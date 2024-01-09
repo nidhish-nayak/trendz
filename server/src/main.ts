@@ -1,4 +1,5 @@
 const cors = require("cors");
+import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 import express, { type Application } from "express";
 import { zodMiddleware } from "./middlewares/zod.middleware";
@@ -14,6 +15,7 @@ const app: Application = express();
 dotenv.config();
 app.use(express.json());
 app.use(cors("*"));
+app.use(cookieParser());
 
 // Global catches using zod
 app.use(zodMiddleware);
