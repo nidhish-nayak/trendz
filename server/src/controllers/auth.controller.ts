@@ -65,6 +65,7 @@ export const login = async (req: Request, res: Response) => {
             "SELECT * FROM users WHERE username = ?",
             [username]
         );
+
         if (!existingUser) {
             return res
                 .status(404)
@@ -74,11 +75,17 @@ export const login = async (req: Request, res: Response) => {
         // Compare passwords
         const hashedPassword = existingUser.password;
         const isPasswordValid = await bcrypt.compare(password, hashedPassword);
+        const userId = existingUser.id;
+        const { password: string, ...other } = existingUser;
+
         if (isPasswordValid && jwtKey) {
-            const token = jwt.sign({ username }, jwtKey);
+            const token = jwt.sign({ id: userId }, jwtKey);
             return res
+                .cookie("accessToken", token, {
+                    httpOnly: true,
+                })
                 .status(200)
-                .json({ token, message: "User is authorized" });
+                .json(other);
         } else {
             return res
                 .status(401)
