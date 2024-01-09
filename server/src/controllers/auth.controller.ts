@@ -95,4 +95,11 @@ export const login = async (req: Request, res: Response) => {
     }
 };
 
-export const logout = (_req: Request, _res: Response) => {};
+export const logout = (_req: Request, res: Response) => {
+    res.clearCookie("accessToken", {
+        secure: true,
+        sameSite: "none",
+    })
+        .status(200)
+        .send("User has been logged out.");
+};
