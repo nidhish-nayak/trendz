@@ -69,7 +69,7 @@ export const login = async (req: Request, res: Response) => {
         if (!existingUser) {
             return res
                 .status(404)
-                .json({ error: "User is not registered. Please sign up." });
+                .send("User is not registered. Please sign up.");
         }
 
         // Compare passwords
@@ -87,13 +87,11 @@ export const login = async (req: Request, res: Response) => {
                 .status(200)
                 .json(other);
         } else {
-            return res
-                .status(401)
-                .json({ error: "Invalid username or password" });
+            return res.status(401).send("Invalid username or password");
         }
     } catch (error) {
         console.error("Error during login!");
-        return res.status(500).json({ error: "Internal Server Error" });
+        return res.status(500).send("Internal Server Error");
     }
 };
 
