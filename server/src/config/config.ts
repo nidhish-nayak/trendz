@@ -9,6 +9,11 @@ const config = {
         database: process.env.DB_NAME,
     },
     jwtKey: process.env.JWT_SECRET_KEY,
+    corsOptions: {
+        origin: "http://localhost:5173",
+        credentials: true,
+        optionSuccessStatus: 200,
+    },
 };
 
 export default config;

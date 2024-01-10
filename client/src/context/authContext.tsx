@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { ReactNode, createContext, useEffect, useState } from "react";
 import { LoginTypes } from "../types/login.types";
 
@@ -27,12 +27,20 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         const API_URL =
             process.env.NODE_ENV === "production"
                 ? `${process.env.SERVER_URL}/api/auth/login`
-                : "http://localhost:3000/api/auth/register";
-        const res = await axios.post(API_URL, inputs, {
-            withCredentials: true,
-        });
+                : "http://localhost:3000/api/auth/login";
 
-        setCurrentUser(res.data);
+        try {
+            const res = await axios.post(API_URL, inputs, {
+                withCredentials: true,
+            });
+
+            setCurrentUser(res.data);
+            console.log(res.data);
+        } catch (error) {
+            const err = error as AxiosError;
+            console.error(err.response?.data);
+            return err.response?.data;
+        }
     };
 
     const value = { currentUser, login };

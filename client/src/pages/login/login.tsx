@@ -1,5 +1,5 @@
-import { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/authContext";
 import { LoginTypes } from "../../types/login.types";
 import "./login.scss";
@@ -10,7 +10,7 @@ const defaultFormFields: LoginTypes = {
 };
 
 const Login = () => {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const { login } = useContext(AuthContext);
     const [formFields, setFormFields] = useState(defaultFormFields);
 
@@ -22,10 +22,10 @@ const Login = () => {
         });
     };
 
-    const handleLoginSubmit = () => {
-        // Run the login func from the AuthContext
+    const handleLoginSubmit = (event: React.FormEvent) => {
+        event.preventDefault();
         login(formFields);
-        navigate("/");
+        // navigate("/");
     };
 
     return (
@@ -66,19 +66,18 @@ const Login = () => {
                             type="text"
                             placeholder="Username"
                             onChange={changeHandler}
+                            required
                         />
                         <input
                             name="password"
                             type="password"
                             placeholder="Password"
                             onChange={changeHandler}
+                            minLength={4}
+                            required
                         />
                         <button type="submit">Login</button>
                     </form>
-                    <span style={{ background: "lightgrey", padding: "5px" }}>
-                        Click on login for direct login without any details!
-                        (TEST)
-                    </span>
                 </div>
             </div>
         </div>
