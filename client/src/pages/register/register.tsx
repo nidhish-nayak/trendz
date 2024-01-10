@@ -1,9 +1,10 @@
 import axios, { AxiosError } from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { RegisterTypes } from "../../types/register.types";
 import "./register.scss";
 
-const defaultFormFields = {
+const defaultFormFields: RegisterTypes = {
     username: "",
     email: "",
     password: "",
@@ -99,6 +100,7 @@ const Register = () => {
                             type="password"
                             name="password"
                             placeholder="Password"
+                            minLength={4}
                             required
                         />
                         <input
@@ -111,9 +113,8 @@ const Register = () => {
                         <button type="submit">Register</button>
                     </form>
                     <div
-                        style={
-                            resData.err ? { color: "red" } : { color: "green" }
-                        }
+                        className="response"
+                        style={{ color: resData.err ? "red" : "green" }}
                     >
                         {resData.msg}
                     </div>

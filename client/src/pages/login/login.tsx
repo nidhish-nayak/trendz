@@ -1,14 +1,30 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/authContext";
+import { LoginTypes } from "../../types/login.types";
 import "./login.scss";
+
+const defaultFormFields: LoginTypes = {
+    username: "",
+    password: "",
+};
 
 const Login = () => {
     const navigate = useNavigate();
     const { login } = useContext(AuthContext);
+    const [formFields, setFormFields] = useState(defaultFormFields);
+
+    const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = event.target;
+        setFormFields({
+            ...formFields,
+            [name]: value,
+        });
+    };
+
     const handleLoginSubmit = () => {
         // Run the login func from the AuthContext
-        login();
+        login(formFields);
         navigate("/");
     };
 
@@ -44,9 +60,19 @@ const Login = () => {
                         <h2>Already have an account ?</h2>
                         <p>Sign in with your email and password</p>
                     </div>
-                    <form action="" onSubmit={handleLoginSubmit}>
-                        <input type="text" placeholder="Username" />
-                        <input type="password" placeholder="Password" />
+                    <form onSubmit={handleLoginSubmit}>
+                        <input
+                            name="username"
+                            type="text"
+                            placeholder="Username"
+                            onChange={changeHandler}
+                        />
+                        <input
+                            name="password"
+                            type="password"
+                            placeholder="Password"
+                            onChange={changeHandler}
+                        />
                         <button type="submit">Login</button>
                     </form>
                     <span style={{ background: "lightgrey", padding: "5px" }}>
