@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./register.scss";
@@ -13,6 +13,7 @@ const defaultFormFields = {
 const Register = () => {
     const [formFields, setFormFields] = useState(defaultFormFields);
     const { username, email, password, name } = formFields;
+    const [resData, setResData] = useState({ err: false, msg: "" }); // Response & Error Handling
 
     const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
@@ -30,17 +31,19 @@ const Register = () => {
                 : "http://localhost:3000/api/auth/register";
 
         try {
+            setResData({ err: false, msg: "" });
             const response = await axios.post(API_URL, {
                 username: username,
                 email: email,
                 password: password,
                 name: name,
             });
-            console.log(response.data);
-            alert("User signup complete! - " + response.status);
+            setResData({ err: false, msg: response.data });
         } catch (error) {
-            console.log(error);
-            alert("User signup failed! - " + error);
+            const err = error as AxiosError;
+            const res = JSON.parse(JSON.stringify(err.response?.data));
+            console.error(error);
+            setResData({ err: true, msg: res });
         }
     };
 
@@ -107,6 +110,13 @@ const Register = () => {
                         />
                         <button type="submit">Register</button>
                     </form>
+                    <div
+                        style={
+                            resData.err ? { color: "red" } : { color: "green" }
+                        }
+                    >
+                        {resData.msg}
+                    </div>
                 </div>
             </div>
         </div>
