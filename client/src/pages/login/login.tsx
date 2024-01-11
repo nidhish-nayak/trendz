@@ -1,8 +1,9 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/authContext";
-import { LoginTypes } from "../../types/login.types";
 import "./login.scss";
+
+import { LoginTypes } from "./login.types";
 
 const defaultFormFields: LoginTypes = {
     username: "",
@@ -10,8 +11,9 @@ const defaultFormFields: LoginTypes = {
 };
 
 const Login = () => {
-    // const navigate = useNavigate();
-    const { login } = useContext(AuthContext);
+    const navigate = useNavigate();
+    const [err, setErr] = useState("");
+    const { login, currentUser } = useContext(AuthContext);
     const [formFields, setFormFields] = useState(defaultFormFields);
 
     const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,10 +24,20 @@ const Login = () => {
         });
     };
 
-    const handleLoginSubmit = (event: React.FormEvent) => {
+    const handleLoginSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
-        login(formFields);
-        // navigate("/");
+        try {
+            await login(formFields);
+            if (currentUser) {
+                setErr("User login success!");
+                navigate("/");
+            } else {
+                setErr("Incorrect username or password!");
+            }
+        } catch (error) {
+            const err = JSON.parse(JSON.stringify(error));
+            setErr(err.response.data);
+        }
     };
 
     return (
@@ -78,6 +90,7 @@ const Login = () => {
                         />
                         <button type="submit">Login</button>
                     </form>
+                    <div>{JSON.parse(JSON.stringify(err))}</div>
                 </div>
             </div>
         </div>

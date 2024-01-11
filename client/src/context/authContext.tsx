@@ -1,6 +1,7 @@
 import axios, { AxiosError } from "axios";
 import { ReactNode, createContext, useEffect, useState } from "react";
-import { LoginTypes } from "../types/login.types";
+
+import { LoginTypes } from "../pages/login/login.types";
 
 export type AuthContextTypes = {
     currentUser: { id: number; name: string; profilePic: string } | null;

@@ -1,8 +1,9 @@
 import axios, { AxiosError } from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { RegisterTypes } from "../../types/register.types";
 import "./register.scss";
+
+import { RegisterTypes } from "./register.types";
 
 const defaultFormFields: RegisterTypes = {
     username: "",

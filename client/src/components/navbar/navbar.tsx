@@ -19,6 +19,7 @@ const Navbar = () => {
     const { darkMode, toggleTheme } = useContext(DarkModeContext);
     const { currentUser } = useContext(AuthContext);
     const scrollDirection = useScrollDirection();
+    const { name, profilePic } = currentUser!;
 
     // Define a state to track whether to show or hide the navbar
     const [isNavbarVisible, setIsNavbarVisible] = useState(true);
@@ -67,8 +68,8 @@ const Navbar = () => {
                     <EmailOutlinedIcon />
                     <NotificationsOutlinedIcon />
                     <div className="user">
-                        <img src={currentUser?.profilePic} alt="logo" />
-                        <span>{currentUser?.name}</span>
+                        <img src={profilePic} alt="logo" />
+                        <span>{name}</span>
                     </div>
                 </div>
             </div>
@@ -116,7 +117,7 @@ const Navbar = () => {
                 </div>
                 <AppsOutlinedIcon />
                 <div className="user">
-                    <img src={currentUser?.profilePic} alt="logo" />
+                    <img src={profilePic} alt="logo" />
                 </div>
             </div>
         </Fragment>

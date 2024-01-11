@@ -6,6 +6,8 @@ import "./stories.scss";
 
 const Stories = () => {
     const { currentUser } = useContext(AuthContext);
+    const { profilePic } = currentUser!;
+
     const moveLeft = () => {
         document
             .getElementById("scrollStories")
@@ -67,10 +69,7 @@ const Stories = () => {
                 <div className="stories" id="scrollStories">
                     <div className="story">
                         <div className="module-border-wrap">
-                            <img
-                                src={currentUser?.profilePic}
-                                alt="user-image"
-                            />
+                            <img src={profilePic} alt="user-image" />
                             <div className="user-name">Your story</div>
                             <button>+</button>
                         </div>

@@ -17,14 +17,15 @@ import "./leftbar.scss";
 
 const Leftbar = () => {
     const { currentUser } = useContext(AuthContext);
+    const { name, profilePic } = currentUser!;
 
     return (
         <div className="leftbar">
             <div className="container">
                 <div className="menu">
                     <div className="user">
-                        <img src={currentUser?.profilePic} alt="user-image" />
-                        <span>{currentUser?.name}</span>
+                        <img src={profilePic} alt="user-image" />
+                        <span>{name ? name : "No User!"}</span>
                     </div>
                     <div className="item">
                         <img src={Friends} alt="user-items" />
