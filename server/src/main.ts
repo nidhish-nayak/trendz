@@ -22,14 +22,14 @@ app.use(cookieParser());
 app.use(zodMiddleware);
 
 // Routes
-app.use("/", (_req, res) => {
-    res.status(200).send("Server running!");
-});
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/comments", commentRoutes);
 app.use("/api/likes", likeRoutes);
+app.use("/api/test", (_req, res) => {
+    res.status(200).send("Server is running!");
+});
 
 // Listener
 const PORT = 3000;
