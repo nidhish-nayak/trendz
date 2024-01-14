@@ -8,6 +8,7 @@ import authRoutes from "./routes/auth.route";
 import commentRoutes from "./routes/comment.route";
 import likeRoutes from "./routes/like.route";
 import postRoutes from "./routes/post.route";
+import testRoutes from "./routes/test.route";
 import userRoutes from "./routes/user.route";
 
 const app: Application = express();
@@ -27,9 +28,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/comments", commentRoutes);
 app.use("/api/likes", likeRoutes);
-app.use("/api/test", (_req, res) => {
-    res.status(200).send("Server is running!");
-});
+app.use("/api/test", testRoutes);
 
 // Listener
 const PORT = 3000;
