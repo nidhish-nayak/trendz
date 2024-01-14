@@ -9,6 +9,7 @@
     "scripts": {
         "dev": "nodemon src/main.ts --ext ts",
         "start": "nodemon src/main.ts --ext ts",
+        "build": "tsc",
         "prettier": "prettier --write ."
     },
     "devDependencies": {

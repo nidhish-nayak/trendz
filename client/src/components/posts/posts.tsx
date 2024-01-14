@@ -5,9 +5,14 @@ import { makeRequest } from "../../utils/axios.utils";
 import "./posts.scss";
 
 const Posts = () => {
-    const { isLoading, error, data } = useQuery(["posts"], () =>
-        makeRequest.get("/posts").then((res) => res.data)
-    );
+    const postRequest = async () => {
+        const res = await makeRequest.get("/posts");
+        return res.data;
+    };
+    const { isLoading, error, data } = useQuery({
+        queryKey: ["posts"],
+        queryFn: postRequest,
+    });
 
     return (
         <div className="posts">
