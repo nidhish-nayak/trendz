@@ -1,6 +1,7 @@
 import axios, { AxiosError } from "axios";
 import { ReactNode, createContext, useEffect, useState } from "react";
 
+import config from "../config/config";
 import { LoginTypes } from "../pages/login/login.types";
 
 export type AuthContextTypes = {
@@ -25,10 +26,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }, [currentUser]);
 
     const login = async (inputs: LoginTypes) => {
-        const API_URL =
-            process.env.NODE_ENV === "production"
-                ? `${process.env.SERVER_URL}/api/auth/login`
-                : "http://localhost:3000/api/auth/login";
+        const API_URL = `${config.serverUrl}/api/auth/login`;
 
         try {
             const res = await axios.post(API_URL, inputs, {

@@ -1,4 +1,3 @@
-const cors = require("cors");
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 import express, { type Application } from "express";
@@ -10,6 +9,8 @@ import likeRoutes from "./routes/like.route";
 import postRoutes from "./routes/post.route";
 import testRoutes from "./routes/test.route";
 import userRoutes from "./routes/user.route";
+
+const cors = require("cors");
 
 const app: Application = express();
 
@@ -31,7 +32,8 @@ app.use("/api/likes", likeRoutes);
 app.use("/api/test", testRoutes);
 
 // Listener
-const PORT = 3000;
-app.listen(PORT, () => {
-    console.log("Server is running on port: " + `http://localhost:${PORT}`);
+app.listen(config.port, () => {
+    console.log(
+        "Server is running on port: " + `http://localhost:${config.port}`
+    );
 });

@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./register.scss";
 
+import config from "../../config/config";
 import { RegisterTypes } from "./register.types";
 
 const defaultFormFields: RegisterTypes = {
@@ -27,10 +28,7 @@ const Register = () => {
 
     const registerUserHandler = async (event: React.FormEvent) => {
         event.preventDefault();
-        const API_URL =
-            process.env.NODE_ENV === "production"
-                ? `${process.env.SERVER_URL}/api/auth/register`
-                : "http://localhost:3000/api/auth/register";
+        const API_URL = `${config.serverUrl}/api/auth/register`;
 
         try {
             setResData({ err: false, msg: "" });

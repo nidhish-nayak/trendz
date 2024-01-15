@@ -1,9 +1,7 @@
 import axios from "axios";
+import config from "../config/config";
 
 export const makeRequest = axios.create({
-    baseURL:
-        process.env.NODE_ENV === "production"
-            ? `${process.env.SERVER_URL}/api`
-            : "http://localhost:3000/api",
+    baseURL: `${config.serverUrl}/api`,
     withCredentials: true,
 });
