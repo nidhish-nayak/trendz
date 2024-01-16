@@ -3,7 +3,7 @@ require("dotenv").config();
 const config = {
     port: process.env.PORT || 3000,
     dbConfig: {
-        supabaseUrl: process.env.DB_URL,
+        supabaseUrl: process.env.DB_POOL_URL,
         supabaseKey: process.env.DB_ANON_KEY,
     },
     jwtKey: process.env.JWT_SECRET_KEY,
