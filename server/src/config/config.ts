@@ -3,10 +3,8 @@ require("dotenv").config();
 const config = {
     port: process.env.PORT || 3000,
     dbConfig: {
-        host: process.env.DB_HOST || "localhost",
-        user: process.env.DB_USER || "root",
-        password: process.env.DB_PASSWORD,
-        database: process.env.DB_NAME || "linkx-db",
+        supabaseUrl: process.env.DB_URL,
+        supabaseKey: process.env.DB_ANON_KEY,
     },
     jwtKey: process.env.JWT_SECRET_KEY,
     corsOptions: {
