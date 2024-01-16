@@ -1,5 +1,5 @@
 import config from "$/config/config";
-import { executeQuery } from "$/db/connect";
+import supabase from "$/db/connect";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
@@ -17,10 +17,13 @@ export const register = async (req: Request, res: Response) => {
         const { username, name, email, password } = validationResult.data.body;
 
         // Check if user exists
-        const existingUser = await executeQuery(
-            "SELECT * FROM users WHERE username = ?",
-            [username]
-        );
+        const { data: existingUser, existingUserError } = await supabase
+            .from("users")
+            .select("username")
+            .eq("username", username);
+
+        if (existingUserError) throw existingUserError;
+
         if (existingUser.length > 0) {
             return res.status(409).send("User already exists!");
         }
@@ -29,16 +32,22 @@ export const register = async (req: Request, res: Response) => {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        // Insert new user
-        const insertUserQuery =
-            "INSERT INTO users (`username`,`email`,`password`,`name`) VALUES (?)";
+        // Insert User
+        const { data: insertUser, insertUserError } = await supabase
+            .from("users")
+            .insert([
+                {
+                    username: username,
+                    name: name,
+                    email: email,
+                    password: hashedPassword,
+                },
+            ])
+            .select();
 
-        const userValues = [username, email, hashedPassword, name];
-        const insertionResult = await executeQuery(insertUserQuery, [
-            userValues,
-        ]);
+        if (insertUserError) throw insertUserError;
 
-        if (insertionResult) {
+        if (insertUser) {
             return res.status(201).send("User added successfully!");
         }
 
@@ -61,10 +70,12 @@ export const login = async (req: Request, res: Response) => {
         const { username, password } = validationResult.data.body;
 
         // Check if the user exists
-        const [existingUser] = await executeQuery(
-            "SELECT * FROM users WHERE username = ?",
-            [username]
-        );
+        const { data: existingUser, existingUserError } = await supabase
+            .from("users")
+            .select("username")
+            .eq("username", username);
+
+        if (existingUserError) throw existingUserError;
 
         if (!existingUser) {
             return res
