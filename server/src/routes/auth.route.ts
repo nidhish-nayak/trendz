@@ -1,4 +1,6 @@
-import { login, logout, register } from "$/controllers/auth.controller";
+import { login } from "$/controllers/auth/login.controller";
+import { logout } from "$/controllers/auth/logout.controller";
+import { register } from "$/controllers/auth/register.controller";
 import express, { type Router } from "express";
 
 const router: Router = express.Router();

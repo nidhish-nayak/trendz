@@ -4,7 +4,7 @@ const config = {
     port: process.env.PORT || 3000,
     dbConfig: {
         supabaseUrl: process.env.DB_POOL_URL,
-        supabaseKey: process.env.DB_ANON_KEY,
+        supabaseKey: process.env.DB_SERVICE_ROLE_KEY,
     },
     jwtKey: process.env.JWT_SECRET_KEY,
     corsOptions: {
