@@ -47,7 +47,7 @@ export const login = async (req: Request, res: Response) => {
                 .status(200)
                 .json(other);
         } else {
-            return res.status(401).send("Invalid username or password");
+            return res.status(401).send("Incorrect password!");
         }
     } catch (error) {
         console.error("Error during login!");

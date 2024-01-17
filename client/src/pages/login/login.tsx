@@ -12,8 +12,8 @@ const defaultFormFields: LoginTypes = {
 
 const Login = () => {
     const navigate = useNavigate();
-    const [err, setErr] = useState("");
-    const { currentUser, login } = useContext(AuthContext);
+    const [err, setErr] = useState<string | null>(null);
+    const { login } = useContext(AuthContext);
     const [formFields, setFormFields] = useState(defaultFormFields);
 
     const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,19 +26,11 @@ const Login = () => {
 
     const handleLoginSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
-        try {
-            await login(formFields);
-            if (currentUser) {
-                setErr("User login success!");
-                navigate("/");
-            } else {
-                setErr("Incorrect username or password!");
-            }
-        } catch (error) {
-            const err = JSON.parse(JSON.stringify(error));
-            setErr(err.response.data);
-            console.log(err);
+        const res = await login(formFields);
+        if (res.isLoggedIn === true) {
+            navigate("/");
         }
+        setErr(res.response);
     };
 
     return (
@@ -91,7 +83,7 @@ const Login = () => {
                         />
                         <button type="submit">Login</button>
                     </form>
-                    <div>{JSON.parse(JSON.stringify(err))}</div>
+                    <div style={{ color: "crimson" }}>{err}</div>
                 </div>
             </div>
         </div>
