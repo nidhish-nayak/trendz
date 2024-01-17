@@ -37,6 +37,7 @@ const Login = () => {
         } catch (error) {
             const err = JSON.parse(JSON.stringify(error));
             setErr(err.response.data);
+            console.log(err);
         }
     };
 
