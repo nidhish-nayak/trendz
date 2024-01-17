@@ -15,4 +15,5 @@
 -   **Zod**: Zod for consistent input validation, data structuring, and error handling.
 -   **ExpressJS**: NodeJS framework for backend.
 -   **Register User**: User signup feature.
+-   **PostgreSQL**: Postgres for relational database.
 -   ...
