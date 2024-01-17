@@ -13,7 +13,7 @@ const defaultFormFields: LoginTypes = {
 const Login = () => {
     const navigate = useNavigate();
     const [err, setErr] = useState("");
-    const { login, currentUser } = useContext(AuthContext);
+    const { currentUser, login } = useContext(AuthContext);
     const [formFields, setFormFields] = useState(defaultFormFields);
 
     const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
