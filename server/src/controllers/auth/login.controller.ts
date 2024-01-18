@@ -42,6 +42,7 @@ export const login = async (req: Request, res: Response) => {
             return res
                 .cookie("accessToken", token, {
                     httpOnly: true,
+                    sameSite: "none",
                     secure: true, // Ensure token is sent only over https
                 })
                 .status(200)
