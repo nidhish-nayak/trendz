@@ -1,0 +1,41 @@
+import axios, { AxiosError } from "axios";
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import config from "../../config/config";
+import "./logout.scss";
+import { LogoutProps } from "./logout.types";
+
+const Logout: React.FC<LogoutProps> = (props) => {
+    const navigate = useNavigate();
+    const { isOpen, image, name } = props;
+
+    const userLogout = async () => {
+        const API_URL = `${config.serverUrl}/api/auth/logout`;
+
+        try {
+            const res = await axios.post(API_URL);
+            if (res.status === 200) {
+                localStorage.removeItem("user");
+                navigate("/login");
+            } else {
+                console.log(res.data);
+                alert("logout failed!");
+            }
+        } catch (error) {
+            const err = error as AxiosError;
+            console.error(err);
+        }
+    };
+
+    return isOpen ? (
+        <div className="logout-container">
+            <img src={image} className="logout-image" />
+            <p className="logout-name">{name}</p>
+            <button className="logout-button" onClick={userLogout}>
+                Logout
+            </button>
+        </div>
+    ) : null;
+};
+
+export default Logout;

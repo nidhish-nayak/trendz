@@ -1,0 +1,44 @@
+@import "../../style.scss";
+
+.logout-container {
+    @include themify($themes) {
+        position: absolute;
+        top: 40px;
+        right: 0px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border: 1px solid themed("border");
+        background-color: themed("bg");
+        padding: 1.5em;
+        border-radius: 10px;
+        max-width: 190px;
+
+        .logout-image {
+            width: 100px;
+            height: 100px;
+            border: 1px solid themed("border");
+        }
+
+        .logout-name {
+            margin-top: 0.5em;
+            max-width: 100px;
+        }
+
+        .logout-button {
+            margin-top: 2em;
+            padding: 0.75em 1em;
+            text-transform: uppercase;
+            border: none;
+            font-size: 0.75rem;
+            background-color: themed("button");
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+
+            &:hover {
+                background-color: themed("buttonSoft");
+            }
+        }
+    }
+}

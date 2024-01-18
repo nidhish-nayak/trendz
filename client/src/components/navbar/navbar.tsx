@@ -13,6 +13,7 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { AuthContext } from "../../context/authContext";
 import { DarkModeContext } from "../../context/darkModeContext";
 import useScrollDirection from "../../hooks/useScrollDirection";
+import Logout from "../logout/logout";
 import "./navbar.scss";
 
 const Navbar = () => {
@@ -28,6 +29,11 @@ const Navbar = () => {
         // Toggle visibility based on the scroll direction
         setIsNavbarVisible(scrollDirection === "up");
     }, [scrollDirection]);
+
+    const [logout, setLogout] = useState(false);
+    const showLogout = () => {
+        setLogout(!logout);
+    };
 
     return (
         <Fragment>
@@ -67,9 +73,17 @@ const Navbar = () => {
                     <PersonOutlinedIcon />
                     <EmailOutlinedIcon />
                     <NotificationsOutlinedIcon />
-                    <div className="user">
-                        <img src={profilePic} alt="logo" />
-                        <span>{name}</span>
+                    <div className="user" onClick={showLogout}>
+                        <img
+                            src={profilePic}
+                            alt="logo"
+                            className="user-image"
+                        />
+                        <Logout
+                            isOpen={logout}
+                            image={profilePic}
+                            name={name}
+                        />
                     </div>
                 </div>
             </div>
@@ -117,7 +131,7 @@ const Navbar = () => {
                 </div>
                 <AppsOutlinedIcon />
                 <div className="user">
-                    <img src={profilePic} alt="logo" />
+                    <img src={profilePic} alt="logo" className="user-image" />
                 </div>
             </div>
         </Fragment>
