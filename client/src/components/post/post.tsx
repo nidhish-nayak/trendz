@@ -9,19 +9,9 @@ import TextsmsOutlinedIcon from "@mui/icons-material/TextsmsOutlined";
 
 import Comments from "../comments/comments";
 import "./post.scss";
+import { PostTypes } from "./post.types";
 
-export type POST_TYPES = {
-    post: {
-        id: number;
-        userId: number;
-        profilePic: string;
-        name: string;
-        img?: string;
-        desc: string;
-    };
-};
-
-const Post = ({ post }: POST_TYPES) => {
+const Post = ({ post }: PostTypes) => {
     const [commentOpen, setCommentOpen] = useState(false);
 
     //TEMPORARY

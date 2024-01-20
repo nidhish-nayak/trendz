@@ -6,7 +6,7 @@ const config = {
         supabaseUrl: process.env.DB_URL,
         supabaseKey: process.env.DB_SERVICE_ROLE_KEY,
     },
-    jwtKey: process.env.JWT_SECRET_KEY,
+    jwtKey: process.env.JWT_SECRET_KEY || "invalid_key",
     corsOptions: {
         origin:
             process.env.NODE_ENV === "production"

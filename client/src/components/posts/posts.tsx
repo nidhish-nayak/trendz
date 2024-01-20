@@ -1,47 +1,37 @@
-// import { useQuery } from "@tanstack/react-query";
-import Post from "../post/post";
+import { useQuery } from "@tanstack/react-query";
+import { axiosRequest } from "../../utils/axios.utils";
 
-// import { makeRequest } from "../../utils/axios.utils";
+import Post from "../post/post";
 import "./posts.scss";
+import { PostsTypes } from "./posts.types";
 
 const Posts = () => {
-    //TEMPORARY
-    const posts = [
-        {
-            id: 1,
-            name: "John Doe",
-            userId: 1,
-            profilePic:
-                "https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg?auto=compress&cs=tinysrgb&w=1600",
-            desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
-            img: "https://images.pexels.com/photos/4881619/pexels-photo-4881619.jpeg?auto=compress&cs=tinysrgb&w=1600",
-        },
-        {
-            id: 2,
-            name: "Jane Doe",
-            userId: 2,
-            profilePic:
-                "https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg?auto=compress&cs=tinysrgb&w=1600",
-            desc: "Tenetur iste voluptates dolorem rem commodi voluptate pariatur, voluptatum, laboriosam consequatur enim nostrum cumque! Maiores a nam non adipisci minima modi tempore.",
-        },
-    ];
+    const getAllPosts = async () => {
+        const res = await axiosRequest.get("/posts");
+        return res.data;
+    };
 
-    // const postRequest = async () => {
-    //     const res = await makeRequest.get("/posts");
-    //     return res.data;
-    // };
-    // const { isLoading, error, data } = useQuery({
-    //     queryKey: ["posts"],
-    //     queryFn: postRequest,
-    // });
+    const { isLoading, data, error } = useQuery({
+        queryKey: ["posts"],
+        queryFn: getAllPosts,
+    });
 
-    return (
-        <div className="posts">
-            {posts.map((post) => (
-                <Post post={post} key={post.id} />
-            ))}
-        </div>
-    );
+    if (error) {
+        console.error(error);
+        return;
+    }
+
+    if (!isLoading) {
+        const posts: PostsTypes = data.posts;
+
+        return (
+            <div className="posts">
+                {posts.map((post) => (
+                    <Post post={post} key={post.id} />
+                ))}
+            </div>
+        );
+    }
 };
 
 export default Posts;
