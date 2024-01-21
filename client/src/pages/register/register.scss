@@ -76,7 +76,7 @@
             gap: 50px;
             justify-content: center;
 
-            div {
+            .right-title {
                 display: flex;
                 flex-direction: column;
                 gap: 10px;
@@ -121,6 +121,15 @@
                     cursor: pointer;
                     border-radius: 2px;
                     transition: 250ms;
+
+                    .check {
+                        display: inline-block;
+                        transform: rotate(45deg);
+                        height: 14px;
+                        width: 8px;
+                        border-bottom: 3px solid white;
+                        border-right: 3px solid white;
+                    }
 
                     &:hover {
                         background-color: #000;

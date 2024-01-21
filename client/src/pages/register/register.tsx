@@ -14,6 +14,7 @@ const defaultFormFields: RegisterTypes = {
 };
 
 const Register = () => {
+    const [isLoading, setIsLoading] = useState(false);
     const [formFields, setFormFields] = useState(defaultFormFields);
     const { username, email, password, name } = formFields;
     const [resData, setResData] = useState({ err: false, msg: "" }); // Response & Error Handling
@@ -31,6 +32,7 @@ const Register = () => {
         const API_URL = `${config.serverUrl}/api/auth/register`;
 
         try {
+            setIsLoading(true);
             setResData({ err: false, msg: "" });
             const response = await axios.post(API_URL, {
                 username: username,
@@ -39,11 +41,13 @@ const Register = () => {
                 name: name,
             });
             setResData({ err: false, msg: response.data });
+            setIsLoading(false);
         } catch (error) {
             const err = error as AxiosError;
             const res = JSON.parse(JSON.stringify(err.response?.data));
             console.error(error);
             setResData({ err: true, msg: res });
+            setIsLoading(false);
         }
     };
 
@@ -75,7 +79,7 @@ const Register = () => {
                     </div>
                 </div>
                 <div className="right">
-                    <div>
+                    <div className="right-title">
                         <h2>Don't have an account ?</h2>
                         <p>Register with your email and password</p>
                     </div>
@@ -109,14 +113,22 @@ const Register = () => {
                             placeholder="Name"
                             required
                         />
-                        <button type="submit">Register</button>
+                        {resData.msg ? (
+                            <div
+                                className="response"
+                                style={{ color: resData.err ? "red" : "green" }}
+                            >
+                                {resData.msg}
+                            </div>
+                        ) : (
+                            <></>
+                        )}
+                        {isLoading ? (
+                            <button type="button">Loading...</button>
+                        ) : (
+                            <button type="submit">Register</button>
+                        )}
                     </form>
-                    <div
-                        className="response"
-                        style={{ color: resData.err ? "red" : "green" }}
-                    >
-                        {resData.msg}
-                    </div>
                 </div>
             </div>
         </div>
