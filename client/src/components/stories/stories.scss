@@ -100,7 +100,7 @@
                     border: 0;
 
                     @include mobile {
-                        border: 2px solid #dd469e;
+                        border: 2px solid themed("button");
                         border-radius: 50%;
                         width: 70px;
                         height: 70px;

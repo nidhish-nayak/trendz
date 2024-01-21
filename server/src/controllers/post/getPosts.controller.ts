@@ -6,7 +6,10 @@ export const getPosts = async (_req: Request, res: Response) => {
         .from("posts")
         .select("*, users (name, profilePic)");
 
-    if (postsError) throw postsError;
+    if (postsError) {
+        res.status(401).send("Unauthorized user!");
+        throw postsError;
+    }
 
     const mutatedPosts = posts.map((post) => ({
         createdAt: post.createdAt,
