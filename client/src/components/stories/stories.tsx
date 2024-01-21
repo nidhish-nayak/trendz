@@ -78,7 +78,9 @@ const Stories = () => {
                         <div className="story" key={story.id}>
                             <div className="module-border-wrap">
                                 <img src={story.img} alt="user-story" />
-                                <span className="user-name">{story.name}</span>
+                                <span className="user-name" title={story.name}>
+                                    {story.name}
+                                </span>
                             </div>
                         </div>
                     ))}

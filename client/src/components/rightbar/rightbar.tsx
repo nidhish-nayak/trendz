@@ -12,7 +12,7 @@ const Rightbar = () => {
                                 src="https://images.pexels.com/photos/4881619/pexels-photo-4881619.jpeg?auto=compress&cs=tinysrgb&w=1600"
                                 alt="user-image"
                             />
-                            <span>Jane Doe</span>
+                            <span title="username">Jane Doe</span>
                         </div>
                         <div className="buttons">
                             <button>follow</button>
@@ -25,7 +25,7 @@ const Rightbar = () => {
                                 src="https://images.pexels.com/photos/4881619/pexels-photo-4881619.jpeg?auto=compress&cs=tinysrgb&w=1600"
                                 alt="user-image"
                             />
-                            <span>Nidhishsadd Nayakasdad</span>
+                            <span title="username">Nidhishsadd Nayakasdad</span>
                         </div>
                         <div className="buttons">
                             <button>follow</button>
@@ -43,7 +43,10 @@ const Rightbar = () => {
                             />
                             <div className="activity-container">
                                 <div>
-                                    <span className="user-name">
+                                    <span
+                                        className="user-name"
+                                        title="username"
+                                    >
                                         Keerthanajand Manjunathan Nayak
                                     </span>
                                     <p className="user-time">1 min ago</p>

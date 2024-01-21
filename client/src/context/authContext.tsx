@@ -5,7 +5,16 @@ import config from "../config/config";
 import { LoginResponseTypes, LoginTypes } from "../pages/login/login.types";
 
 export type AuthContextTypes = {
-    currentUser: { id: number; name: string; profilePic: string } | null;
+    currentUser: {
+        id: number;
+        name: string;
+        profilePic: string;
+        email: string;
+        username: string;
+        website: string;
+        city: string;
+        coverPic: string;
+    } | null;
     login: (inputs: LoginTypes) => Promise<LoginResponseTypes>;
 };
 

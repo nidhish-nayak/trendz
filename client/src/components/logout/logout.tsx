@@ -7,7 +7,8 @@ import { LogoutProps } from "./logout.types";
 
 const Logout: React.FC<LogoutProps> = (props) => {
     const navigate = useNavigate();
-    const { isOpen, image, name } = props;
+    const { isOpen, image, name, city, username, coverPic, website, email } =
+        props;
 
     const userLogout = async () => {
         const API_URL = `${config.serverUrl}/api/auth/logout`;
@@ -29,8 +30,39 @@ const Logout: React.FC<LogoutProps> = (props) => {
 
     return isOpen ? (
         <div className="logout-container">
-            <img src={image} className="logout-image" />
-            <p className="logout-name">{name}</p>
+            <div className="logout-items">
+                <img
+                    src={coverPic}
+                    alt="cover-picture"
+                    className="logout-cover"
+                />
+                <img
+                    src={image}
+                    alt="profile-picture"
+                    className="logout-image"
+                />
+                <div className="logout-user">
+                    <p className="user-items">
+                        Name: <span title={name}>{name}</span>
+                    </p>
+                    <p className="user-items">
+                        Email: <span title={email}>{email}</span>
+                    </p>
+                    <p className="user-items">
+                        Username: <span title={username}>{username}</span>
+                    </p>
+                    {city || website ? (
+                        <>
+                            <p className="user-items">
+                                City: <span title={city}>{city}</span>
+                            </p>
+                            <p className="user-items">
+                                Website: <span title={website}>{website}</span>
+                            </p>
+                        </>
+                    ) : null}
+                </div>
+            </div>
             <button className="logout-button" onClick={userLogout}>
                 Logout
             </button>
