@@ -11,7 +11,8 @@ export const getPosts = async (req: Request, res: Response) => {
                 ON (u.id = p."userId")
                 LEFT JOIN relationships AS r 
                 ON (p."userId" = r."followedUserId")
-                WHERE r."followerUserId" = ${myUserId} OR p."userId" = ${myUserId};
+                WHERE r."followerUserId" = ${myUserId} OR p."userId" = ${myUserId}
+                ORDER BY p."createdAt" DESC;
             `;
 
         res.status(200).json(posts);
