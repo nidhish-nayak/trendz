@@ -1,25 +1,21 @@
-import supabase from "$/db/connect";
+import { sql } from "$/db/connect";
 import { type Request, type Response } from "express";
 
-export const getPosts = async (_req: Request, res: Response) => {
-    const { data: posts, error: postsError } = await supabase
-        .from("posts")
-        .select("*, users (name, profilePic)");
+export const getPosts = async (req: Request, res: Response) => {
+    try {
+        const myUserId = req.body.userId;
+        const posts = await sql`
+                SELECT p.*, u.id AS "userId", name, "profilePic"
+                FROM posts AS p 
+                JOIN users AS u 
+                ON (u.id = p."userId")
+                LEFT JOIN relationships AS r 
+                ON (p."userId" = r."followedUserId")
+                WHERE r."followerUserId" = ${myUserId} OR p."userId" = ${myUserId};
+            `;
 
-    if (postsError) {
-        res.status(401).send("Unauthorized user!");
-        throw postsError;
+        res.status(200).json(posts);
+    } catch (error) {
+        res.status(401).json(error);
     }
-
-    const mutatedPosts = posts.map((post) => ({
-        createdAt: post.createdAt,
-        desc: post.desc,
-        id: post.id,
-        img: post.img,
-        userId: post.userId,
-        name: post.users ? post.users.name : null,
-        profilePic: post.users ? post.users.profilePic : null,
-    }));
-
-    res.status(200).json({ posts: mutatedPosts });
 };

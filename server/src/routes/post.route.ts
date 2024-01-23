@@ -6,7 +6,7 @@ import express from "express";
 
 const router = express.Router();
 
-router.get("/", authMiddleware, getPosts);
+router.post("/", authMiddleware, getPosts);
 router.post("/", addPost);
 router.delete("/:id", deletePost);
 

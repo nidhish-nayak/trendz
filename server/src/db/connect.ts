@@ -1,8 +1,12 @@
 import config from "$/config/config";
 import { createClient } from "@supabase/supabase-js";
+import postgres from "postgres";
 import { type Database } from "./database.types";
 
+// API Connect
 const { supabaseUrl, supabaseKey } = config.dbConfig;
-const supabase = createClient<Database>(supabaseUrl!, supabaseKey!);
+export const supabase = createClient<Database>(supabaseUrl!, supabaseKey!);
 
-export default supabase;
+// Direct Connect using Postgres
+const { supabaseDirectUrl } = config.dbConfig;
+export const sql = postgres(supabaseDirectUrl!);

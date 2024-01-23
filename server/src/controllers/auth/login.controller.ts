@@ -1,5 +1,5 @@
 import config from "$/config/config";
-import supabase from "$/db/connect";
+import { supabase } from "$/db/connect";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 

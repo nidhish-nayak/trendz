@@ -1,4 +1,4 @@
-import supabase from "$/db/connect";
+import { supabase } from "$/db/connect";
 import bcrypt from "bcryptjs";
 
 import { RegisterSchema } from "$/validations/auth.validation";

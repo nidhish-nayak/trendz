@@ -5,6 +5,7 @@ const config = {
     dbConfig: {
         supabaseUrl: process.env.DB_URL,
         supabaseKey: process.env.DB_SERVICE_ROLE_KEY,
+        supabaseDirectUrl: process.env.DB_DIRECT_URL,
     },
     jwtKey: process.env.JWT_SECRET_KEY || "invalid_key",
     corsOptions: {
