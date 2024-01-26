@@ -9,4 +9,6 @@ export const supabase = createClient<Database>(supabaseUrl!, supabaseKey!);
 
 // Direct Connect using Postgres
 const { supabaseDirectUrl } = config.dbConfig;
-export const sql = postgres(supabaseDirectUrl!);
+if (!supabaseDirectUrl) throw new Error("Supabase Direct URL not found!");
+
+export const sql = postgres(supabaseDirectUrl);
