@@ -7,43 +7,50 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import TextsmsOutlinedIcon from "@mui/icons-material/TextsmsOutlined";
 
+import formatTimeDifference from "../../utils/date.utils";
 import Comments from "../comments/comments";
 import "./post.scss";
 import { PostTypes } from "./post.types";
 
 const Post = ({ post }: PostTypes) => {
     const [commentOpen, setCommentOpen] = useState(false);
+    const { profilePic, userId, name, img, desc, createdAt } = post;
 
     //TEMPORARY
     const liked = false;
+
+    const currentDate = new Date().toISOString();
+    const postedDate = createdAt;
+
+    const currentDateObject = new Date(currentDate).getTime();
+    const postedDateObject = new Date(postedDate).getTime();
+
+    const timeDifference: number = currentDateObject - postedDateObject;
+    const time = formatTimeDifference(timeDifference);
 
     return (
         <div className="post">
             <div className="container">
                 <div className="user">
                     <div className="userInfo">
-                        <img src={post.profilePic} alt="" />
+                        <img src={profilePic} alt="" />
                         <div className="details">
                             <Link
-                                to={`/profile/${post.userId}`}
+                                to={`/profile/${userId}`}
                                 style={{
                                     textDecoration: "none",
                                     color: "inherit",
                                 }}
                             >
-                                <span className="name">{post.name}</span>
+                                <span className="name">{name}</span>
                             </Link>
-                            <span className="date">1 min ago</span>
+                            <span className="date">{time}</span>
                         </div>
                     </div>
                     <MoreHorizIcon className="more-icon" />
                 </div>
                 <div className="content">
-                    {post.img ? (
-                        <img src={post.img} alt="post-image" />
-                    ) : (
-                        <p>{post.desc}</p>
-                    )}
+                    {img ? <img src={img} alt="post-image" /> : <p>{desc}</p>}
                 </div>
                 <div className="info">
                     <div className="item">
@@ -66,22 +73,25 @@ const Post = ({ post }: PostTypes) => {
                 <span className="mobile-likes">12 Likes</span>
                 {post.img ? (
                     <p>
-                        <span>{post.name}</span>
-                        {post.desc}
+                        <span>{name}</span>
+                        {desc}
                     </p>
                 ) : (
                     <></>
                 )}
 
-                {commentOpen && <Comments />}
                 <div
                     className="comment-stamp"
                     onClick={() => setCommentOpen(!commentOpen)}
                 >
-                    {commentOpen ? "" : "View all 12 comments"}
+                    View all 12 comments
+                    {commentOpen ? <span>-</span> : <span>+</span>}
                 </div>
+
+                {commentOpen && <Comments />}
+
                 <div className="time-stamp">
-                    <span className="stamps">1 min ago</span>
+                    <span className="stamps">{time}</span>
                     <span className="dot" />
                     <span className="stamps">Suggested for you</span>
                 </div>

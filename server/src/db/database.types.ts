@@ -213,7 +213,20 @@ export interface Database {
             [_ in never]: never;
         };
         Functions: {
-            [_ in never]: never;
+            get_user_posts: {
+                Args: {
+                    my_id: number;
+                };
+                Returns: {
+                    id: number;
+                    desc: string;
+                    img: string;
+                    userId: number;
+                    createdAt: string;
+                    name: string;
+                    profilePic: string;
+                }[];
+            };
         };
         Enums: {
             [_ in never]: never;

@@ -6,5 +6,6 @@ export type PostTypes = {
         name: string;
         img?: string;
         desc: string;
+        createdAt: Date;
     };
 };

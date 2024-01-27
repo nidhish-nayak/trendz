@@ -139,7 +139,15 @@
 
         .comment-stamp {
             cursor: pointer;
-            color: themed("arrow");
+            width: fit-content;
+            color: themed("textColorSoft");
+
+            span {
+                font-size: 1rem;
+                font-weight: bold;
+                color: themed("button");
+                padding: 0px 5px;
+            }
 
             @include mobile {
                 margin: 0 10px;
@@ -153,7 +161,6 @@
             gap: 10px;
             color: themed("arrow");
             font-size: small;
-            font-weight: lighter;
 
             @include mobile {
                 margin: 0 10px;
