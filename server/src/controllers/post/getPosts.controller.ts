@@ -16,10 +16,7 @@ export const getPosts = async (req: Request, res: Response) => {
             my_id: myUserId,
         });
 
-        if (error)
-            throw Error(
-                "Posts data fetching failed from function get_user_posts(my_id)"
-            );
+        if (error) throw Error("Function get_user_posts() failed!");
 
         res.status(200).json(posts);
     } catch (error) {

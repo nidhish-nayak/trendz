@@ -1,17 +1,36 @@
 import { useQuery } from "@tanstack/react-query";
+import { AxiosError } from "axios";
+import { useNavigate } from "react-router-dom";
+import { axiosRequest } from "../../utils/axios.utils";
 
 import Post from "../post/post";
 import Spinner from "../spinner/spinner";
-import { getAllPosts } from "./posts.axios";
 import PostsError from "./posts.error";
 import "./posts.scss";
 
 import { PostsTypes } from "./posts.types";
 
 const Posts = () => {
+    const navigate = useNavigate();
+
+    const getPosts = async () => {
+        try {
+            const res = await axiosRequest.get("/posts");
+            return res.data;
+        } catch (error) {
+            const err = error as AxiosError;
+            if (err?.response?.status) {
+                localStorage.removeItem("user");
+                navigate("/login");
+                alert("Please login again!");
+            }
+            return err;
+        }
+    };
+
     const { isLoading, data, error } = useQuery({
         queryKey: ["posts"],
-        queryFn: getAllPosts,
+        queryFn: getPosts,
     });
 
     if (error) {

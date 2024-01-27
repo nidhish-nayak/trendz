@@ -3,19 +3,18 @@ import { type Request, type Response } from "express";
 
 export const addPost = async (req: Request, res: Response) => {
     try {
-        const myUserId = req.body.userId;
+        const { desc, img, userId, createdAt } = req.body.userId;
 
-        // RPC functions for complex JOINS
-        const { data: posts, error } = await supabase.rpc("get_user_posts", {
-            my_id: myUserId,
-        });
+        const { data, error } = await supabase
+            .from("posts")
+            .insert([
+                { desc: desc, img: img, userId: userId, createdAt: createdAt },
+            ])
+            .select();
 
-        if (error)
-            throw Error(
-                "Posts data fetching failed from function get_user_posts(my_id)"
-            );
+        if (error) throw Error("Post sharing has failed!");
 
-        res.status(200).json(posts);
+        res.status(200).json(data);
     } catch (error) {
         res.status(401).json(error);
     }
