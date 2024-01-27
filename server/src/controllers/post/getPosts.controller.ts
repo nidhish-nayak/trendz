@@ -1,9 +1,15 @@
+import config from "$/config/config";
 import { supabase } from "$/db/connect";
 import { type Request, type Response } from "express";
+import jwt from "jsonwebtoken";
 
 export const getPosts = async (req: Request, res: Response) => {
     try {
-        const myUserId = req.body.userId;
+        const token = req.cookies.accessToken;
+        const key = config.jwtKey;
+
+        const verified: any = jwt.verify(token, key);
+        const myUserId = verified?.id;
 
         // RPC functions for complex JOINS
         const { data: posts, error } = await supabase.rpc("get_user_posts", {
