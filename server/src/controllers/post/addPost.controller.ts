@@ -3,12 +3,16 @@ import { type Request, type Response } from "express";
 
 export const addPost = async (req: Request, res: Response) => {
     try {
-        const { desc, img, userId, createdAt } = req.body.userId;
+        const { desc, img, userId } = req.body;
 
         const { data, error } = await supabase
             .from("posts")
             .insert([
-                { desc: desc, img: img, userId: userId, createdAt: createdAt },
+                {
+                    desc: desc,
+                    img: img ? img : null,
+                    userId: userId,
+                },
             ])
             .select();
 

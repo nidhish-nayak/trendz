@@ -88,13 +88,18 @@
                     }
                 }
                 .right {
-                    padding: 5px;
-                    cursor: pointer;
-                    border-radius: 10px;
-                    color: themed("textColor");
+                    button {
+                        padding: 5px;
+                        cursor: pointer;
+                        border-radius: 10px;
+                        border: none;
+                        outline: none;
+                        color: themed("textColor");
+                        background-color: transparent;
 
-                    &:hover {
-                        color: themed("button");
+                        &:hover {
+                            color: themed("button");
+                        }
                     }
                 }
             }

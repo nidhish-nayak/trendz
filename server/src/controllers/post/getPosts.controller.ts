@@ -17,7 +17,6 @@ export const getPosts = async (req: Request, res: Response) => {
 
         const verified = jwt.verify(token, key) as JWT_PAYLOAD_TYPE;
         const myUserId = verified.id;
-        console.log(verified);
 
         // RPC functions for complex JOINS
         const { data: posts, error } = await supabase.rpc("get_user_posts", {
