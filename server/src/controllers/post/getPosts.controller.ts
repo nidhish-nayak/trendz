@@ -3,13 +3,21 @@ import { supabase } from "$/db/connect";
 import { type Request, type Response } from "express";
 import jwt from "jsonwebtoken";
 
+type JWT_PAYLOAD_TYPE = {
+    id: number;
+    iat: number;
+};
+
 export const getPosts = async (req: Request, res: Response) => {
     try {
         const token = req.cookies.accessToken;
         const key = config.jwtKey;
 
-        const verified: any = jwt.verify(token, key);
-        const myUserId = verified?.id;
+        if (!token || !key) throw Error("getPosts failed - no token / key!");
+
+        const verified = jwt.verify(token, key) as JWT_PAYLOAD_TYPE;
+        const myUserId = verified.id;
+        console.log(verified);
 
         // RPC functions for complex JOINS
         const { data: posts, error } = await supabase.rpc("get_user_posts", {
