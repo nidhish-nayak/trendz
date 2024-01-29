@@ -1,4 +1,4 @@
-# LinkX - Social Media App
+# Trendz - a fullstack application
 
 > **Warning**
 > This app is a work in progress. I am building this in public. You can follow the process on Github.
