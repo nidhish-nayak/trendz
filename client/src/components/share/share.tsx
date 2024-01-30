@@ -1,3 +1,4 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useContext, useState } from "react";
 
 import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
@@ -5,34 +6,29 @@ import AttachFileIcon from "@mui/icons-material/AttachFile";
 import SendIcon from "@mui/icons-material/Send";
 import TagIcon from "@mui/icons-material/Tag";
 
-import { AxiosError } from "axios";
 import { AuthContext } from "../../context/authContext";
 import { axiosRequest } from "../../utils/axios.utils";
 import "./share.scss";
+import { NEW_POST_TYPES } from "./share.types";
 
 const Share = () => {
     const [file, setFile] = useState<File | null>(null);
     const [desc, setDesc] = useState("");
 
+    console.log(file);
+
+    const queryClient = useQueryClient();
     const { currentUser } = useContext(AuthContext);
 
-    const addPost = async () => {
-        try {
-            const res = await axiosRequest.post("/posts", {
-                desc: desc,
-                userId: currentUser?.id,
-                // image: null
-            });
-            return res.data;
-        } catch (error) {
-            const err = error as AxiosError;
-            alert("Post failed!");
-            return err;
-        }
-    };
+    const mutation = useMutation({
+        mutationFn: (newPost: NEW_POST_TYPES) =>
+            axiosRequest.post("/posts", newPost),
+        onSuccess: () => queryClient.invalidateQueries({ queryKey: ["posts"] }),
+    });
+
+    if (!currentUser) return <div>User not found!</div>;
 
     const handleClick = async () => {
-        console.log(file);
         if (desc.length === 0) {
             alert("Please enter description to your post!");
             return;
@@ -44,14 +40,8 @@ const Share = () => {
             return;
         }
 
-        try {
-            console.log("first");
-        } catch (error) {
-            throw new Error("Failed adding post!");
-        }
+        mutation.mutate({ desc: desc, userId: currentUser.id, file: file });
     };
-
-    if (!currentUser) return <div>User not found!</div>;
 
     return (
         <div className="share">
