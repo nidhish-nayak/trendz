@@ -18,7 +18,7 @@ export const addPost = async (req: Request, res: Response) => {
 
         if (error) throw Error("Post sharing has failed!");
 
-        res.status(200).json(req.body);
+        res.status(200).json(data);
     } catch (error) {
         res.status(401).json(error);
     }

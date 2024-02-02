@@ -35,7 +35,9 @@ export const login = async (req: Request, res: Response) => {
         const hashedPassword = existingUser[0].password;
         const isPasswordValid = await bcrypt.compare(password, hashedPassword);
         const userId = existingUser[0].id;
-        const { password: string, ...other } = existingUser[0];
+
+        // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+        const { password: userPassword, ...other } = existingUser[0];
 
         if (isPasswordValid && jwtKey) {
             const token = jwt.sign({ id: userId }, jwtKey);
@@ -43,7 +45,7 @@ export const login = async (req: Request, res: Response) => {
                 .cookie("accessToken", token, {
                     httpOnly: true,
                     secure: true,
-                    sameSite: "none",
+                    sameSite: "lax",
                     maxAge: 3 * 24 * 60 * 60 * 1000,
                 })
                 .status(200)
@@ -52,7 +54,6 @@ export const login = async (req: Request, res: Response) => {
             return res.status(401).send("Incorrect password!");
         }
     } catch (error) {
-        console.error("Error during login!");
         return res.status(500).send("Internal Server Error");
     }
 };
