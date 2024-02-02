@@ -17,8 +17,9 @@ const app: Application = express();
 // Configs
 dotenv.config();
 app.use(express.json());
-app.use(cors(config.corsOptions));
 app.use(cookieParser());
+app.use(cors(config.corsOptions));
+app.use(express.urlencoded({ extended: true }));
 
 // Global catches using zod
 app.use(zodMiddleware);

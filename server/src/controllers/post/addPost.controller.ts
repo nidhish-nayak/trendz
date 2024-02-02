@@ -1,25 +1,25 @@
+import { supabase } from "$/db/connect";
 import { type Request, type Response } from "express";
 
 export const addPost = async (req: Request, res: Response) => {
     try {
-        console.log(req.body.file);
-        // const { desc, img, userId } = req.body;
+        const { desc, img, userId } = req.body;
 
-        // const { data, error } = await supabase
-        //     .from("posts")
-        //     .insert([
-        //         {
-        //             desc: desc,
-        //             img: img ? img : null,
-        //             userId: userId,
-        //         },
-        //     ])
-        //     .select();
+        const { data, error } = await supabase
+            .from("posts")
+            .insert([
+                {
+                    desc: desc,
+                    img: img ? img : null,
+                    userId: userId,
+                },
+            ])
+            .select();
 
-        // if (error) throw Error("Post sharing has failed!");
+        if (error) throw Error("Post sharing has failed!");
 
         res.status(200).json(req.body);
     } catch (error) {
-        // res.status(401).json(error);
+        res.status(401).json(error);
     }
 };

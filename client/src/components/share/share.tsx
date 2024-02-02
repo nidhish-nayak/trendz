@@ -1,4 +1,4 @@
-import { useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useContext, useState } from "react";
 
 import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
@@ -9,6 +9,7 @@ import TagIcon from "@mui/icons-material/Tag";
 import { AuthContext } from "../../context/authContext";
 import { axiosRequest } from "../../utils/axios.utils";
 import "./share.scss";
+import { NEW_POST_TYPES } from "./share.types";
 
 const Share = () => {
     const [file, setFile] = useState<File | null>(null);
@@ -17,11 +18,11 @@ const Share = () => {
     const queryClient = useQueryClient();
     const { currentUser } = useContext(AuthContext);
 
-    // const mutation = useMutation({
-    //     mutationFn: (newPost: NEW_POST_TYPES) =>
-    //         axiosRequest.post("/posts", newPost),
-    //     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["posts"] }),
-    // });
+    const mutation = useMutation({
+        mutationFn: (newPost: NEW_POST_TYPES) =>
+            axiosRequest.post("/posts", newPost),
+        onSuccess: () => queryClient.invalidateQueries({ queryKey: ["posts"] }),
+    });
 
     if (!currentUser) return <div>User not found!</div>;
 
@@ -37,22 +38,7 @@ const Share = () => {
             return;
         }
 
-        try {
-            const formData = new FormData();
-            formData.append("file", file!);
-
-            const response = await axiosRequest.post(
-                "http://localhost:3000/api/posts",
-                {
-                    body: formData,
-                }
-            );
-            console.log(response);
-
-            // mutation.mutate({ desc: desc, userId: currentUser.id, file: file });
-        } catch (err) {
-            console.log("Pondu marre work atiji");
-        }
+        mutation.mutate({ desc: desc, userId: currentUser.id, file: file });
     };
 
     return (
