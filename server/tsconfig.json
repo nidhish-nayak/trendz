@@ -17,5 +17,5 @@
             "$/*": ["./src/*"]
         }
     },
-    "include": ["./src/**/*.ts", "./src/**/*.js", ".eslintrc.cjs"]
+    "include": ["./src/**/*.ts", "./src/**/*.js", ".eslintrc"]
 }
