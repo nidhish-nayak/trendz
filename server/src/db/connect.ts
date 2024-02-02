@@ -7,6 +7,7 @@ import { type Database } from "./database.types";
 const { supabaseUrl, supabaseKey } = config.dbConfig;
 if (!supabaseUrl || !supabaseKey)
     throw new Error("Supabase API URL or KEY not found!");
+
 export const supabase = createClient<Database>(supabaseUrl, supabaseKey);
 
 // Direct Connect using Postgres
