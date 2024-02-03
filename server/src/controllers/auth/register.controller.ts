@@ -51,6 +51,7 @@ export const register = async (req: Request, res: Response) => {
 
         return res.status(500).send("New user registration failed!");
     } catch (error) {
+        console.error(error);
         return res.status(500).send("Server error!");
     }
 };

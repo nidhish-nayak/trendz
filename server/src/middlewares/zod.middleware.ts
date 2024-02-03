@@ -1,10 +1,11 @@
-import { type Request, type Response } from "express";
+import { type NextFunction, type Request, type Response } from "express";
 import { z } from "zod";
 
 export function zodMiddleware(
     err: unknown,
     _req: Request,
-    res: Response
+    res: Response,
+    _next: NextFunction
 ): void {
     if (err instanceof z.ZodError) {
         res.status(400).json({
