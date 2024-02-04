@@ -1,7 +1,7 @@
 import {
-    addComment,
-    deleteComment,
-    getComments,
+	addComment,
+	deleteComment,
+	getComments,
 } from "$/controllers/comment.controller";
 import express from "express";
 
