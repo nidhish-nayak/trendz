@@ -10,6 +10,7 @@ import { AuthContext } from "../../context/authContext";
 import { axiosRequest } from "../../utils/axios.utils";
 import "./share.scss";
 import { NEW_POST_TYPES } from "./share.types";
+import upload from "./upload";
 
 const Share = () => {
     const [file, setFile] = useState<File | null>(null);
@@ -21,12 +22,16 @@ const Share = () => {
     const mutation = useMutation({
         mutationFn: (newPost: NEW_POST_TYPES) =>
             axiosRequest.post("/posts", newPost),
+
+        // refetch on updated content
         onSuccess: () => queryClient.invalidateQueries({ queryKey: ["posts"] }),
     });
 
     if (!currentUser) return <div>User not found!</div>;
 
     const handleClick = async () => {
+        let imgUrl = "";
+
         if (desc.length === 0) {
             alert("Please enter description to your post!");
             return;
@@ -38,7 +43,10 @@ const Share = () => {
             return;
         }
 
-        mutation.mutate({ desc: desc, userId: currentUser.id, file: file });
+        // Uploading file to server and getting image link back
+        if (file) imgUrl = await upload(file);
+
+        mutation.mutate({ desc: desc, userId: currentUser.id, img: imgUrl });
     };
 
     return (

@@ -50,7 +50,14 @@ const Post = ({ post }: PostTypes) => {
                     <MoreHorizIcon className="more-icon" />
                 </div>
                 <div className="content">
-                    {img ? <img src={img} alt="post-image" /> : <p>{desc}</p>}
+                    {img ? (
+                        <>
+                            <img src={`./upload/${img}`} alt="post-image" />
+                            <p>{desc}</p>
+                        </>
+                    ) : (
+                        <p>{desc}</p>
+                    )}
                 </div>
                 <div className="info">
                     <div className="item">
@@ -71,7 +78,7 @@ const Post = ({ post }: PostTypes) => {
                     </div>
                 </div>
                 <span className="mobile-likes">12 Likes</span>
-                {post.img ? (
+                {img ? (
                     <p>
                         <span>{name}</span>
                         {desc}

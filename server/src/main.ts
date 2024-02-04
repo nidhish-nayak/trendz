@@ -11,6 +11,7 @@ import commentRoutes from "./routes/comment.route";
 import likeRoutes from "./routes/like.route";
 import postRoutes from "./routes/post.route";
 import testRoutes from "./routes/test.route";
+import uploadRoutes from "./routes/upload.route";
 import userRoutes from "./routes/user.route";
 
 const app: Application = express();
@@ -23,6 +24,9 @@ app.use(cookieParser());
 
 // Global catches using zod
 app.use(zodMiddleware);
+
+// Upload to client API
+app.use("/api/upload", uploadRoutes);
 
 // Routes
 app.use("/api/auth", authRoutes);

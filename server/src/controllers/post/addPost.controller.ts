@@ -4,7 +4,6 @@ import { type Request, type Response } from "express";
 export const addPost = async (req: Request, res: Response) => {
 	try {
 		const { desc, img, userId } = req.body;
-		console.log(req);
 
 		const { data, error } = await supabase
 			.from("posts")
