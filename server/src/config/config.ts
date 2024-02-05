@@ -18,6 +18,14 @@ const config = {
 		credentials: true,
 		optionSuccessStatus: 200,
 	},
+	awsConfig: {
+		accessKeyId: process.env.accessKeyId,
+		secretAccessKey: process.env.secretAccessKey,
+	},
+	s3Config: {
+		s3BucketLink: process.env.s3BucketLink,
+		s3ImageLink: process.env.s3ImageLink,
+	},
 };
 
 export default config;

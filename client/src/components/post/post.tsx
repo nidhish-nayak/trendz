@@ -52,7 +52,7 @@ const Post = ({ post }: PostTypes) => {
                 <div className="content">
                     {img ? (
                         <>
-                            <img src={`./upload/${img}`} alt="post-image" />
+                            <img src={img} alt="post-image" />
                             <p>{desc}</p>
                         </>
                     ) : (

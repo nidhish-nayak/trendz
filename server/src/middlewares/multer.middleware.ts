@@ -1,12 +1,19 @@
+import config from "$/config/config";
+import s3 from "$/utils/s3.util";
 import multer from "multer";
+import multerS3 from "multer-s3";
 
-const storage = multer.diskStorage({
-	destination: function (_req, _file, cb) {
-		cb(null, "../client/public/upload");
-	},
-	filename: function (_req, file, cb) {
-		cb(null, Date.now() + file.originalname);
-	},
+if (!config.s3Config.s3BucketLink)
+	throw new Error("AWS S3 bucket link not found!");
+
+export const uploadMulter = multer({
+	storage: multerS3({
+		s3: s3,
+		bucket: config.s3Config.s3BucketLink,
+		acl: "public-read",
+		contentType: multerS3.AUTO_CONTENT_TYPE,
+		key: function (_req, file, cb) {
+			cb(null, Date.now().toString() + file.originalname);
+		},
+	}),
 });
-
-export const uploadMulter = multer({ storage: storage });
