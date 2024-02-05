@@ -30,7 +30,7 @@ const Share = () => {
     if (!currentUser) return <div>User not found!</div>;
 
     const handleClick = async () => {
-        let imgUrl = "";
+        let imgUrl: string | null = null;
 
         if (desc.length === 0) {
             alert("Please enter description to your post!");
@@ -43,7 +43,7 @@ const Share = () => {
             return;
         }
 
-        // Uploading file to server and getting image link back
+        // Upload file to server and get imgUrl back
         if (file) imgUrl = await upload(file);
 
         mutation.mutate({ desc: desc, userId: currentUser.id, img: imgUrl });
