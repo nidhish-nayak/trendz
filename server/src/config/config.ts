@@ -19,8 +19,8 @@ const config = {
 		optionSuccessStatus: 200,
 	},
 	awsConfig: {
-		accessKeyId: process.env.accessKeyId,
-		secretAccessKey: process.env.secretAccessKey,
+		accessKeyId: process.env.awsAccessKeyId,
+		secretAccessKey: process.env.awsSecretAccessKey,
 	},
 	s3Config: {
 		region: "ap-south-1",
