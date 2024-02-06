@@ -23,8 +23,9 @@ const config = {
 		secretAccessKey: process.env.secretAccessKey,
 	},
 	s3Config: {
-		s3BucketLink: process.env.s3BucketLink,
-		s3ImageLink: process.env.s3ImageLink,
+		region: "ap-south-1",
+		imageLink: process.env.s3ImageLink,
+		bucketLink: process.env.s3BucketLink,
 	},
 };
 

@@ -9,7 +9,7 @@ const s3 = new S3Client({
 		accessKeyId: config.awsConfig.accessKeyId,
 		secretAccessKey: config.awsConfig.secretAccessKey,
 	},
-	region: "ap-south-1",
+	region: config.s3Config.region,
 });
 
 export default s3;

@@ -3,13 +3,13 @@ import s3 from "$/utils/s3.util";
 import multer from "multer";
 import multerS3 from "multer-s3";
 
-if (!config.s3Config.s3BucketLink)
+if (!config.s3Config.bucketLink)
 	throw new Error("AWS S3 bucket link not found!");
 
 export const uploadMulter = multer({
 	storage: multerS3({
 		s3: s3,
-		bucket: config.s3Config.s3BucketLink,
+		bucket: config.s3Config.bucketLink,
 		acl: "public-read",
 		contentType: multerS3.AUTO_CONTENT_TYPE,
 		key: function (_req, file, cb) {

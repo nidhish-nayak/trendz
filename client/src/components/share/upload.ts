@@ -7,7 +7,10 @@ const upload = async (file: File) => {
         const res = await axiosRequest.post("/upload", formData);
         return res.data;
     } catch (error) {
-        console.log(error);
+        console.log({
+            message: "File upload failed!",
+            errorData: error,
+        });
     }
 };
 

@@ -13,8 +13,9 @@ import { NEW_POST_TYPES } from "./share.types";
 import upload from "./upload";
 
 const Share = () => {
-    const [file, setFile] = useState<File | null>(null);
     const [desc, setDesc] = useState("");
+    const [file, setFile] = useState<File | null>(null);
+    const [localImgUrl, setLocalImgUrl] = useState<string | null>(null);
 
     const queryClient = useQueryClient();
     const { currentUser } = useContext(AuthContext);
@@ -22,21 +23,26 @@ const Share = () => {
     const mutation = useMutation({
         mutationFn: (newPost: NEW_POST_TYPES) =>
             axiosRequest.post("/posts", newPost),
-
-        // refetch on updated content
-        onSuccess: () => queryClient.invalidateQueries({ queryKey: ["posts"] }),
+        onSuccess: () => {
+            setDesc("");
+            setFile(null);
+            // refetch on updated content
+            return queryClient.invalidateQueries({ queryKey: ["posts"] });
+        },
+        onError(error) {
+            console.log(error);
+            return alert("Post upload failed!");
+        },
     });
 
     if (!currentUser) return <div>User not found!</div>;
 
     const handleClick = async () => {
         let imgUrl: string | null = null;
-
         if (desc.length === 0) {
             alert("Please enter description to your post!");
             return;
         }
-
         if (file && file.size > 300000) {
             setFile(null);
             alert("Please upload image less than 300kb!");
@@ -45,8 +51,19 @@ const Share = () => {
 
         // Upload file to server and get imgUrl back
         if (file) imgUrl = await upload(file);
-
         mutation.mutate({ desc: desc, userId: currentUser.id, img: imgUrl });
+    };
+
+    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (!e.target.files) return "File selection failed!";
+        const selectedFile = e.target.files?.[0];
+
+        if (selectedFile) {
+            setFile(selectedFile);
+            // Display image preview
+            const url = URL.createObjectURL(selectedFile);
+            setLocalImgUrl(url);
+        }
     };
 
     return (
@@ -57,13 +74,19 @@ const Share = () => {
                         <img src={currentUser.profilePic} alt="user-image" />
                         <input
                             type="text"
-                            placeholder={`What's on your mind ${currentUser.name}?`}
+                            placeholder="What's on your mind?"
                             value={desc}
                             onChange={(e) => setDesc(e.target.value)}
                         />
                     </div>
                     <div className="right">
-                        {file && <img className="file" alt="" />}
+                        {file && localImgUrl && (
+                            <img
+                                src={localImgUrl}
+                                className="file"
+                                alt="uploaded-img"
+                            />
+                        )}
                     </div>
                 </div>
                 <hr />
@@ -75,10 +98,7 @@ const Share = () => {
                             name="file`"
                             accept="image/*"
                             style={{ display: "none" }}
-                            onChange={(e) => {
-                                if (!e.target.files) return;
-                                setFile(e.target.files[0]);
-                            }}
+                            onChange={handleFileChange}
                         />
                         <label htmlFor="file">
                             <div className="item">
@@ -101,6 +121,7 @@ const Share = () => {
                         </button>
                     </div>
                 </div>
+                <hr className="mobile-only-hr" />
             </div>
         </div>
     );
