@@ -10,7 +10,7 @@ export const uploadMulter = multer({
 	storage: multerS3({
 		s3: s3,
 		bucket: config.s3Config.bucketLink,
-		acl: "public-read",
+		acl: "private",
 		contentType: multerS3.AUTO_CONTENT_TYPE,
 		key: function (_req, file, cb) {
 			cb(null, Date.now().toString() + file.originalname);

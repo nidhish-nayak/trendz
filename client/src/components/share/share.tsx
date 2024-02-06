@@ -50,7 +50,14 @@ const Share = () => {
         }
 
         // Upload file to server and get imgUrl back
-        if (file) imgUrl = await upload(file);
+        if (file) {
+            imgUrl = await upload(file);
+            if (!imgUrl) {
+                alert("Upload failed!");
+                return;
+            }
+        }
+
         mutation.mutate({ desc: desc, userId: currentUser.id, img: imgUrl });
     };
 

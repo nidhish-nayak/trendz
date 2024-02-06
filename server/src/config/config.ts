@@ -26,6 +26,7 @@ const config = {
 		region: "ap-south-1",
 		imageLink: process.env.s3ImageLink,
 		bucketLink: process.env.s3BucketLink,
+		cloudfrontLink: process.env.s3CloudfrontLink,
 	},
 };
 

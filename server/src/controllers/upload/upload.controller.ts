@@ -9,5 +9,10 @@ export const uploadFile = (req: Request, res: Response) => {
 	const file = req.file as Express.MulterS3.File;
 
 	if (!file) return res.status(401).send("File not found in server!");
-	res.status(200).json(config.s3Config.imageLink + "/" + file.key);
+
+	// Get S3 direct link
+	// res.status(200).json(config.s3Config.imageLink + "/" + file.key);
+
+	// Get Cloudfront link - recommended
+	res.status(200).json(config.s3Config.cloudfrontLink + "/" + file.key);
 };
