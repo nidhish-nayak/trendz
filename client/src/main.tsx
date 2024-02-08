@@ -15,6 +15,7 @@ import Register from "./pages/register/register.tsx";
 
 import { AuthContext, AuthProvider } from "./context/authContext.tsx";
 import { DarkModeProvider } from "./context/darkModeContext.tsx";
+import { SearchProvider } from "./context/searchContext.tsx";
 import "./main.scss";
 
 export const ProtectedRoute = ({ children }: { children: ReactNode }) => {
@@ -58,12 +59,24 @@ const router = createBrowserRouter([
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 
-root.render(
-    <React.StrictMode>
-        <DarkModeProvider>
-            <AuthProvider>
-                <RouterProvider router={router} />
-            </AuthProvider>
-        </DarkModeProvider>
-    </React.StrictMode>
-);
+import.meta.env.MODE === "production"
+    ? root.render(
+          <DarkModeProvider>
+              <AuthProvider>
+                  <SearchProvider>
+                      <RouterProvider router={router} />
+                  </SearchProvider>
+              </AuthProvider>
+          </DarkModeProvider>
+      )
+    : root.render(
+          <React.StrictMode>
+              <DarkModeProvider>
+                  <AuthProvider>
+                      <SearchProvider>
+                          <RouterProvider router={router} />
+                      </SearchProvider>
+                  </AuthProvider>
+              </DarkModeProvider>
+          </React.StrictMode>
+      );

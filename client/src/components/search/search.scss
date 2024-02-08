@@ -1,0 +1,91 @@
+@import "../../style.scss";
+
+.search {
+    @include themify($themes) {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        border: 1px solid themed("border");
+        background-color: themed("bgSoft");
+        border-radius: 5px;
+        padding: 4px;
+
+        @include tablet {
+            width: 160px;
+        }
+
+        .search-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: themed("bg");
+            color: themed("textColor");
+            border-radius: 5px;
+            padding: 4px;
+            cursor: pointer;
+            transition: 250ms ease-in-out;
+
+            &:hover {
+                background-color: themed("button");
+            }
+        }
+
+        input {
+            border: none;
+            width: 500px;
+            padding: 2px;
+            background-color: inherit;
+            color: themed("textColor");
+
+            &:focus-visible {
+                outline: none;
+            }
+
+            @include tablet {
+                width: 100%;
+            }
+
+            @include mobile {
+                display: none;
+            }
+        }
+
+        .cancel-icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            color: themed("border");
+            transition: 250ms ease-in-out;
+
+            &:hover {
+                color: themed("textColor");
+            }
+
+            @include mobile {
+                display: none;
+            }
+        }
+
+        .clear-btn {
+            display: none;
+
+            @include mobile {
+                display: block;
+                padding: 4px;
+                border: none;
+                border-radius: 5px;
+                font-size: 0.85rem;
+                font-family: cursive;
+                color: black;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: themed("buttonSoft");
+                    color: white;
+                }
+            }
+        }
+    }
+}

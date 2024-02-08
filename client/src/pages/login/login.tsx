@@ -12,8 +12,8 @@ const defaultFormFields: LoginTypes = {
 
 const Login = () => {
     const navigate = useNavigate();
-    const [err, setErr] = useState<string | null>(null);
     const { login } = useContext(AuthContext);
+    const [err, setErr] = useState<string | null>(null);
     const [formFields, setFormFields] = useState(defaultFormFields);
 
     const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,7 +38,7 @@ const Login = () => {
             <div className="card">
                 <div className="left">
                     <div className="left-heading">
-                        <h1>LinkX.</h1>
+                        <h1>Trendz.</h1>
                         <p>
                             Welcome to our vibrant social media community, where
                             meaningful connections thrive. Immerse yourself in a
@@ -56,8 +56,9 @@ const Login = () => {
                                 width: "min-content",
                             }}
                         >
-                            <button>Register</button>
+                            <button className="register-btn">Register</button>
                         </Link>
+                        <button className="guest-btn">Guest</button>
                     </div>
                 </div>
                 <div className="right">

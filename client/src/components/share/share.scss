@@ -61,6 +61,26 @@
                 .right {
                     display: flex;
                     justify-content: flex-end;
+                    position: relative;
+
+                    .image-delete {
+                        position: absolute;
+                        height: 30px;
+                        width: 30px;
+                        padding: 4px;
+                        cursor: pointer;
+                        background-color: themed("bgSoft");
+                        border-radius: 100%;
+                        border: 1px solid themed("border");
+                        top: -10px;
+                        right: -10px;
+                        transition: 250ms ease-in-out;
+
+                        &:hover {
+                            background-color: red;
+                            color: white;
+                        }
+                    }
 
                     .file {
                         // width: 100px;

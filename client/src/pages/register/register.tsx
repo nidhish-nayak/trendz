@@ -56,7 +56,7 @@ const Register = () => {
             <div className="card">
                 <div className="left">
                     <div className="left-heading">
-                        <h1>LinkX.</h1>
+                        <h1>Trendz.</h1>
                         <p>
                             Welcome to our vibrant social media community, where
                             meaningful connections thrive. Immerse yourself in a

@@ -2,6 +2,7 @@ import { Fragment, useContext } from "react";
 import { AuthContext } from "../../context/authContext";
 
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
+import AddIcon from "@mui/icons-material/Add";
 import "./stories.scss";
 
 const Stories = () => {
@@ -71,7 +72,9 @@ const Stories = () => {
                         <div className="module-border-wrap">
                             <img src={profilePic} alt="user-image" />
                             <div className="user-name">Your story</div>
-                            <button>+</button>
+                            <button>
+                                <AddIcon fontSize="small" />
+                            </button>
                         </div>
                     </div>
                     {stories.map((story) => (

@@ -1,7 +1,9 @@
 import { Fragment, useContext, useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 
 import AppsOutlinedIcon from "@mui/icons-material/AppsOutlined";
+import CancelIcon from "@mui/icons-material/Cancel";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
@@ -13,17 +15,22 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { AuthContext } from "../../context/authContext";
 import { DarkModeContext } from "../../context/darkModeContext";
 import useScrollDirection from "../../hooks/useScrollDirection";
+
+import Logo from "../logo/logo";
 import Logout from "../logout/logout";
+import Search from "../search/search";
 import "./navbar.scss";
 
 const Navbar = () => {
-    const { darkMode, toggleTheme } = useContext(DarkModeContext);
-    const { currentUser } = useContext(AuthContext);
     const scrollDirection = useScrollDirection();
+    const { currentUser } = useContext(AuthContext);
+    const { darkMode, toggleTheme } = useContext(DarkModeContext);
+
     const { name, profilePic, email, username, city, website, coverPic } =
         currentUser!;
 
-    // Define a state to track whether to show or hide the navbar
+    const [logout, setLogout] = useState(false);
+    const [searchPortal, setSearchPortal] = useState(false);
     const [isNavbarVisible, setIsNavbarVisible] = useState(true);
 
     useEffect(() => {
@@ -31,7 +38,6 @@ const Navbar = () => {
         setIsNavbarVisible(scrollDirection === "up");
     }, [scrollDirection]);
 
-    const [logout, setLogout] = useState(false);
     const showLogout = () => {
         setLogout(!logout);
     };
@@ -40,16 +46,7 @@ const Navbar = () => {
         <Fragment>
             <div className="navbar-main">
                 <div className="left">
-                    <Link
-                        to="/"
-                        style={{
-                            textDecoration: "none",
-                        }}
-                    >
-                        <div className="logo-link">
-                            Link<span>X.</span>
-                        </div>
-                    </Link>
+                    <Logo />
                     <Link to="/" className="home-link" title="Home">
                         <HomeOutlinedIcon />
                     </Link>
@@ -65,10 +62,7 @@ const Navbar = () => {
                         )}
                     </div>
                     <AppsOutlinedIcon />
-                    <div className="search">
-                        <SearchOutlinedIcon />
-                        <input type="text" placeholder="Search..." />
-                    </div>
+                    <Search />
                 </div>
                 <div className="right">
                     <PersonOutlinedIcon />
@@ -99,16 +93,7 @@ const Navbar = () => {
                 }`}
             >
                 <div className="left-mobile">
-                    <Link
-                        to="/"
-                        style={{
-                            textDecoration: "none",
-                        }}
-                    >
-                        <div className="logo-link">
-                            Link<span>X.</span>
-                        </div>
-                    </Link>
+                    <Logo />
                 </div>
                 <div className="right-mobile">
                     <div
@@ -131,13 +116,36 @@ const Navbar = () => {
                     <HomeOutlinedIcon />
                 </Link>
                 <PersonOutlinedIcon />
-                <div className="search">
-                    <SearchOutlinedIcon />
-                    <input type="text" placeholder="Search..." />
+                <div className="search-mobile">
+                    {!searchPortal && (
+                        <SearchOutlinedIcon
+                            onClick={() => setSearchPortal(!searchPortal)}
+                        />
+                    )}
+                    {searchPortal && (
+                        <CancelIcon
+                            onClick={() => setSearchPortal(!searchPortal)}
+                        />
+                    )}
+                    {searchPortal &&
+                        createPortal(
+                            <Search />,
+                            document.getElementById("home")!
+                        )}
                 </div>
                 <AppsOutlinedIcon />
-                <div className="user">
+                <div className="user" onClick={showLogout}>
                     <img src={profilePic} alt="logo" className="user-image" />
+                    <Logout
+                        isOpen={logout}
+                        image={profilePic}
+                        name={name}
+                        city={city}
+                        username={username}
+                        email={email}
+                        coverPic={coverPic}
+                        website={website}
+                    />
                 </div>
             </div>
         </Fragment>

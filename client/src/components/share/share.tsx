@@ -3,6 +3,7 @@ import { useContext, useState } from "react";
 
 import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
+import DeleteIcon from "@mui/icons-material/Delete";
 import SendIcon from "@mui/icons-material/Send";
 import TagIcon from "@mui/icons-material/Tag";
 
@@ -44,7 +45,6 @@ const Share = () => {
             return;
         }
         if (file && file.size > 300000) {
-            setFile(null);
             alert("Please upload image less than 300kb!");
             return;
         }
@@ -87,6 +87,14 @@ const Share = () => {
                         />
                     </div>
                     <div className="right">
+                        {file && localImgUrl && (
+                            <div
+                                className="image-delete"
+                                onClick={() => setFile(null)}
+                            >
+                                <DeleteIcon fontSize="small" />
+                            </div>
+                        )}
                         {file && localImgUrl && (
                             <img
                                 src={localImgUrl}

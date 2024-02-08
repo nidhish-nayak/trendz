@@ -8,10 +8,13 @@ import Spinner from "../spinner/spinner";
 import PostsError from "./posts.error";
 import "./posts.scss";
 
+import { useContext } from "react";
+import { SearchContext } from "../../context/searchContext";
 import { PostsTypes } from "./posts.types";
 
 const Posts = () => {
     const navigate = useNavigate();
+    const { search } = useContext(SearchContext);
 
     const getPosts = async () => {
         try {
@@ -40,10 +43,19 @@ const Posts = () => {
 
     if (!isLoading && data) {
         const posts: PostsTypes = data;
+        const filteredPosts = posts.filter((post) => {
+            const searchText = search.toLowerCase();
+            const postDesc = post.desc.toLowerCase();
+            const userName = post.name.toLowerCase();
+
+            return (
+                postDesc.includes(searchText) || userName.includes(searchText)
+            );
+        });
 
         return (
             <div className="posts">
-                {posts.map((post) => (
+                {filteredPosts.map((post) => (
                     <Post post={post} key={post.id} />
                 ))}
             </div>

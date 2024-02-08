@@ -50,7 +50,7 @@
                     font-weight: 500;
                 }
 
-                button {
+                .register-btn {
                     width: min-content;
                     padding: 10px 30px;
                     border: none;
@@ -59,9 +59,26 @@
                     font-weight: bold;
                     cursor: pointer;
                     border-radius: 2px;
+                    transition: 250ms ease-in-out;
 
                     &:hover {
                         background-color: #e4e4e4;
+                    }
+                }
+                .guest-btn {
+                    width: min-content;
+                    padding: 10px 30px;
+                    text-transform: uppercase;
+                    background-color: #1f1f1f;
+                    color: white;
+                    font-weight: bold;
+                    cursor: pointer;
+                    border-radius: 2px;
+                    border: 1px solid #555555;
+                    transition: 250ms ease-in-out;
+
+                    &:hover {
+                        background-color: black;
                     }
                 }
             }
@@ -119,7 +136,7 @@
                     color: white;
                     cursor: pointer;
                     border-radius: 2px;
-                    transition: 250ms;
+                    transition: 250ms ease-in-out;
 
                     &:hover {
                         background-color: #000;
