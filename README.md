@@ -1,4 +1,4 @@
-# Trendz - a fullstack application
+# Trendz - Fullstack application
 
 > **Warning**
 > This app is a work in progress. I am building this in public. You can follow the process on Github.
@@ -9,10 +9,10 @@
 
 Trendz is a full-stack application featuring social media functionalities such as posts, likes, uploads, etc. This project is built using Typescript, React, Express, React Query (Tanstack Query), PostgreSQL (Supabase) and Material UI. We will be implementing the features with Context APIs to maintain simplicity as much as possible so that anyone can understand the process. In case complexity increases we will be adding redux-toolkit or other client-side libraries.
 
-<p align="left">
-
 ![vercel](https://img.shields.io/github/deployments/nidhish-nayak/trendz/production?label=vercel&logo=vercel&logoColor=white)
 ![ts](https://badgen.net/badge/Built%20With/TypeScript/blue)
+
+<p align="left">
 
   <img alt="GitHub Language Count" src="https://img.shields.io/github/languages/count/nidhish-nayak/linkx" />
   <img alt="GitHub Top Language" src="https://img.shields.io/github/languages/top/nidhish-nayak/linkx" />
