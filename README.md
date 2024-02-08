@@ -3,24 +3,23 @@
 > **Warning**
 > This app is a work in progress. I am building this in public. You can follow the process on Github.
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/nidhish-nayak/linkx/tree/main)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/nidhish-nayak/trendz/tree/main)
 
 ## About the Project
 
-LinkX is a full-stack application featuring social media functionalities such as posts, likes, uploads, etc. This project is built using JWT Auth, ReactJS, NodeJS, ExpressJS, MySQL, React Query (Tanstack Query) and Material UI. We will be implementing the features with Context APIs to maintain simplicity as much as possible so that anyone can understand the process. In case complexity increases we will be adding redux-toolkit or other client-side libraries.
+Trendz is a full-stack application featuring social media functionalities such as posts, likes, uploads, etc. This project is built using Typescript, React, Express, React Query (Tanstack Query), PostgreSQL (Supabase) and Material UI. We will be implementing the features with Context APIs to maintain simplicity as much as possible so that anyone can understand the process. In case complexity increases we will be adding redux-toolkit or other client-side libraries.
 
 <p align="left">
-  
+
+![vercel](https://img.shields.io/github/deployments/nidhish-nayak/trendz/production?label=vercel&logo=vercel&logoColor=white)
+![ts](https://badgen.net/badge/Built%20With/TypeScript/blue)
+
   <img alt="GitHub Language Count" src="https://img.shields.io/github/languages/count/nidhish-nayak/linkx" />
   <img alt="GitHub Top Language" src="https://img.shields.io/github/languages/top/nidhish-nayak/linkx" />
-  <img alt="Repo Size" src="https://img.shields.io/github/repo-size/nidhish-nayak/linkx" />
   <img alt="GitHub Issues" src="https://img.shields.io/github/issues/nidhish-nayak/linkx" />
   <img alt="GitHub Closed Issues" src="https://img.shields.io/github/issues-closed/nidhish-nayak/linkx" />
-  <img alt="GitHub Pull Requests" src="https://img.shields.io/github/issues-pr/nidhish-nayak/linkx" />
-  <img alt="GitHub Closed Pull Requests" src="https://img.shields.io/github/issues-pr-closed/nidhish-nayak/linkx" />
   <img alt="GitHub Last Commit" src="https://img.shields.io/github/last-commit/nidhish-nayak/linkx" />
   <img alt="GitHub Commit Activity (Year)" src="https://img.shields.io/github/commit-activity/y/nidhish-nayak/linkx" />
-  <img alt="Github License" src="https://img.shields.io/github/license/nidhish-nayak/linkx" />
 
 </p>
 
@@ -37,12 +36,13 @@ Here's an overview of the project's frontend folder structure:
     ├── public/             # Public assets and HTML template
     ├── src/
     │   ├── assets/         # Assets / files used in the application
+    │   ├── assets/         # All configs for endpoints
     │   ├── components/     # Reusable React components
     │   ├── hooks/          # Reusable custom hooks
     │   ├── context/        # React context apis
     |   |   |
     |   │   ├── darkModeContext.tsx   # Handles toggle for dark mode
-    |   │   └── authContext.tsx       # Handles authentication
+    |   │   └── authContext.tsx       # Handles authentication (Login)
     |   |
     │   ├── pages/          # Top-level application pages
     |   ├── types/          # Custom and global types defined
@@ -64,15 +64,17 @@ Here's an overview of the project's backend folder structure:
 ```
 📂server/
     ├── src/
+    │   ├── config/    # All endpoint configurations
     │   ├── controllers/    # Controllers consists of logic for routes
     │   ├── db/             # Database configuration and setup
     │   ├── middlewares/    # Middleware configs and setup
     │   ├── routes/         # Routes for all features
-    │   ├── types/          # Typescript types exports
+    │   ├── utils/          # Utility files
     │   ├── validations/    # Zod validations
     │   └── main.ts         # root file for server
     │
-    └── .eslintrc.cjs       # eslint config
+    └── .eslintrc           # eslint config
+    └── .prettierrc         # prettier config
     └── .env                # environment variables
     └── package.json        # Dependencies for the server-side
     └── tsconfig.json       # Typescript configuration
@@ -83,12 +85,14 @@ Here's an overview of the project's backend folder structure:
 
 -   **User Authentication**: Users can create accounts, log in, and securely access their personalized profiles. We have used JWT for user authentication feature.
 -   **Responsive Design**: Enjoy a consistent and visually appealing experience across various devices.
--   **Search**: Search functionality to search your and other's posts.
--   Other features will be added here when implemented...
+-   **User Profile**: User can manage their profile info
+-   **Upload Posts**: User can post their thoughts or memories with or without images attached. File upload managed through AWS S3 and Cloudfront.
+-   **Comments**: User can comment on the posts made by their followers.
+-   **Will be added soon...**
 
 ## Installation 💻
 
-To make the whole application run locally on your computer, you have to run both `client` and `server` separately in the terminal simultaneously.
+To make the whole application run locally on your computer, you have to run both `client` and `server` separately in the terminal simultaneously. You will also need to setup your own AWS S3, .env file and configure the endpoints in both client and server using `config/config.ts` file.
 
 ### Project setup:
 
@@ -97,13 +101,13 @@ Follow the steps below to setup the project locally:
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/nidhish-nayak/linkx.git
+    git clone https://github.com/nidhish-nayak/trendz.git
     ```
 
 2. Navigate to the project directory:
 
     ```bash
-    cd linkx
+    cd trendz
     ```
 
 > You can use `npm / yarn / pnpm`. Just replace `pnpm` with `npm` or `yarn` for all the commands.
@@ -166,11 +170,10 @@ Setting up the server is similar to frontend setup given above. Follow the below
 -   **Vite**: Latest version of Vite is used for react frontend.
 -   **Typescript**: TypeScript checks a program for errors before execution, ensures better developer experience.
 -   **React**: JavaScript library for building user interfaces.
--   **Redux**: State management tool for predictable state updates.
--   **Redux Toolkit**: A more opinionated state management tool for better developer experience.
 -   **Axios**: Promise-based HTTP client for making API requests.
 -   **SCSS**: Sass is a preprocessor scripting language that is interpreted or compiled into Cascading Style Sheets.
 -   **React Router**: react-router-dom V6 is used for the application routing.
+-   **React Query**: Also knows as Tanstack query for better data fetching.
 -   ...Upcoming updates
 
 ### Backend technologies:
@@ -180,11 +183,14 @@ Setting up the server is similar to frontend setup given above. Follow the below
 -   **Zod**: Zod for consistent input validation, data structuring, and error handling.
 -   **ExpressJS**: NodeJS framework for backend.
 -   **JWT**: Authentication management.
+-   **Multer & AWS S3**: For file upload and storage.
+-   **AWS Cloudfront**: CDN for hosting images across the globe.
+-   **PostgreSQL**: Supabase is used to manage our postgres database.
 -   ...Upcoming updates
 
 ## Contributing 🤝
 
-We welcome open-source contributions to **Linkx - social media project** ! If you would like to contribute, please follow the below steps:
+We welcome open-source contributions to **Trendz project** ! If you would like to contribute, please follow the below steps:
 
 1. Fork the repository.
 2. Create a new branch for your feature/fix: `git checkout -b feature-name`.
@@ -195,7 +201,7 @@ We welcome open-source contributions to **Linkx - social media project** ! If yo
 ### Contributors
 
 <a href="https://github.com/nidhish-nayak/linkx/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=nidhish-nayak/linkx" />
+  <img src="https://contrib.rocks/image?repo=nidhish-nayak/trendz" />
 </a>
 
 ## License 📝
