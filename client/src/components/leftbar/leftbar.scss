@@ -12,6 +12,7 @@
 
         @include tablet {
             min-width: 30%;
+            background-color: themed("bgSoft");
         }
 
         @include mobile {

@@ -7,7 +7,7 @@
         padding: 2em;
         z-index: 100;
 
-        @include mobile {
+        @include tablet {
             padding: 0;
             background-color: themed("bg");
             padding-bottom: 70px;

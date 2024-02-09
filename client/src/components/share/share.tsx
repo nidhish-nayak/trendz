@@ -7,11 +7,12 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import SendIcon from "@mui/icons-material/Send";
 import TagIcon from "@mui/icons-material/Tag";
 
+import config from "../../config/config";
 import { AuthContext } from "../../context/authContext";
 import { axiosRequest } from "../../utils/axios.utils";
+import upload from "../../utils/upload.utils";
 import "./share.scss";
 import { NEW_POST_TYPES } from "./share.types";
-import upload from "./upload";
 
 const Share = () => {
     const [desc, setDesc] = useState("");
@@ -51,7 +52,7 @@ const Share = () => {
 
         // Upload file to server and get imgUrl back
         if (file) {
-            imgUrl = await upload(file);
+            imgUrl = await upload(file, config.s3.folders.posts);
             if (!imgUrl) {
                 alert("Upload failed!");
                 return;

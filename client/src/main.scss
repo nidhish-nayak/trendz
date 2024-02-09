@@ -40,3 +40,24 @@ body::-webkit-scrollbar-thumb:hover {
         }
     }
 }
+
+.main {
+    @include themify($themes) {
+        max-width: 1600px;
+        margin: 0 auto;
+
+        @media (min-width: 1600px) {
+            border-right: 1px solid themed("border");
+            border-left: 1px solid themed("border");
+            background-color: themed("bg");
+        }
+    }
+}
+
+.theme-dark {
+    background-color: black;
+}
+
+.themed-light {
+    background-color: white;
+}

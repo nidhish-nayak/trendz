@@ -1,5 +1,6 @@
 import config from "$/config/config";
 import s3 from "$/utils/s3.util";
+import { Request } from "express";
 import multer from "multer";
 import multerS3 from "multer-s3";
 
@@ -12,8 +13,13 @@ export const uploadMulter = multer({
 		bucket: config.s3Config.bucketLink,
 		acl: "private",
 		contentType: multerS3.AUTO_CONTENT_TYPE,
-		key: function (_req, file, cb) {
-			cb(null, Date.now().toString() + file.originalname);
+		key: function (req: Request, file, cb) {
+			cb(
+				null,
+				`${req.body.folder}/` +
+					Date.now().toString() +
+					file.originalname
+			);
 		},
 	}),
 });

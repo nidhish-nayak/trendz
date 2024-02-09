@@ -24,6 +24,10 @@
             justify-content: center;
             gap: 30px;
 
+            @include tablet {
+                gap: 40px;
+            }
+
             .home-link {
                 border-radius: 50%;
                 width: 30px;
@@ -81,6 +85,111 @@
 
                 span {
                     font-weight: 500;
+                }
+            }
+
+            @include tablet {
+                position: fixed;
+                width: 100%;
+                display: flex;
+                justify-content: space-around;
+                bottom: 0;
+                left: 0;
+                padding: 10px 100px;
+                background-color: themed("bg");
+
+                .user {
+                    display: flex;
+                    align-items: center;
+                    position: relative;
+                    gap: 10px;
+
+                    .user-image {
+                        width: 30px;
+                        height: 30px;
+                        border-radius: 50%;
+                        object-fit: cover;
+                    }
+
+                    .logout-container {
+                        position: absolute;
+                        top: -360px;
+                        right: -18px;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        border: 1px solid themed("border");
+                        background-color: themed("bg");
+                        padding: 1.5em;
+                        border-radius: 10px;
+                        min-width: 240px;
+                        gap: 30px;
+
+                        .logout-items {
+                            display: flex;
+                            flex-direction: column;
+                            align-items: flex-start;
+                            max-width: 300px;
+                            gap: 20px;
+
+                            .logout-cover {
+                                position: absolute;
+                                top: 0;
+                                left: 0;
+                                width: 100%;
+                                height: 130px;
+                                z-index: 0;
+                                border-top-right-radius: 10px;
+                                border-top-left-radius: 10px;
+                            }
+
+                            .logout-image {
+                                width: 140px;
+                                height: 140px;
+                                border-radius: 100%;
+                                border: 5px solid themed("bg");
+                                object-fit: cover;
+                                align-self: center;
+                                z-index: 1;
+                            }
+
+                            .logout-user {
+                                display: flex;
+                                flex-direction: column;
+                                gap: 5px;
+
+                                .user-items {
+                                    display: flex;
+                                    gap: 4px;
+                                    font-weight: bold;
+                                    max-width: 300px;
+
+                                    span {
+                                        font-weight: normal;
+                                        white-space: nowrap;
+                                        overflow: hidden;
+                                        text-overflow: ellipsis;
+                                    }
+                                }
+                            }
+                        }
+
+                        .logout-button {
+                            padding: 0.75em 1em;
+                            text-transform: uppercase;
+                            border: 1px solid themed("button");
+                            border-radius: 4px;
+                            font-size: 0.75rem;
+                            font-weight: bold;
+                            cursor: pointer;
+                            transition: all 250ms ease-in-out;
+
+                            &:hover {
+                                background-color: themed("button");
+                                color: white;
+                            }
+                        }
+                    }
                 }
             }
         }

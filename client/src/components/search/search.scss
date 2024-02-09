@@ -11,10 +11,6 @@
         border-radius: 5px;
         padding: 4px;
 
-        @include tablet {
-            width: 160px;
-        }
-
         .search-icon {
             display: flex;
             align-items: center;

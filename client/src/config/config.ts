@@ -7,6 +7,16 @@ const config = {
         import.meta.env.MODE === "production"
             ? import.meta.env.VITE_CLIENT_URL
             : import.meta.env.VITE_LOCAL_CLIENT_URL,
+    s3: {
+        folders: {
+            posts: "posts",
+            profiles: {
+                covers: "profiles/covers",
+                users: "profiles/users",
+            },
+            stories: "stories",
+        },
+    },
 };
 
 export default config;

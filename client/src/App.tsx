@@ -17,7 +17,7 @@ const App = () => {
         <QueryClientProvider client={queryClient}>
             <div className={`theme-${darkMode ? "dark" : "light"}`}>
                 <Navbar />
-                <div style={{ display: "flex" }}>
+                <div className="main" style={{ display: "flex" }}>
                     <Leftbar />
                     <div className="outlet-container">
                         <Outlet />

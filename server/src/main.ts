@@ -19,6 +19,7 @@ const app: Application = express();
 // Configs
 dotenv.config();
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors(config.corsOptions));
 app.use(cookieParser());
 
