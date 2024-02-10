@@ -16,7 +16,7 @@ export const addPost = async (req: Request, res: Response) => {
 			])
 			.select();
 
-		if (error) throw Error("Post sharing has failed!");
+		if (error) throw Error("Post upload to DB has failed!");
 
 		res.status(200).json(data);
 	} catch (error) {

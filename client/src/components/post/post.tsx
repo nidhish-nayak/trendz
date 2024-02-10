@@ -3,30 +3,31 @@ import { Link } from "react-router-dom";
 
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import TextsmsOutlinedIcon from "@mui/icons-material/TextsmsOutlined";
 
-import formatTimeDifference from "../../utils/date.utils";
+import Delete from "@mui/icons-material/Delete";
+import formatTime from "../../utils/date.utils";
 import Comments from "../comments/comments";
 import "./post.scss";
 import { PostTypes } from "./post.types";
 
 const Post = ({ post }: PostTypes) => {
     const [commentOpen, setCommentOpen] = useState(false);
-    const { profilePic, userId, name, img, desc, createdAt } = post;
+    const [isOpen, setIsOpen] = useState(false);
+    const { profilePic, userId, name, img, desc, createdAt, id } = post;
+
+    const time = formatTime(createdAt);
+
+    const handleDelete = () => {
+        // Will be added last
+        setIsOpen(false);
+        return;
+    };
 
     //TEMPORARY
     const liked = false;
-
-    const currentDate = new Date().toISOString();
-    const postedDate = createdAt;
-
-    const currentDateObject = new Date(currentDate).getTime();
-    const postedDateObject = new Date(postedDate).getTime();
-
-    const timeDifference: number = currentDateObject - postedDateObject;
-    const time = formatTimeDifference(timeDifference);
 
     return (
         <div className="post">
@@ -47,7 +48,18 @@ const Post = ({ post }: PostTypes) => {
                             <span className="date">{time}</span>
                         </div>
                     </div>
-                    <MoreHorizIcon className="more-icon" />
+                    <div
+                        className="post-delete"
+                        onClick={() => setIsOpen(!isOpen)}
+                    >
+                        <MoreVertIcon />
+                        {isOpen && (
+                            <div className="delete" onClick={handleDelete}>
+                                Delete
+                                <Delete />
+                            </div>
+                        )}
+                    </div>
                 </div>
                 <div className="content">
                     {img ? <img src={img} alt="post-image" /> : <p>{desc}</p>}
@@ -88,7 +100,7 @@ const Post = ({ post }: PostTypes) => {
                     {commentOpen ? <span>-</span> : <span>+</span>}
                 </div>
 
-                {commentOpen && <Comments />}
+                {commentOpen && <Comments postId={id} />}
 
                 <div className="time-stamp">
                     <span className="stamps">{time}</span>

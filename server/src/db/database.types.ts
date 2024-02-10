@@ -6,7 +6,7 @@ export type Json =
 	| { [key: string]: Json | undefined }
 	| Json[];
 
-export interface Database {
+export type Database = {
 	public: {
 		Tables: {
 			comments: {
@@ -213,6 +213,20 @@ export interface Database {
 			[_ in never]: never;
 		};
 		Functions: {
+			get_user_comments: {
+				Args: {
+					post_id: number;
+				};
+				Returns: {
+					id: number;
+					desc: string;
+					createdAt: string;
+					userId: number;
+					postId: number;
+					name: string;
+					profilePic: string;
+				}[];
+			};
 			get_user_posts: {
 				Args: {
 					my_id: number;
@@ -235,7 +249,7 @@ export interface Database {
 			[_ in never]: never;
 		};
 	};
-}
+};
 
 export type Tables<
 	PublicTableNameOrOptions extends

@@ -6,12 +6,12 @@
         background-color: themed("bg");
         color: themed("textColor");
         margin-bottom: 20px;
-        box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
-            0 4px 6px -4px rgb(0 0 0 / 0.1);
+        border: 1px solid themed("border");
 
         @include tablet {
             box-shadow: none;
             border-radius: 0;
+            border: 0;
             margin-top: 10px;
         }
 

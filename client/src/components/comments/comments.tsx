@@ -1,48 +1,50 @@
-import { useContext } from "react";
-import { AuthContext } from "../../context/authContext";
+import { useQuery } from "@tanstack/react-query";
 
+import { axiosRequest } from "../../utils/axios.utils";
+import AddComment from "../addComment/addComment";
+import Comment from "../comment/comment";
+import Spinner from "../spinner/spinner";
+import CommentsError from "./comments.error";
 import "./comments.scss";
+import { CommentsTypes } from "./comments.types";
 
-const Comments = () => {
-    const { currentUser } = useContext(AuthContext);
-    //Temporary
-    const comments = [
-        {
-            id: 1,
-            desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem nequeaspernatur ullam aperiam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem nequeaspernatur ullam aperiam",
-            name: "John Doe",
-            userId: 1,
-            profilePicture:
-                "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-        },
-        {
-            id: 2,
-            desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem nequeaspernatur ullam aperiam",
-            name: "Jane Doe",
-            userId: 2,
-            profilePicture:
-                "https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg?auto=compress&cs=tinysrgb&w=1600",
-        },
-    ];
+const Comments = ({ postId }: { postId: number }) => {
+    const getComments = async () => {
+        try {
+            const res = await axiosRequest.get(`/comments?postId=${postId}`);
+            return res.data;
+        } catch (error) {
+            console.error(error);
+            throw new Error("Comments fetch failed!");
+        }
+    };
+
+    const { isLoading, data, error } = useQuery({
+        queryKey: ["comments", postId],
+        queryFn: getComments,
+    });
+
+    if (error) {
+        console.error(error.message);
+        return <CommentsError />;
+    }
+
+    if (!isLoading && data) {
+        const comments: CommentsTypes = data;
+
+        return (
+            <div className="comments">
+                <AddComment postId={postId} />
+                {comments.map((comment) => (
+                    <Comment key={comment.id} comment={comment} />
+                ))}
+            </div>
+        );
+    }
+
     return (
         <div className="comments">
-            <div className="write">
-                <img src={currentUser?.profilePic} alt="" />
-                <input type="text" placeholder="write a comment" />
-                <button>Send</button>
-            </div>
-            {comments.map((comment) => (
-                <div className="comment" key={comment.id}>
-                    <img src={comment.profilePicture} alt="" />
-                    <div className="info">
-                        <div>
-                            {comment.name}
-                            <span className="date">1 hour ago</span>
-                        </div>
-                        <p>{comment.desc}</p>
-                    </div>
-                </div>
-            ))}
+            <Spinner />
         </div>
     );
 };

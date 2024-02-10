@@ -1,9 +1,9 @@
 export type PostsTypes = {
     id: number;
     desc: string;
-    name: string;
-    userId: number;
-    profilePic?: string;
     img: string;
+    userId: number;
     createdAt: Date;
+    name: string;
+    profilePic?: string;
 }[];

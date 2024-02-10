@@ -1,5 +1,12 @@
-const formatTimeDifference = (timeInMilliseconds: number): string => {
-    const timeInMinutes = timeInMilliseconds / (1000 * 60);
+const formatTime = (createdAt: Date): string => {
+    const currentDate = new Date().toISOString();
+    const postedDate = createdAt;
+
+    const currentDateObject = new Date(currentDate).getTime();
+    const postedDateObject = new Date(postedDate).getTime();
+
+    const timeDifference: number = currentDateObject - postedDateObject;
+    const timeInMinutes = timeDifference / (1000 * 60);
 
     if (timeInMinutes < 1) {
         return "Just now";
@@ -20,4 +27,4 @@ const formatTimeDifference = (timeInMilliseconds: number): string => {
     }
 };
 
-export default formatTimeDifference;
+export default formatTime;

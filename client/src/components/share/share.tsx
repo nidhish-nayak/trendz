@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useContext, useState } from "react";
+import { ChangeEvent, useContext, useState } from "react";
 
 import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
@@ -11,16 +11,18 @@ import config from "../../config/config";
 import { AuthContext } from "../../context/authContext";
 import { axiosRequest } from "../../utils/axios.utils";
 import upload from "../../utils/upload.utils";
+import Spinner from "../spinner/spinner";
 import "./share.scss";
 import { NEW_POST_TYPES } from "./share.types";
 
 const Share = () => {
-    const [desc, setDesc] = useState("");
-    const [file, setFile] = useState<File | null>(null);
-    const [localImgUrl, setLocalImgUrl] = useState<string | null>(null);
-
     const queryClient = useQueryClient();
     const { currentUser } = useContext(AuthContext);
+
+    const [desc, setDesc] = useState("");
+    const [file, setFile] = useState<File | null>(null);
+    const [uploading, setUploading] = useState(false);
+    const [localImgUrl, setLocalImgUrl] = useState<string | null>(null);
 
     const mutation = useMutation({
         mutationFn: (newPost: NEW_POST_TYPES) =>
@@ -28,8 +30,9 @@ const Share = () => {
         onSuccess: () => {
             setDesc("");
             setFile(null);
-            // refetch on updated content
-            return queryClient.invalidateQueries({ queryKey: ["posts"] });
+
+            queryClient.invalidateQueries({ queryKey: ["posts"] });
+            return setUploading(false);
         },
         onError(error) {
             console.log(error);
@@ -39,8 +42,10 @@ const Share = () => {
 
     if (!currentUser) return <div>User not found!</div>;
 
-    const handleClick = async () => {
+    const submitPost = async () => {
+        setUploading(true);
         let imgUrl: string | null = null;
+
         if (desc.length === 0) {
             alert("Please enter description to your post!");
             return;
@@ -62,7 +67,7 @@ const Share = () => {
         mutation.mutate({ desc: desc, userId: currentUser.id, img: imgUrl });
     };
 
-    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
         if (!e.target.files) return "File selection failed!";
         const selectedFile = e.target.files?.[0];
 
@@ -132,9 +137,13 @@ const Share = () => {
                         </div>
                     </div>
                     <div className="right" title="Share">
-                        <button onClick={handleClick}>
-                            <SendIcon fontSize="medium" />
-                        </button>
+                        {uploading ? (
+                            <Spinner />
+                        ) : (
+                            <button onClick={submitPost}>
+                                <SendIcon fontSize="medium" />
+                            </button>
+                        )}
                     </div>
                 </div>
                 <hr className="mobile-only-hr" />

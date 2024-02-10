@@ -34,12 +34,6 @@
                     margin: 0 10px;
                 }
 
-                .more-icon {
-                    @include mobile {
-                        transform: rotate(90deg);
-                    }
-                }
-
                 .userInfo {
                     display: flex;
                     gap: 20px;
@@ -61,6 +55,35 @@
 
                         .date {
                             font-size: 12px;
+                        }
+                    }
+                }
+                .post-delete {
+                    cursor: pointer;
+                    color: white;
+                    position: relative;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    .delete {
+                        position: absolute;
+                        right: 8px;
+                        top: 2em;
+                        display: flex;
+                        justify-content: center;
+                        align-items: flex-start;
+                        background-color: themed("bgSoft");
+                        border: 1px solid themed("border");
+                        border-radius: 10px 0px 10px 10px;
+                        color: themed("textColor");
+                        overflow: hidden;
+                        padding: 8px 12px;
+                        gap: 10px;
+                        transition: 250ms ease-in-out;
+
+                        &:hover {
+                            background-color: themed("button");
                         }
                     }
                 }
