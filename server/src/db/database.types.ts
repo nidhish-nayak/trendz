@@ -213,6 +213,16 @@ export type Database = {
 			[_ in never]: never;
 		};
 		Functions: {
+			get_post_likes: {
+				Args: {
+					post_id: number;
+					user_id: number;
+				};
+				Returns: {
+					liked: boolean;
+					count: number;
+				}[];
+			};
 			get_user_comments: {
 				Args: {
 					post_id: number;
