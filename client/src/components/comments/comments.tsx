@@ -6,9 +6,9 @@ import Comment from "../comment/comment";
 import Spinner from "../spinner/spinner";
 import CommentsError from "./comments.error";
 import "./comments.scss";
-import { CommentsTypes } from "./comments.types";
+import { CommentsProps, CommentsTypes } from "./comments.types";
 
-const Comments = ({ postId }: { postId: number }) => {
+const Comments = ({ postId }: CommentsProps) => {
     const getComments = async () => {
         try {
             const res = await axiosRequest.get(`/comments?postId=${postId}`);

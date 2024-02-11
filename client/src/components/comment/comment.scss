@@ -41,11 +41,17 @@
 
                     .comment-delete {
                         cursor: pointer;
-                        color: white;
+                        color: themed("textColor");
                         position: relative;
                         display: flex;
                         justify-content: center;
                         align-items: center;
+                        background-color: themed("bgSoft");
+                        border-radius: 5px;
+
+                        &:hover {
+                            background-color: themed("button");
+                        }
 
                         .delete {
                             position: absolute;

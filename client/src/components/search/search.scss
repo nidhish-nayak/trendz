@@ -21,8 +21,10 @@
             padding: 4px;
             cursor: pointer;
             transition: 250ms ease-in-out;
+            border: 1px solid themed("bgSoft");
 
             &:hover {
+                border: 1px solid themed("buttonBorder");
                 background-color: themed("button");
             }
         }

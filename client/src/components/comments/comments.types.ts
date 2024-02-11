@@ -7,3 +7,7 @@ export type CommentsTypes = {
     name: string;
     profilePic: string;
 }[];
+
+export type CommentsProps = {
+    postId: number;
+};

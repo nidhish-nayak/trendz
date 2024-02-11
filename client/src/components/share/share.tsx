@@ -50,8 +50,8 @@ const Share = () => {
             alert("Please enter description to your post!");
             return;
         }
-        if (file && file.size > 300000) {
-            alert("Please upload image less than 300kb!");
+        if (file && file.size > 1048576) {
+            alert("Please upload image less than 1MB!");
             return;
         }
 
