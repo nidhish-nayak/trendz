@@ -10,13 +10,8 @@ import { CommentsProps, CommentsTypes } from "./comments.types";
 
 const Comments = ({ postId }: CommentsProps) => {
     const getComments = async () => {
-        try {
-            const res = await axiosRequest.get(`/comments?postId=${postId}`);
-            return res.data;
-        } catch (error) {
-            console.error(error);
-            throw new Error("Comments fetch failed!");
-        }
+        const res = await axiosRequest.get(`/comments?postId=${postId}`);
+        return res.data;
     };
 
     const { isLoading, data, error } = useQuery({

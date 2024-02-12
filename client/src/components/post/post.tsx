@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
@@ -8,53 +9,116 @@ import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import TextsmsOutlinedIcon from "@mui/icons-material/TextsmsOutlined";
 
 import Delete from "@mui/icons-material/Delete";
-import { useQuery } from "@tanstack/react-query";
-import { AxiosError } from "axios";
+import { AuthContext } from "../../context/authContext";
 import { axiosRequest } from "../../utils/axios.utils";
 import formatTime from "../../utils/date.utils";
 import Comments from "../comments/comments";
 import Spinner from "../spinner/spinner";
 import "./post.scss";
-import { PostTypes } from "./post.types";
+import { LikedPost, PostTypes } from "./post.types";
 
 const Post = ({ post }: PostTypes) => {
+    const queryClient = useQueryClient();
+    const { currentUser } = useContext(AuthContext);
     const { profilePic, userId, name, img, desc, createdAt, id } = post;
 
-    const [commentOpen, setCommentOpen] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
+    const [commentOpen, setCommentOpen] = useState(false);
+    const [likeDisabled, setLikeDisabled] = useState(false);
+    const [dislikeDisabled, setDislikeDisabled] = useState(false);
 
     const time = formatTime(createdAt);
+    if (!currentUser) throw Error("User not logged in!");
 
-    const getCommentsCount = async () => {
-        try {
-            const res = await axiosRequest.get(`/comments/count?postId=${id}`);
-            return res.data;
-        } catch (error) {
-            const err = error as AxiosError;
-            console.error(err);
-            throw Error("Comments count fetch failed!");
-        }
-    };
-
-    const {
-        isLoading,
-        data: count,
-        error,
-    } = useQuery({
-        queryKey: ["comments", post],
-        queryFn: getCommentsCount,
-    });
-
-    if (error) throw Error("getCommentsCount failed!");
-
+    // Handle post delete
     const handleDelete = () => {
         // Will be added last
         setIsOpen(false);
         return;
     };
 
-    //TEMPORARY
-    const liked = false;
+    // Get Comments
+    const getCommentsCount = async () => {
+        const res = await axiosRequest.get(`/comments/count?postId=${id}`);
+        return res.data;
+    };
+
+    const {
+        isLoading: commentsLoading,
+        data: count,
+        error: commentsError,
+    } = useQuery({
+        queryKey: ["comments", post],
+        queryFn: getCommentsCount,
+    });
+
+    if (commentsError) throw Error("getCommentsCount failed!");
+
+    // Get Likes
+    const getLikes = async () => {
+        const res = await axiosRequest.get(
+            `likes?postId=${id}&userId=${currentUser.id}`
+        );
+        return res.data;
+    };
+
+    const {
+        isLoading: likesLoading,
+        data: likesData,
+        error: likesError,
+    } = useQuery({
+        queryKey: ["likes", id],
+        queryFn: getLikes,
+    });
+
+    if (likesError) throw Error("getLikes failed!");
+
+    // Like Post
+    const likeMutation = useMutation({
+        mutationFn: (likedPost: LikedPost) =>
+            axiosRequest.post("/likes", likedPost),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["likes", id] });
+            setLikeDisabled(true);
+            return setTimeout(() => {
+                setLikeDisabled(false);
+            }, 60000);
+            // Re-enable like button after 1 minute
+        },
+        onError(error) {
+            console.log(error);
+            return alert("Like upload failed!");
+        },
+    });
+
+    // Dislike Post
+    const dislikeMutation = useMutation({
+        mutationFn: () => axiosRequest.delete(`likes/${id}`),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["likes", id] });
+            setDislikeDisabled(true);
+            return setTimeout(() => {
+                setDislikeDisabled(false);
+            }, 60000);
+            // Re-enable dislike button after 1 minute
+        },
+        onError(error) {
+            console.log(error);
+            return alert("Dislike failed!");
+        },
+    });
+
+    const handleLike = () => {
+        if (likeDisabled)
+            return console.log("wait 60 seconds to like/dislike again!");
+        likeMutation.mutate({ postId: id, userId: currentUser.id });
+    };
+
+    const handleDislike = () => {
+        if (dislikeDisabled)
+            return console.log("wait 60 seconds to like/dislike again!");
+        dislikeMutation.mutate();
+    };
 
     return (
         <div className="post">
@@ -92,13 +156,23 @@ const Post = ({ post }: PostTypes) => {
                     {img ? <img src={img} alt="post-image" /> : <p>{desc}</p>}
                 </div>
                 <div className="info">
-                    <div className="item">
-                        {liked ? (
-                            <FavoriteOutlinedIcon />
-                        ) : (
+                    {likesLoading ? (
+                        <div className="item" onClick={handleLike}>
                             <FavoriteBorderOutlinedIcon />
-                        )}
-                    </div>
+                        </div>
+                    ) : likesData.liked === true ? (
+                        <div
+                            className="item"
+                            style={{ color: "crimson" }}
+                            onClick={handleDislike}
+                        >
+                            <FavoriteOutlinedIcon />
+                        </div>
+                    ) : (
+                        <div className="item" onClick={handleLike}>
+                            <FavoriteBorderOutlinedIcon />
+                        </div>
+                    )}
                     <div
                         className="item"
                         onClick={() => setCommentOpen(!commentOpen)}
@@ -109,7 +183,9 @@ const Post = ({ post }: PostTypes) => {
                         <ShareOutlinedIcon />
                     </div>
                 </div>
-                <span className="mobile-likes">12 Likes</span>
+                <span className="mobile-likes">
+                    {likesLoading ? <Spinner /> : likesData.count} Likes
+                </span>
                 {img && (
                     <p>
                         <span>{name}</span>
@@ -120,7 +196,7 @@ const Post = ({ post }: PostTypes) => {
                     className="comment-stamp"
                     onClick={() => setCommentOpen(!commentOpen)}
                 >
-                    {isLoading ? (
+                    {commentsLoading ? (
                         <Spinner />
                     ) : count === 0 ? (
                         "No Comments"

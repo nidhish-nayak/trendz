@@ -9,3 +9,8 @@ export type PostTypes = {
         createdAt: Date;
     };
 };
+
+export type LikedPost = {
+    postId: number;
+    userId: number;
+};
