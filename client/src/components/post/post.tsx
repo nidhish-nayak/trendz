@@ -24,8 +24,6 @@ const Post = ({ post }: PostTypes) => {
 
     const [isOpen, setIsOpen] = useState(false);
     const [commentOpen, setCommentOpen] = useState(false);
-    const [likeDisabled, setLikeDisabled] = useState(false);
-    const [dislikeDisabled, setDislikeDisabled] = useState(false);
 
     const time = formatTime(createdAt);
     if (!currentUser) throw Error("User not logged in!");
@@ -78,12 +76,7 @@ const Post = ({ post }: PostTypes) => {
         mutationFn: (likedPost: LikedPost) =>
             axiosRequest.post("/likes", likedPost),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["likes", id] });
-            setLikeDisabled(true);
-            return setTimeout(() => {
-                setLikeDisabled(false);
-            }, 60000);
-            // Re-enable like button after 1 minute
+            return queryClient.invalidateQueries({ queryKey: ["likes", id] });
         },
         onError(error) {
             console.log(error);
@@ -95,12 +88,7 @@ const Post = ({ post }: PostTypes) => {
     const dislikeMutation = useMutation({
         mutationFn: () => axiosRequest.delete(`likes/${id}`),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["likes", id] });
-            setDislikeDisabled(true);
-            return setTimeout(() => {
-                setDislikeDisabled(false);
-            }, 60000);
-            // Re-enable dislike button after 1 minute
+            return queryClient.invalidateQueries({ queryKey: ["likes", id] });
         },
         onError(error) {
             console.log(error);
@@ -109,14 +97,10 @@ const Post = ({ post }: PostTypes) => {
     });
 
     const handleLike = () => {
-        if (likeDisabled)
-            return console.log("wait 60 seconds to like/dislike again!");
         likeMutation.mutate({ postId: id, userId: currentUser.id });
     };
 
     const handleDislike = () => {
-        if (dislikeDisabled)
-            return console.log("wait 60 seconds to like/dislike again!");
         dislikeMutation.mutate();
     };
 
