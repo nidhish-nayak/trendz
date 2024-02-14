@@ -1,3 +1,6 @@
+import { useQuery } from "@tanstack/react-query";
+import { useParams } from "react-router-dom";
+
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import FacebookTwoToneIcon from "@mui/icons-material/FacebookTwoTone";
 import InstagramIcon from "@mui/icons-material/Instagram";
@@ -9,44 +12,54 @@ import PinterestIcon from "@mui/icons-material/Pinterest";
 import PlaceIcon from "@mui/icons-material/Place";
 import TwitterIcon from "@mui/icons-material/Twitter";
 
-import { useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
 import Posts from "../../components/posts/posts";
+import Spinner from "../../components/spinner/spinner";
+import { axiosRequest } from "../../utils/axios.utils";
 import "./profile.scss";
+import { USER_TYPES } from "./profile.types";
 
 const Profile = () => {
-    const userId = useParams();
-    console.log(userId);
-    // const getUsers = () => {
-    //     return axiosRequest.get(`/users/${userId}`)
-    // }
+    const { id } = useParams();
+
+    const getUsers = async (): Promise<USER_TYPES> => {
+        const res = await axiosRequest.get(`/users/${id}`);
+        return res.data;
+    };
 
     const { isLoading, data, error } = useQuery({
         queryKey: ["users"],
         queryFn: getUsers,
     });
 
+    if (error) throw Error("getUsers failed!");
+
+    if (isLoading)
+        return (
+            <div className="profile">
+                <Spinner />
+            </div>
+        );
+
+    if (!data) throw Error("No data retrieved");
+    const { username, email, name, coverPic, city, website, profilePic } = data;
+
     return (
         <div className="profile">
             <div className="user-container">
                 <div className="images">
+                    <img src={coverPic} alt="Cover Photo" className="cover" />
                     <img
-                        src="https://images.pexels.com/photos/13440765/pexels-photo-13440765.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-                        alt=""
-                        className="cover"
-                    />
-                    <img
-                        src="https://images.pexels.com/photos/14028501/pexels-photo-14028501.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load"
-                        alt=""
+                        src={profilePic}
+                        alt="Profile Photo"
                         className="profilePic"
                     />
                 </div>
                 <div className="details">
                     <div className="left">
-                        <div className="name">Jane Doe</div>
+                        <div className="name">{name}</div>
                         <div className="desc">
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit.
+                            Username: {username}
+                            Email: {email}
                         </div>
                         <button className="follow-button">
                             <PersonAddAlt1Icon fontSize="small" />
@@ -62,11 +75,11 @@ const Profile = () => {
                         <div className="info">
                             <div className="item">
                                 <PlaceIcon />
-                                <span>USA</span>
+                                <span>{city}</span>
                             </div>
                             <div className="item">
                                 <LanguageIcon />
-                                <span>lama.dev</span>
+                                <span>{website}</span>
                             </div>
                         </div>
                         <div className="social-links">
