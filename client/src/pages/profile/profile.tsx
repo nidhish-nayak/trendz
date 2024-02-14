@@ -9,10 +9,23 @@ import PinterestIcon from "@mui/icons-material/Pinterest";
 import PlaceIcon from "@mui/icons-material/Place";
 import TwitterIcon from "@mui/icons-material/Twitter";
 
+import { useQuery } from "@tanstack/react-query";
+import { useParams } from "react-router-dom";
 import Posts from "../../components/posts/posts";
 import "./profile.scss";
 
 const Profile = () => {
+    const userId = useParams();
+    console.log(userId);
+    // const getUsers = () => {
+    //     return axiosRequest.get(`/users/${userId}`)
+    // }
+
+    const { isLoading, data, error } = useQuery({
+        queryKey: ["users"],
+        queryFn: getUsers,
+    });
+
     return (
         <div className="profile">
             <div className="user-container">
