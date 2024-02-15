@@ -134,7 +134,24 @@
                         display: flex;
                         justify-content: center;
                         align-items: center;
-                        gap: 10px;
+                        gap: 20px;
+
+                        .edit {
+                            background-color: themed("bgSoft");
+                            color: themed("textColor");
+                            border-radius: 10px;
+                            padding: 8px 14px 8px 8px;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            gap: 10px;
+                            font-weight: 500;
+                            cursor: pointer;
+
+                            &:hover {
+                                background-color: themed("button");
+                            }
+                        }
                     }
 
                     .social-links {

@@ -1,12 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 
+import EditIcon from "@mui/icons-material/Edit";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import FacebookTwoToneIcon from "@mui/icons-material/FacebookTwoTone";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import LanguageIcon from "@mui/icons-material/Language";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 import PinterestIcon from "@mui/icons-material/Pinterest";
 import PlaceIcon from "@mui/icons-material/Place";
@@ -20,6 +20,11 @@ import { USER_TYPES } from "./profile.types";
 
 const Profile = () => {
     const { id } = useParams();
+
+    // TO DO...
+    const editProfile = () => {
+        return;
+    };
 
     const getUsers = async (): Promise<USER_TYPES> => {
         const res = await axiosRequest.get(`/users/find/${id}`);
@@ -71,7 +76,10 @@ const Profile = () => {
                     <div className="right">
                         <div className="more">
                             <EmailOutlinedIcon />
-                            <MoreVertIcon />
+                            <div className="edit" onClick={editProfile}>
+                                <EditIcon fontSize="small" />
+                                Edit
+                            </div>
                         </div>
                         <div className="info">
                             <div className="item city">
