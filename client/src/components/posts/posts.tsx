@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { axiosRequest } from "../../utils/axios.utils";
 
 import Post from "../post/post";
@@ -13,6 +13,7 @@ import { SearchContext } from "../../context/searchContext";
 import { PostsTypes } from "./posts.types";
 
 const Posts = () => {
+    const param = useParams();
     const navigate = useNavigate();
     const { search } = useContext(SearchContext);
 
@@ -42,15 +43,27 @@ const Posts = () => {
     }
 
     if (!isLoading && data) {
+        // Only filter if user profile link is opened
+        const profileUserId = param.id ? parseInt(param.id) : undefined;
+
         const posts: PostsTypes = data;
         const filteredPosts = posts.filter((post) => {
             const searchText = search.toLowerCase();
             const postDesc = post.desc.toLowerCase();
             const userName = post.name.toLowerCase();
+            const userId = post.userId;
 
-            return (
-                postDesc.includes(searchText) || userName.includes(searchText)
-            );
+            if (profileUserId)
+                return (
+                    (postDesc.includes(searchText) ||
+                        userName.includes(searchText)) &&
+                    userId === profileUserId
+                );
+            else
+                return (
+                    postDesc.includes(searchText) ||
+                    userName.includes(searchText)
+                );
         });
 
         return (

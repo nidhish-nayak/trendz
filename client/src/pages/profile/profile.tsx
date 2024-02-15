@@ -22,7 +22,7 @@ const Profile = () => {
     const { id } = useParams();
 
     const getUsers = async (): Promise<USER_TYPES> => {
-        const res = await axiosRequest.get(`/users/${id}`);
+        const res = await axiosRequest.get(`/users/find/${id}`);
         return res.data;
     };
 
@@ -58,8 +58,9 @@ const Profile = () => {
                     <div className="left">
                         <div className="name">{name}</div>
                         <div className="desc">
-                            Username: {username}
-                            Email: {email}
+                            <b>Username:</b> {username}
+                            <br />
+                            <b>Email:</b> {email}
                         </div>
                         <button className="follow-button">
                             <PersonAddAlt1Icon fontSize="small" />
@@ -73,14 +74,17 @@ const Profile = () => {
                             <MoreVertIcon />
                         </div>
                         <div className="info">
-                            <div className="item">
+                            <div className="item city">
                                 <PlaceIcon />
-                                <span>{city}</span>
+                                <div>{city}</div>
                             </div>
-                            <div className="item">
+                            <a
+                                href={website!}
+                                title={website!}
+                                className="item"
+                            >
                                 <LanguageIcon />
-                                <span>{website}</span>
-                            </div>
+                            </a>
                         </div>
                         <div className="social-links">
                             <a href="http://facebook.com">
