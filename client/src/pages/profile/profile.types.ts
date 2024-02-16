@@ -8,3 +8,9 @@ export type USER_TYPES = {
     city: string | null;
     coverPic: string;
 };
+
+export type FOLLOW_TYPE = {
+    id: number;
+    followerUserId: number;
+    followedUserId: number;
+};

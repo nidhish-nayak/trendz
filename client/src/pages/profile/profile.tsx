@@ -7,19 +7,24 @@ import FacebookTwoToneIcon from "@mui/icons-material/FacebookTwoTone";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import LanguageIcon from "@mui/icons-material/Language";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 import PinterestIcon from "@mui/icons-material/Pinterest";
 import PlaceIcon from "@mui/icons-material/Place";
 import TwitterIcon from "@mui/icons-material/Twitter";
 
+import { useContext } from "react";
 import Posts from "../../components/posts/posts";
 import Spinner from "../../components/spinner/spinner";
+import { AuthContext } from "../../context/authContext";
 import { axiosRequest } from "../../utils/axios.utils";
+import FollowUser from "./followUser";
 import "./profile.scss";
 import { USER_TYPES } from "./profile.types";
 
 const Profile = () => {
     const { id } = useParams();
+    const { currentUser } = useContext(AuthContext);
+
+    if (!currentUser || !id) throw Error("User not found!");
 
     // TO DO...
     const editProfile = () => {
@@ -67,19 +72,18 @@ const Profile = () => {
                             <br />
                             <b>Email:</b> {email}
                         </div>
-                        <button className="follow-button">
-                            <PersonAddAlt1Icon fontSize="small" />
-                            Follow
-                        </button>
+                        <FollowUser />
                     </div>
 
                     <div className="right">
                         <div className="more">
                             <EmailOutlinedIcon />
-                            <div className="edit" onClick={editProfile}>
-                                <EditIcon fontSize="small" />
-                                Edit
-                            </div>
+                            {currentUser.id !== parseInt(id) ? null : (
+                                <div className="edit" onClick={editProfile}>
+                                    <EditIcon fontSize="small" />
+                                    Edit
+                                </div>
+                            )}
                         </div>
                         <div className="info">
                             <div className="item city">
