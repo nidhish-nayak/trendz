@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
@@ -23,6 +23,7 @@ const Post = ({ post }: PostTypes) => {
     const { profilePic, userId, name, img, desc, createdAt, id } = post;
 
     const [isOpen, setIsOpen] = useState(false);
+    const [isLiked, setIsLiked] = useState(false);
     const [commentOpen, setCommentOpen] = useState(false);
 
     const time = formatTime(createdAt);
@@ -57,6 +58,7 @@ const Post = ({ post }: PostTypes) => {
         const res = await axiosRequest.get(
             `likes?postId=${id}&userId=${currentUser.id}`
         );
+        if (res.data) setIsLiked(res.data.liked);
         return res.data;
     };
 
@@ -104,6 +106,18 @@ const Post = ({ post }: PostTypes) => {
         dislikeMutation.mutate();
     };
 
+    // Debouncing Likes to avoid spam
+    useEffect(() => {
+        if (likesLoading) return;
+        if (likesData.liked === isLiked) return;
+
+        const debounce = setTimeout(() => {
+            isLiked ? handleLike() : handleDislike();
+        }, 10000);
+        return () => clearTimeout(debounce);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isLiked, likesLoading]);
+
     return (
         <div className="post">
             <div className="container">
@@ -144,16 +158,16 @@ const Post = ({ post }: PostTypes) => {
                         <div className="item" onClick={handleLike}>
                             <FavoriteBorderOutlinedIcon />
                         </div>
-                    ) : likesData.liked === true ? (
+                    ) : isLiked === true ? (
                         <div
                             className="item"
                             style={{ color: "crimson" }}
-                            onClick={handleDislike}
+                            onClick={() => setIsLiked(false)}
                         >
                             <FavoriteOutlinedIcon />
                         </div>
                     ) : (
-                        <div className="item" onClick={handleLike}>
+                        <div className="item" onClick={() => setIsLiked(true)}>
                             <FavoriteBorderOutlinedIcon />
                         </div>
                     )}
