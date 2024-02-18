@@ -14,3 +14,8 @@ export type FOLLOW_TYPE = {
     followerUserId: number;
     followedUserId: number;
 };
+
+export type FOLLOW_MUTATION_TYPE = {
+    followerUserId: number;
+    followedUserId: number;
+};

@@ -24,6 +24,14 @@ const Comments = ({ postId }: CommentsProps) => {
         return <CommentsError />;
     }
 
+    if (isLoading) {
+        return (
+            <div className="comments">
+                <Spinner />
+            </div>
+        );
+    }
+
     if (!isLoading && data) {
         const comments: CommentsTypes = data;
 
@@ -36,12 +44,6 @@ const Comments = ({ postId }: CommentsProps) => {
             </div>
         );
     }
-
-    return (
-        <div className="comments">
-            <Spinner />
-        </div>
-    );
 };
 
 export default Comments;

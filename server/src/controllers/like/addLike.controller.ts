@@ -1,8 +1,13 @@
 import { supabase } from "$/db/connect";
+import { LikeSchema } from "$/validations/like.validation";
 import { type Request, type Response } from "express";
 
 export const addLike = async (req: Request, res: Response) => {
-	const { postId, userId } = req.body;
+	const validationResult = LikeSchema.safeParse(req);
+	if (!validationResult.success)
+		return res.status(400).send("Input validation failed!");
+
+	const { postId, userId } = validationResult.data.body;
 
 	const { data: existingLike, error: existingLikeError } = await supabase
 		.from("likes")

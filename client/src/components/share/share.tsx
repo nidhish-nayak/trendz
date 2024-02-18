@@ -43,9 +43,6 @@ const Share = () => {
     if (!currentUser) return <div>User not found!</div>;
 
     const submitPost = async () => {
-        setUploading(true);
-        let imgUrl: string | null = null;
-
         if (desc.length === 0) {
             alert("Please enter description to your post!");
             return;
@@ -54,6 +51,9 @@ const Share = () => {
             alert("Please upload image less than 1MB!");
             return;
         }
+
+        setUploading(true);
+        let imgUrl: string | null = null;
 
         // Upload file to server and get imgUrl back
         if (file) {

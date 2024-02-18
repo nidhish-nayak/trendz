@@ -1,18 +1,21 @@
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 import PersonRemoveAlt1Icon from "@mui/icons-material/PersonRemoveAlt1";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 import Spinner from "../../components/spinner/spinner";
 import { AuthContext } from "../../context/authContext";
 import { axiosRequest } from "../../utils/axios.utils";
 import "./profile.scss";
-import { FOLLOW_TYPE } from "./profile.types";
+import { FOLLOW_MUTATION_TYPE, FOLLOW_TYPE } from "./profile.types";
 
 const FollowUser = () => {
     const { id } = useParams();
+    const queryClient = useQueryClient();
     const [isFollowed, setIsFollowed] = useState(false);
     const { currentUser } = useContext(AuthContext);
+
+    if (!currentUser || !id) throw Error("User/Profile not found!");
 
     // Get Followers Data
     const getFollowers = async () => {
@@ -29,14 +32,40 @@ const FollowUser = () => {
 
     if (error) throw Error("getFollowers fetch failed!");
 
+    // Mutate Followers Data
+    const followMutation = useMutation({
+        mutationFn: (followDetails: FOLLOW_MUTATION_TYPE) =>
+            axiosRequest.post("/relationships", followDetails),
+        onSuccess: () =>
+            queryClient.invalidateQueries({ queryKey: ["relationships"] }),
+        onError(error) {
+            console.log(error);
+            return alert("Follow user failed!");
+        },
+    });
+
+    const unfollowMutation = useMutation({
+        mutationFn: () => axiosRequest.delete(`/relationships/${id}`),
+        onSuccess: () =>
+            queryClient.invalidateQueries({ queryKey: ["relationships"] }),
+        onError(error) {
+            console.log(error);
+            return alert("Unfollow user failed!");
+        },
+    });
+
     // Follow user
     const handleFollow = () => {
-        return;
+        const followDetails = {
+            followerUserId: currentUser.id,
+            followedUserId: parseInt(id),
+        };
+        followMutation.mutate(followDetails);
     };
 
     // Unfollow User
     const handleUnfollow = () => {
-        return;
+        unfollowMutation.mutate();
     };
 
     if (isLoading) {

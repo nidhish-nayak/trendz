@@ -113,7 +113,7 @@ const Post = ({ post }: PostTypes) => {
 
         const debounce = setTimeout(() => {
             isLiked ? handleLike() : handleDislike();
-        }, 10000);
+        }, 5000);
         return () => clearTimeout(debounce);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isLiked, likesLoading]);

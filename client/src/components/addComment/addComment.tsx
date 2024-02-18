@@ -34,8 +34,8 @@ const AddComment = ({ postId }: { postId: number }) => {
     if (!currentUser) return <div className="write">User not found!</div>;
 
     const submitComment = () => {
-        setUploading(true);
         if (comment === "") return alert("Please enter any comment!");
+        setUploading(true);
 
         mutation.mutate({
             desc: comment,

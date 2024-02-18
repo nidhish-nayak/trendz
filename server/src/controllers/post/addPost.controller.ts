@@ -1,9 +1,16 @@
 import { supabase } from "$/db/connect";
+import { AddPostSchema } from "$/validations/post.validation";
 import { type Request, type Response } from "express";
 
 export const addPost = async (req: Request, res: Response) => {
 	try {
-		const { desc, img, userId } = req.body;
+		// Zod validations
+		const validationResult = AddPostSchema.safeParse(req);
+		if (!validationResult.success) {
+			return res.status(400).send("Input validation failed!");
+		}
+
+		const { desc, img, userId } = validationResult.data.body;
 
 		const { data, error } = await supabase
 			.from("posts")
