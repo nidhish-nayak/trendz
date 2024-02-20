@@ -96,7 +96,10 @@ const Profile = () => {
                                 </div>
                             )}
                             {isEditOpen ? (
-                                <EditProfile closeModal={closeModal} />
+                                <EditProfile
+                                    closeModal={closeModal}
+                                    profileData={data}
+                                />
                             ) : null}
                         </div>
                         <div className="info">

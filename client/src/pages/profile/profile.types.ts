@@ -1,3 +1,6 @@
+import { UseMutationResult } from "@tanstack/react-query";
+import { AxiosError, AxiosResponse } from "axios";
+
 export type USER_TYPES = {
     id: number;
     name: string;
@@ -27,3 +30,10 @@ export type EDIT_PROFILE_FORM_TYPE = {
     city: string;
     website: string;
 };
+
+export type MUTATION_TYPE = UseMutationResult<
+    AxiosResponse,
+    AxiosError,
+    EDIT_PROFILE_FORM_TYPE,
+    unknown
+>;

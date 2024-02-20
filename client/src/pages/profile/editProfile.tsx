@@ -1,14 +1,26 @@
-import CloseIcon from "@mui/icons-material/Close";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ChangeEvent, FormEvent, useContext, useState } from "react";
 import { useParams } from "react-router-dom";
+
+import CloseIcon from "@mui/icons-material/Close";
 import Spinner from "../../components/spinner/spinner";
 import { AuthContext } from "../../context/authContext";
 import { axiosRequest } from "../../utils/axios.utils";
 import "./profile.scss";
-import { EDIT_PROFILE_FORM_TYPE } from "./profile.types";
 
-const EditProfile = ({ closeModal }: { closeModal: () => void }) => {
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+    EDIT_PROFILE_FORM_TYPE,
+    MUTATION_TYPE,
+    USER_TYPES,
+} from "./profile.types";
+
+const EditProfile = ({
+    closeModal,
+    profileData,
+}: {
+    closeModal: () => void;
+    profileData: USER_TYPES;
+}) => {
     const { currentUser } = useContext(AuthContext);
     const { id } = useParams();
     const queryClient = useQueryClient();
@@ -18,18 +30,16 @@ const EditProfile = ({ closeModal }: { closeModal: () => void }) => {
         throw Error("User not logged in!");
     }
 
-    const { username, email, name, city, website } = currentUser;
-
     const [formData, setFormData] = useState({
         id: parseInt(id),
-        username: username,
-        email: email,
-        name: name,
-        city: city === null ? "" : city,
-        website: website === null ? "" : website,
+        username: profileData.username,
+        email: profileData.email,
+        name: profileData.name,
+        city: profileData.city === null ? "" : profileData.city,
+        website: profileData.website === null ? "" : profileData.website,
     });
 
-    const mutation = useMutation({
+    const mutation: MUTATION_TYPE = useMutation({
         mutationFn: (formData: EDIT_PROFILE_FORM_TYPE) =>
             axiosRequest.put("/users", formData),
         onSuccess: () => {
@@ -51,13 +61,14 @@ const EditProfile = ({ closeModal }: { closeModal: () => void }) => {
 
         // Check if form data changes were made
         if (
-            (currentUser.username === formData.username &&
-                currentUser.email === formData.email &&
-                currentUser.name === formData.name &&
-                (currentUser.city || "") === formData.city &&
-                (currentUser.website || "") === formData.website) === true
+            formData.name === profileData.name &&
+            formData.username === profileData.username &&
+            formData.email === profileData.email &&
+            formData.city === profileData.city &&
+            formData.website === profileData.website
         ) {
-            return alert("No updates made!");
+            alert("No updates made!");
+            return;
         }
 
         mutation.mutate(formData);
@@ -171,6 +182,13 @@ const EditProfile = ({ closeModal }: { closeModal: () => void }) => {
                             />
                         </div>
                     </div>
+                    {mutation.error?.response && (
+                        <div className="error-message">
+                            {JSON.parse(
+                                JSON.stringify(mutation.error.response.data)
+                            )}
+                        </div>
+                    )}
                     <div className="button-container">
                         <button
                             type="button"
@@ -187,11 +205,6 @@ const EditProfile = ({ closeModal }: { closeModal: () => void }) => {
                             {mutation.isPending ? <Spinner /> : "Save"}
                         </button>
                     </div>
-                    {mutation.error && (
-                        <div className="error-message">
-                            {mutation.error.message}
-                        </div>
-                    )}
                 </form>
             </div>
         </div>

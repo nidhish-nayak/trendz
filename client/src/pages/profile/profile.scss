@@ -270,7 +270,7 @@
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
-                gap: 50px;
+                gap: 40px;
 
                 .form-group-container {
                     display: grid;
@@ -367,6 +367,10 @@
             }
             .error-message {
                 font-size: 1rem;
+                background-color: themed("bg");
+                color: rgb(255, 39, 39);
+                padding: 10px;
+                border-radius: 10px;
             }
         }
     }
