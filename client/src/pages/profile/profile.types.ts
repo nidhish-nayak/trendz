@@ -19,3 +19,11 @@ export type FOLLOW_MUTATION_TYPE = {
     followerUserId: number;
     followedUserId: number;
 };
+
+export type EDIT_PROFILE_FORM_TYPE = {
+    username: string;
+    email: string;
+    name: string;
+    city: string;
+    website: string;
+};

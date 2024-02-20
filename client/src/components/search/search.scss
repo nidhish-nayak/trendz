@@ -21,7 +21,7 @@
             padding: 4px;
             cursor: pointer;
             transition: 250ms ease-in-out;
-            border: 1px solid themed("bgSoft");
+            border: 1px solid themed("border");
 
             &:hover {
                 border: 1px solid themed("buttonBorder");
@@ -54,7 +54,7 @@
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            color: themed("border");
+            color: themed("arrow");
             transition: 250ms ease-in-out;
 
             &:hover {
@@ -71,11 +71,10 @@
 
             @include mobile {
                 display: block;
-                padding: 4px;
+                padding: 7px;
                 border: none;
                 border-radius: 5px;
                 font-size: 0.85rem;
-                font-family: cursive;
                 color: black;
                 cursor: pointer;
 

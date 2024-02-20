@@ -123,7 +123,9 @@ const Post = ({ post }: PostTypes) => {
             <div className="container">
                 <div className="user">
                     <div className="userInfo">
-                        <img src={profilePic} alt="" />
+                        <Link to={`/profile/${userId}`}>
+                            <img src={profilePic} alt="user-image" />
+                        </Link>
                         <div className="details">
                             <Link
                                 to={`/profile/${userId}`}

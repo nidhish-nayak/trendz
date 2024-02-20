@@ -1,7 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ChangeEvent, useContext, useState } from "react";
 
-import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SendIcon from "@mui/icons-material/Send";
@@ -127,10 +126,6 @@ const Share = () => {
                                 <span>Add Image</span>
                             </div>
                         </label>
-                        <div className="item">
-                            <AddLocationAltIcon fontSize="small" />
-                            <span>Add Place</span>
-                        </div>
                         <div className="item">
                             <TagIcon fontSize="small" />
                             <span>Tag Friends</span>

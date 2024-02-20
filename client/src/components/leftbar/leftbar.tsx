@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { Link } from "react-router-dom";
 import Friends from "../../assets/1.png";
 import Messages from "../../assets/10.png";
 import Tutorials from "../../assets/11.png";
@@ -23,10 +24,18 @@ const Leftbar = () => {
         <div className="leftbar">
             <div className="container">
                 <div className="menu">
-                    <div className="user">
-                        <img src={profilePic} alt="user-image" />
-                        <span>{name ? name : "No User!"}</span>
-                    </div>
+                    <Link
+                        to={`/profile/${currentUser?.id}`}
+                        style={{
+                            textDecoration: "none",
+                            color: "inherit",
+                        }}
+                    >
+                        <div className="user">
+                            <img src={profilePic} alt="user-image" />
+                            <span>{name ? name : "No User!"}</span>
+                        </div>
+                    </Link>
                     <div className="item">
                         <img src={Friends} alt="user-items" />
                         <span>Friends</span>

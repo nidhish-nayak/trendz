@@ -36,7 +36,7 @@
             .menu {
                 display: flex;
                 flex-direction: column;
-                gap: 20px;
+                gap: 10px;
 
                 span {
                     font-size: 12px;
@@ -46,6 +46,18 @@
                     display: flex;
                     align-items: center;
                     gap: 10px;
+                    padding: 10px;
+                    border-radius: 10px;
+
+                    &:hover {
+                        background-color: themed("bgSoft");
+                    }
+
+                    @include tablet {
+                        &:hover {
+                            background-color: themed("bg");
+                        }
+                    }
 
                     img {
                         width: 30px;
@@ -62,6 +74,8 @@
                 .item {
                     display: flex;
                     align-items: center;
+                    border-radius: 10px;
+                    padding: 10px;
                     gap: 10px;
 
                     img {

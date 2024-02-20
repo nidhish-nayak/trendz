@@ -6,6 +6,6 @@ import express from "express";
 const router = express.Router();
 
 router.get("/find/:userId", authMiddleware, getUser);
-router.put("/", updateUser);
+router.put("/", authMiddleware, updateUser);
 
 export default router;
