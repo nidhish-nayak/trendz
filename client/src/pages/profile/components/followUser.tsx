@@ -3,11 +3,11 @@ import PersonRemoveAlt1Icon from "@mui/icons-material/PersonRemoveAlt1";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
-import Spinner from "../../components/spinner/spinner";
-import { AuthContext } from "../../context/authContext";
-import { axiosRequest } from "../../utils/axios.utils";
-import "./profile.scss";
-import { FOLLOW_MUTATION_TYPE, FOLLOW_TYPE } from "./profile.types";
+import Spinner from "../../../components/spinner/spinner";
+import { AuthContext } from "../../../context/authContext";
+import { axiosRequest } from "../../../utils/axios.utils";
+import "../profile.scss";
+import { FOLLOW_MUTATION_TYPE, FOLLOW_TYPE } from "../profile.types";
 
 const FollowUser = () => {
     const { id } = useParams();

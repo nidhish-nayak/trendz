@@ -37,3 +37,8 @@ export type MUTATION_TYPE = UseMutationResult<
     EDIT_PROFILE_FORM_TYPE,
     unknown
 >;
+
+export type UPLOAD_IMAGE_PROPS_TYPE = {
+    profilePic: string;
+    coverPic: string;
+};

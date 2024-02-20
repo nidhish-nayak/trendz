@@ -16,8 +16,8 @@ import Posts from "../../components/posts/posts";
 import Spinner from "../../components/spinner/spinner";
 import { AuthContext } from "../../context/authContext";
 import { axiosRequest } from "../../utils/axios.utils";
-import EditProfile from "./editProfile";
-import FollowUser from "./followUser";
+import EditProfile from "./components/editProfile";
+import FollowUser from "./components/followUser";
 import "./profile.scss";
 import { USER_TYPES } from "./profile.types";
 

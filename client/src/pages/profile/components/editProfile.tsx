@@ -2,17 +2,18 @@ import { ChangeEvent, FormEvent, useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import CloseIcon from "@mui/icons-material/Close";
-import Spinner from "../../components/spinner/spinner";
-import { AuthContext } from "../../context/authContext";
-import { axiosRequest } from "../../utils/axios.utils";
-import "./profile.scss";
+import Spinner from "../../../components/spinner/spinner";
+import { AuthContext } from "../../../context/authContext";
+import { axiosRequest } from "../../../utils/axios.utils";
+import "../profile.scss";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
     EDIT_PROFILE_FORM_TYPE,
     MUTATION_TYPE,
     USER_TYPES,
-} from "./profile.types";
+} from "../profile.types";
+import UploadImage from "./uploadImage";
 
 const EditProfile = ({
     closeModal,
@@ -83,8 +84,10 @@ const EditProfile = ({
                 </div>
             </div>
             <div className="edit-profile-image">
-                <div className="user">User Image</div>
-                <div className="cover">Cover Image</div>
+                <UploadImage
+                    profilePic={profileData.profilePic}
+                    coverPic={profileData.coverPic}
+                />
             </div>
             <div className="form-container">
                 <form onSubmit={handleSubmit} className="form">
