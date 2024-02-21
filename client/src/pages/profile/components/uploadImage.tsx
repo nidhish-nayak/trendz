@@ -1,10 +1,11 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useContext, useState } from "react";
+import { ProfileContext } from "../../../context/profileContext";
 import "../profile.scss";
 import { UPLOAD_IMAGE_PROPS_TYPE } from "../profile.types";
 
 const UploadImage = ({ profilePic, coverPic }: UPLOAD_IMAGE_PROPS_TYPE) => {
-    const [userImg, setUserImg] = useState<File | null>(null);
-    const [coverImg, setCoverImg] = useState<File | null>(null);
+    const { setUserImgHandler, setCoverImgHandler, userImg, coverImg } =
+        useContext(ProfileContext);
     const [localUserImgUrl, setLocalUserImgUrl] = useState<string | null>(null);
     const [localCoverImgUrl, setLocalCoverImgUrl] = useState<string | null>(
         null
@@ -15,7 +16,8 @@ const UploadImage = ({ profilePic, coverPic }: UPLOAD_IMAGE_PROPS_TYPE) => {
         const selectedFile = e.target.files?.[0];
 
         if (selectedFile) {
-            setUserImg(selectedFile);
+            setUserImgHandler(selectedFile);
+            console.log(userImg);
             // Display image preview
             const url = URL.createObjectURL(selectedFile);
             setLocalUserImgUrl(url);
@@ -27,7 +29,8 @@ const UploadImage = ({ profilePic, coverPic }: UPLOAD_IMAGE_PROPS_TYPE) => {
         const selectedFile = e.target.files?.[0];
 
         if (selectedFile) {
-            setCoverImg(selectedFile);
+            setCoverImgHandler(selectedFile);
+            console.log(coverImg);
             // Display image preview
             const url = URL.createObjectURL(selectedFile);
             setLocalCoverImgUrl(url);

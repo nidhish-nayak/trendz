@@ -8,6 +8,9 @@ import { axiosRequest } from "../../../utils/axios.utils";
 import "../profile.scss";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import config from "../../../config/config";
+import { ProfileContext } from "../../../context/profileContext";
+import upload from "../../../utils/upload.utils";
 import {
     EDIT_PROFILE_FORM_TYPE,
     MUTATION_TYPE,
@@ -23,6 +26,9 @@ const EditProfile = ({
     profileData: USER_TYPES;
 }) => {
     const { currentUser } = useContext(AuthContext);
+    const { userImg, coverImg, setUserImgHandler, setCoverImgHandler } =
+        useContext(ProfileContext);
+
     const { id } = useParams();
     const queryClient = useQueryClient();
 
@@ -36,16 +42,21 @@ const EditProfile = ({
         username: profileData.username,
         email: profileData.email,
         name: profileData.name,
-        city: profileData.city === null ? "" : profileData.city,
-        website: profileData.website === null ? "" : profileData.website,
+        city: profileData.city,
+        website: profileData.website,
+        coverPic: profileData.coverPic,
+        profilePic: profileData.profilePic,
     });
 
     const mutation: MUTATION_TYPE = useMutation({
         mutationFn: (formData: EDIT_PROFILE_FORM_TYPE) =>
             axiosRequest.put("/users", formData),
         onSuccess: () => {
-            console.log("User created successfully!");
+            setUserImgHandler(null);
+            setCoverImgHandler(null);
+            console.log(formData);
             queryClient.invalidateQueries({ queryKey: ["users"] });
+            localStorage.setItem("user", JSON.stringify(formData));
             closeModal();
         },
         onError: (error) => {
@@ -57,19 +68,80 @@ const EditProfile = ({
         setFormData({ ...formData, [event.target.name]: event.target.value });
     };
 
-    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-
         // Check if form data changes were made
         if (
             formData.name === profileData.name &&
             formData.username === profileData.username &&
             formData.email === profileData.email &&
             formData.city === profileData.city &&
-            formData.website === profileData.website
+            formData.website === profileData.website &&
+            userImg === null &&
+            coverImg === null
         ) {
             alert("No updates made!");
             return;
+        }
+
+        if (userImg && userImg.size > 1048576) {
+            alert("Please upload user image less than 1MB!");
+            return;
+        }
+
+        if (coverImg && coverImg.size > 1048576) {
+            alert("Please upload cover image less than 1MB!");
+            return;
+        }
+
+        let userImgUrl: string | null = null;
+        let coverImgUrl: string | null = null;
+
+        // Upload user image to server and get imgUrl back
+        if (userImg) {
+            userImgUrl = await upload(
+                userImg,
+                config.s3.folders.profiles.users
+            );
+            if (!userImgUrl) {
+                alert("Upload user image failed!");
+                return;
+            }
+        }
+
+        // Upload cover image to server and get imgUrl back
+        if (coverImg) {
+            coverImgUrl = await upload(
+                coverImg,
+                config.s3.folders.profiles.covers
+            );
+            if (!coverImgUrl) {
+                alert("Upload cover image failed!");
+                return;
+            }
+        }
+
+        // Mutate based on image updates made
+        if (!userImgUrl && coverImgUrl) {
+            mutation.mutate({
+                ...formData,
+                coverPic: coverImgUrl,
+            });
+        }
+
+        if (userImgUrl && !coverImgUrl) {
+            mutation.mutate({
+                ...formData,
+                profilePic: userImgUrl,
+            });
+        }
+
+        if (userImgUrl && coverImgUrl) {
+            mutation.mutate({
+                ...formData,
+                profilePic: userImgUrl,
+                coverPic: coverImgUrl,
+            });
         }
 
         mutation.mutate(formData);
@@ -163,7 +235,9 @@ const EditProfile = ({
                                 type="text"
                                 id="city"
                                 name="city"
-                                value={formData.city}
+                                value={
+                                    formData.city === null ? "" : formData.city
+                                }
                                 onChange={handleChange}
                             />
                         </div>
@@ -180,7 +254,11 @@ const EditProfile = ({
                                 type="url"
                                 id="website"
                                 name="website"
-                                value={formData.website}
+                                value={
+                                    formData.website === null
+                                        ? ""
+                                        : formData.website
+                                }
                                 onChange={handleChange}
                             />
                         </div>

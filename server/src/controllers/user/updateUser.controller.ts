@@ -12,7 +12,8 @@ export const updateUser = async (req: Request, res: Response) => {
 	const formData = validationResult.data.body;
 	const userId = getUserIdFromCookie(req);
 
-	const { id, name, username, email, website, city } = formData;
+	const { id, name, username, email, website, city, profilePic, coverPic } =
+		formData;
 
 	if (id !== userId) {
 		return res.status(401).json("Profile edit not authorized!");
@@ -36,12 +37,17 @@ export const updateUser = async (req: Request, res: Response) => {
 			name: name,
 			username: username,
 			email: email,
-			website: website,
-			city: city,
+			website: website === "" ? null : website,
+			city: city === "" ? null : city,
+			profilePic: profilePic,
+			coverPic: coverPic,
 		})
 		.match({ id: id });
 
-	if (error) throw Error("User profile update failed to DB!");
+	if (error) {
+		res.status(409).json("Profile update failed to DB!");
+		throw Error("User profile update failed to DB!");
+	}
 
 	return res.status(200).json(data);
 };

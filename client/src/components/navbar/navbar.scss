@@ -125,6 +125,10 @@
                         min-width: 240px;
                         gap: 30px;
 
+                        @include tablet {
+                            top: -420px;
+                        }
+
                         .logout-items {
                             display: flex;
                             flex-direction: column;
@@ -318,8 +322,13 @@
                     background-color: themed("bg");
                     padding: 1.5em;
                     border-radius: 10px;
-                    min-width: 240px;
+                    min-width: 280px;
                     gap: 30px;
+
+                    @include tablet {
+                        top: -420px;
+                        right: -18px;
+                    }
 
                     .logout-items {
                         display: flex;
@@ -327,6 +336,10 @@
                         align-items: flex-start;
                         max-width: 300px;
                         gap: 20px;
+
+                        @include mobile {
+                            max-width: 240px;
+                        }
 
                         .logout-cover {
                             position: absolute;
@@ -358,7 +371,7 @@
                                 display: flex;
                                 gap: 4px;
                                 font-weight: bold;
-                                max-width: 300px;
+                                max-width: 256px;
 
                                 span {
                                     font-weight: normal;

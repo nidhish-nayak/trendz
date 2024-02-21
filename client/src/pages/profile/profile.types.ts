@@ -27,8 +27,10 @@ export type EDIT_PROFILE_FORM_TYPE = {
     username: string;
     email: string;
     name: string;
-    city: string;
-    website: string;
+    city: string | null;
+    website: string | null;
+    profilePic: string | null;
+    coverPic: string | null;
 };
 
 export type MUTATION_TYPE = UseMutationResult<

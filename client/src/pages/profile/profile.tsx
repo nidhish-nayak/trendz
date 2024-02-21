@@ -11,7 +11,7 @@ import PinterestIcon from "@mui/icons-material/Pinterest";
 import PlaceIcon from "@mui/icons-material/Place";
 import TwitterIcon from "@mui/icons-material/Twitter";
 
-import { useContext, useRef, useState } from "react";
+import { useContext, useState } from "react";
 import Posts from "../../components/posts/posts";
 import Spinner from "../../components/spinner/spinner";
 import { AuthContext } from "../../context/authContext";
@@ -25,7 +25,6 @@ const Profile = () => {
     const { id } = useParams();
     const { currentUser } = useContext(AuthContext);
     const [isEditOpen, setIsEditOpen] = useState(false);
-    const bodyRef = useRef(document.body);
 
     if (!currentUser || !id) throw Error("User not found!");
 
@@ -53,11 +52,6 @@ const Profile = () => {
 
     const handleClick = () => {
         setIsEditOpen(!isEditOpen);
-        if (isEditOpen) {
-            bodyRef.current.classList.add("modal-open");
-        } else {
-            bodyRef.current.classList.remove("modal-open");
-        }
     };
 
     const closeModal = () => {
