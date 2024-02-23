@@ -5,8 +5,8 @@ type PROFILE_CONTEXT_TYPES = {
     userImg: string | null;
     coverImg: string | null;
     profileData: USER_TYPES | null;
-    setUserImgHandler: (data: string) => void;
-    setCoverImgHandler: (data: string) => void;
+    setUserImgHandler: (data: string | null) => void;
+    setCoverImgHandler: (data: string | null) => void;
     setProfileDataHandler: (data: USER_TYPES) => void;
 };
 
@@ -18,8 +18,8 @@ export const ProfileContext = createContext<PROFILE_CONTEXT_TYPES>({
         name: "",
         email: "",
         username: "",
-        city: null,
-        website: null,
+        city: "",
+        website: "",
         coverPic: null,
         profilePic: null,
     },
@@ -33,14 +33,13 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
     const [coverImg, setCoverImg] = useState<string | null>(null);
     const [profileData, setProfileData] = useState<USER_TYPES | null>(null);
 
-    const setUserImgHandler = (data: string) => {
+    const setUserImgHandler = (data: string | null) => {
         setUserImg(() => data);
     };
-    const setCoverImgHandler = (data: string) => {
+    const setCoverImgHandler = (data: string | null) => {
         setCoverImg(() => data);
     };
     const setProfileDataHandler = (data: USER_TYPES) => {
-        console.log("data from context:", data);
         setProfileData(() => data);
     };
 

@@ -264,6 +264,9 @@
                 height: 150px;
                 background-color: themed("bg");
                 border: 1px solid themed("border");
+                display: flex;
+                justify-content: center;
+                align-items: center;
 
                 img {
                     width: 100%;
@@ -295,6 +298,9 @@
                 height: 200px;
                 background-color: themed("bg");
                 border: 1px solid themed("border");
+                display: flex;
+                justify-content: center;
+                align-items: center;
 
                 @include tablet {
                     width: 100%;
@@ -303,7 +309,7 @@
 
                 @include mobile {
                     width: 100%;
-                    height: min-content;
+                    height: 150px;
                 }
 
                 img {

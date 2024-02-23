@@ -22,11 +22,15 @@ import FollowUser from "./components/followUser";
 import "./profile.scss";
 import { USER_TYPES } from "./profile.types";
 
+// DO NOT TOUCH AREA - You will regret refactoring this component & its components!!!
+
 const Profile = () => {
+    const [isEditOpen, setIsEditOpen] = useState(false);
+
     const { id } = useParams();
     const { currentUser } = useContext(AuthContext);
-    const [isEditOpen, setIsEditOpen] = useState(false);
-    const { setProfileDataHandler } = useContext(ProfileContext);
+    const { setProfileDataHandler, setUserImgHandler, setCoverImgHandler } =
+        useContext(ProfileContext);
 
     if (!currentUser || !id) throw Error("User not found!");
 
@@ -50,6 +54,8 @@ const Profile = () => {
         );
 
     if (!data) throw Error("No data retrieved");
+
+    if (data) localStorage.setItem("user", JSON.stringify(data));
     const { username, email, name, coverPic, city, website, profilePic } = data;
 
     const handleClick = async () => {
@@ -58,6 +64,8 @@ const Profile = () => {
     };
 
     const closeModal = () => {
+        setCoverImgHandler(null);
+        setUserImgHandler(null);
         setIsEditOpen(!isEditOpen);
     };
 

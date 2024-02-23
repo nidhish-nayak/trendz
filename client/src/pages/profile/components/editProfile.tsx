@@ -9,18 +9,17 @@ import "../profile.scss";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ProfileContext } from "../../../context/profileContext";
-import {
-    EDIT_PROFILE_FORM_TYPE,
-    MUTATION_TYPE,
-    USER_TYPES,
-} from "../profile.types";
+import { objectsAreEqual } from "../../../utils/objects.utils";
+import { MUTATION_TYPE, USER_TYPES } from "../profile.types";
+import UploadUser from "./uploadUser";
 
 const EditProfile = ({ closeModal }: { closeModal: () => void }) => {
     const { id } = useParams();
     const queryClient = useQueryClient();
 
     const { currentUser } = useContext(AuthContext);
-    const { profileData, setProfileDataHandler } = useContext(ProfileContext);
+    const { userImg, coverImg, profileData, setProfileDataHandler } =
+        useContext(ProfileContext);
 
     if (!currentUser || !id) {
         alert("User not logged in!");
@@ -30,12 +29,35 @@ const EditProfile = ({ closeModal }: { closeModal: () => void }) => {
     const [formData, setFormData] = useState<USER_TYPES | null>(profileData);
 
     const mutation: MUTATION_TYPE = useMutation({
-        mutationFn: (formData: EDIT_PROFILE_FORM_TYPE) =>
+        mutationFn: (formData: USER_TYPES) =>
             axiosRequest.put("/users", formData),
         onSuccess: () => {
             if (formData === null) return alert("Null formData sent to server");
-            setProfileDataHandler(formData);
-            localStorage.setItem("user", JSON.stringify(formData));
+
+            if (!userImg && coverImg) {
+                localStorage.setItem(
+                    "user",
+                    JSON.stringify({ ...formData, coverPic: coverImg })
+                );
+            }
+            if (userImg && !coverImg) {
+                localStorage.setItem(
+                    "user",
+                    JSON.stringify({ ...formData, profilePic: userImg })
+                );
+            }
+            if (!userImg && !coverImg) {
+                localStorage.setItem("user", JSON.stringify({ ...formData }));
+            }
+            localStorage.setItem(
+                "user",
+                JSON.stringify({
+                    ...formData,
+                    profilePic: userImg,
+                    coverPic: coverImg,
+                })
+            );
+
             queryClient.invalidateQueries({ queryKey: ["users"] });
             closeModal();
         },
@@ -50,13 +72,35 @@ const EditProfile = ({ closeModal }: { closeModal: () => void }) => {
             return;
         }
         setFormData({ ...formData, [event.target.name]: event.target.value });
+        setProfileDataHandler(formData);
     };
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        if (formData === null) return alert("form data is blank!");
-        mutation.mutate(formData);
+        if (formData === null || profileData === null)
+            return alert("Form data is blank!");
+
+        // Very important code - DO NOT TOUCH!!!
+        if (!userImg && coverImg) {
+            return mutation.mutate({ ...formData, coverPic: coverImg });
+        }
+
+        if (userImg && !coverImg) {
+            return mutation.mutate({ ...formData, profilePic: userImg });
+        }
+
+        if (!userImg && !coverImg) {
+            if (objectsAreEqual(formData, currentUser))
+                return alert("No updates made!");
+            return mutation.mutate(formData);
+        }
+
+        return mutation.mutate({
+            ...formData,
+            profilePic: userImg,
+            coverPic: coverImg,
+        });
     };
 
     if (formData === null) {
@@ -75,34 +119,7 @@ const EditProfile = ({ closeModal }: { closeModal: () => void }) => {
                     <CloseIcon />
                 </div>
             </div>
-            <div className="edit-profile-image">
-                <div className="user">
-                    <img src={formData.profilePic!} alt="profile-pic" />
-                    <input
-                        type="file"
-                        id="user-file"
-                        name="user-file"
-                        accept="image/*"
-                        style={{ display: "none" }}
-                    />
-                    <label htmlFor="user-file" className="user-edit">
-                        Update
-                    </label>
-                </div>
-                <div className="cover">
-                    <img src={formData.coverPic!} alt="cover-pic" />
-                    <input
-                        type="file"
-                        id="cover-file"
-                        name="cover-file"
-                        accept="image/*"
-                        style={{ display: "none" }}
-                    />
-                    <label htmlFor="cover-file" className="cover-edit">
-                        Update
-                    </label>
-                </div>
-            </div>
+            <UploadUser />
             <div className="form-container">
                 <form onSubmit={handleSubmit} className="form">
                     <div className="form-group-container">

@@ -23,25 +23,9 @@ export type FOLLOW_MUTATION_TYPE = {
     followedUserId: number;
 };
 
-export type EDIT_PROFILE_FORM_TYPE = {
-    id: number;
-    username: string;
-    email: string;
-    name: string;
-    city: string | null;
-    website: string | null;
-    coverPic: string | null;
-    profilePic: string | null;
-};
-
 export type MUTATION_TYPE = UseMutationResult<
     AxiosResponse,
     AxiosError,
-    EDIT_PROFILE_FORM_TYPE,
+    USER_TYPES,
     unknown
 >;
-
-export type UPLOAD_IMAGE_PROPS_TYPE = {
-    profilePic: string;
-    coverPic: string;
-};
