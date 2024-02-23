@@ -4,12 +4,12 @@ import { AxiosError, AxiosResponse } from "axios";
 export type USER_TYPES = {
     id: number;
     name: string;
-    profilePic: string;
     email: string;
     username: string;
-    website: string | null;
     city: string | null;
-    coverPic: string;
+    website: string | null;
+    coverPic: string | null;
+    profilePic: string | null;
 };
 
 export type FOLLOW_TYPE = {
@@ -24,13 +24,14 @@ export type FOLLOW_MUTATION_TYPE = {
 };
 
 export type EDIT_PROFILE_FORM_TYPE = {
+    id: number;
     username: string;
     email: string;
     name: string;
     city: string | null;
     website: string | null;
-    profilePic: string | null;
     coverPic: string | null;
+    profilePic: string | null;
 };
 
 export type MUTATION_TYPE = UseMutationResult<

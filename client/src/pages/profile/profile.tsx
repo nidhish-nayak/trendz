@@ -15,6 +15,7 @@ import { useContext, useState } from "react";
 import Posts from "../../components/posts/posts";
 import Spinner from "../../components/spinner/spinner";
 import { AuthContext } from "../../context/authContext";
+import { ProfileContext } from "../../context/profileContext";
 import { axiosRequest } from "../../utils/axios.utils";
 import EditProfile from "./components/editProfile";
 import FollowUser from "./components/followUser";
@@ -25,6 +26,7 @@ const Profile = () => {
     const { id } = useParams();
     const { currentUser } = useContext(AuthContext);
     const [isEditOpen, setIsEditOpen] = useState(false);
+    const { setProfileDataHandler } = useContext(ProfileContext);
 
     if (!currentUser || !id) throw Error("User not found!");
 
@@ -50,7 +52,8 @@ const Profile = () => {
     if (!data) throw Error("No data retrieved");
     const { username, email, name, coverPic, city, website, profilePic } = data;
 
-    const handleClick = () => {
+    const handleClick = async () => {
+        setProfileDataHandler(data);
         setIsEditOpen(!isEditOpen);
     };
 
@@ -62,9 +65,9 @@ const Profile = () => {
         <div className="profile" id="profile">
             <div className="user-container">
                 <div className="images">
-                    <img src={coverPic} alt="Cover Photo" className="cover" />
+                    <img src={coverPic!} alt="Cover Photo" className="cover" />
                     <img
-                        src={profilePic}
+                        src={profilePic!}
                         alt="Profile Photo"
                         className="profilePic"
                     />
@@ -90,10 +93,7 @@ const Profile = () => {
                                 </div>
                             )}
                             {isEditOpen ? (
-                                <EditProfile
-                                    closeModal={closeModal}
-                                    profileData={data}
-                                />
+                                <EditProfile closeModal={closeModal} />
                             ) : null}
                         </div>
                         <div className="info">

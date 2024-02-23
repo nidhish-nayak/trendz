@@ -8,55 +8,35 @@ import { axiosRequest } from "../../../utils/axios.utils";
 import "../profile.scss";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import config from "../../../config/config";
 import { ProfileContext } from "../../../context/profileContext";
-import upload from "../../../utils/upload.utils";
 import {
     EDIT_PROFILE_FORM_TYPE,
     MUTATION_TYPE,
     USER_TYPES,
 } from "../profile.types";
-import UploadImage from "./uploadImage";
 
-const EditProfile = ({
-    closeModal,
-    profileData,
-}: {
-    closeModal: () => void;
-    profileData: USER_TYPES;
-}) => {
-    const { currentUser } = useContext(AuthContext);
-    const { userImg, coverImg, setUserImgHandler, setCoverImgHandler } =
-        useContext(ProfileContext);
-
+const EditProfile = ({ closeModal }: { closeModal: () => void }) => {
     const { id } = useParams();
     const queryClient = useQueryClient();
+
+    const { currentUser } = useContext(AuthContext);
+    const { profileData, setProfileDataHandler } = useContext(ProfileContext);
 
     if (!currentUser || !id) {
         alert("User not logged in!");
         throw Error("User not logged in!");
     }
 
-    const [formData, setFormData] = useState({
-        id: parseInt(id),
-        username: profileData.username,
-        email: profileData.email,
-        name: profileData.name,
-        city: profileData.city,
-        website: profileData.website,
-        coverPic: profileData.coverPic,
-        profilePic: profileData.profilePic,
-    });
+    const [formData, setFormData] = useState<USER_TYPES | null>(profileData);
 
     const mutation: MUTATION_TYPE = useMutation({
         mutationFn: (formData: EDIT_PROFILE_FORM_TYPE) =>
             axiosRequest.put("/users", formData),
         onSuccess: () => {
-            setUserImgHandler(null);
-            setCoverImgHandler(null);
-            console.log(formData);
-            queryClient.invalidateQueries({ queryKey: ["users"] });
+            if (formData === null) return alert("Null formData sent to server");
+            setProfileDataHandler(formData);
             localStorage.setItem("user", JSON.stringify(formData));
+            queryClient.invalidateQueries({ queryKey: ["users"] });
             closeModal();
         },
         onError: (error) => {
@@ -65,87 +45,27 @@ const EditProfile = ({
     });
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+        if (formData === null) {
+            console.log("Form data loading...");
+            return;
+        }
         setFormData({ ...formData, [event.target.name]: event.target.value });
     };
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        // Check if form data changes were made
-        if (
-            formData.name === profileData.name &&
-            formData.username === profileData.username &&
-            formData.email === profileData.email &&
-            formData.city === profileData.city &&
-            formData.website === profileData.website &&
-            userImg === null &&
-            coverImg === null
-        ) {
-            alert("No updates made!");
-            return;
-        }
 
-        if (userImg && userImg.size > 1048576) {
-            alert("Please upload user image less than 1MB!");
-            return;
-        }
-
-        if (coverImg && coverImg.size > 1048576) {
-            alert("Please upload cover image less than 1MB!");
-            return;
-        }
-
-        let userImgUrl: string | null = null;
-        let coverImgUrl: string | null = null;
-
-        // Upload user image to server and get imgUrl back
-        if (userImg) {
-            userImgUrl = await upload(
-                userImg,
-                config.s3.folders.profiles.users
-            );
-            if (!userImgUrl) {
-                alert("Upload user image failed!");
-                return;
-            }
-        }
-
-        // Upload cover image to server and get imgUrl back
-        if (coverImg) {
-            coverImgUrl = await upload(
-                coverImg,
-                config.s3.folders.profiles.covers
-            );
-            if (!coverImgUrl) {
-                alert("Upload cover image failed!");
-                return;
-            }
-        }
-
-        // Mutate based on image updates made
-        if (!userImgUrl && coverImgUrl) {
-            mutation.mutate({
-                ...formData,
-                coverPic: coverImgUrl,
-            });
-        }
-
-        if (userImgUrl && !coverImgUrl) {
-            mutation.mutate({
-                ...formData,
-                profilePic: userImgUrl,
-            });
-        }
-
-        if (userImgUrl && coverImgUrl) {
-            mutation.mutate({
-                ...formData,
-                profilePic: userImgUrl,
-                coverPic: coverImgUrl,
-            });
-        }
-
+        if (formData === null) return alert("form data is blank!");
         mutation.mutate(formData);
     };
+
+    if (formData === null) {
+        return (
+            <div className="edit-profile" id="edit-profile-id">
+                <Spinner />
+            </div>
+        );
+    }
 
     return (
         <div className="edit-profile" id="edit-profile-id">
@@ -156,10 +76,32 @@ const EditProfile = ({
                 </div>
             </div>
             <div className="edit-profile-image">
-                <UploadImage
-                    profilePic={profileData.profilePic}
-                    coverPic={profileData.coverPic}
-                />
+                <div className="user">
+                    <img src={formData.profilePic!} alt="profile-pic" />
+                    <input
+                        type="file"
+                        id="user-file"
+                        name="user-file"
+                        accept="image/*"
+                        style={{ display: "none" }}
+                    />
+                    <label htmlFor="user-file" className="user-edit">
+                        Update
+                    </label>
+                </div>
+                <div className="cover">
+                    <img src={formData.coverPic!} alt="cover-pic" />
+                    <input
+                        type="file"
+                        id="cover-file"
+                        name="cover-file"
+                        accept="image/*"
+                        style={{ display: "none" }}
+                    />
+                    <label htmlFor="cover-file" className="cover-edit">
+                        Update
+                    </label>
+                </div>
             </div>
             <div className="form-container">
                 <form onSubmit={handleSubmit} className="form">
