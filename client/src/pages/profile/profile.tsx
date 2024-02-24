@@ -55,7 +55,11 @@ const Profile = () => {
 
     if (!data) throw Error("No data retrieved");
 
-    if (data) localStorage.setItem("user", JSON.stringify(data));
+    // Only set latest user profile if user is viewing his own profile
+    if (data && data.id === currentUser.id) {
+        localStorage.setItem("user", JSON.stringify(data));
+    }
+
     const { username, email, name, coverPic, city, website, profilePic } = data;
 
     const handleClick = async () => {
