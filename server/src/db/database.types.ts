@@ -148,16 +148,19 @@ export type Database = {
 			};
 			stories: {
 				Row: {
+					createdAt: string | null;
 					id: number;
 					img: string;
 					userId: number;
 				};
 				Insert: {
+					createdAt?: string | null;
 					id?: number;
 					img: string;
 					userId: number;
 				};
 				Update: {
+					createdAt?: string | null;
 					id?: number;
 					img?: string;
 					userId?: number;
@@ -221,6 +224,18 @@ export type Database = {
 				Returns: {
 					liked: boolean;
 					count: number;
+				}[];
+			};
+			get_stories: {
+				Args: {
+					user_id: number;
+				};
+				Returns: {
+					id: number;
+					img: string;
+					userId: number;
+					createdAt: string;
+					name: string;
 				}[];
 			};
 			get_user_comments: {

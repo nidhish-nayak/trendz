@@ -3,7 +3,10 @@ import { AuthContext } from "../../context/authContext";
 
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import AddIcon from "@mui/icons-material/Add";
+import { useQuery } from "@tanstack/react-query";
+import { axiosRequest } from "../../utils/axios.utils";
 import "./stories.scss";
+import { GET_STORIES_TYPE } from "./stories.types";
 
 const Stories = () => {
     const { currentUser } = useContext(AuthContext);
@@ -14,51 +17,29 @@ const Stories = () => {
             .getElementById("scrollStories")
             ?.scrollBy({ left: -300, behavior: "smooth" });
     };
+
     const moveRight = () => {
         document
             .getElementById("scrollStories")
             ?.scrollBy({ left: 300, behavior: "smooth" });
     };
 
-    //TEMPORARY
-    const stories = [
-        {
-            id: 1,
-            name: "Doe",
-            img: "https://images.pexels.com/photos/13916254/pexels-photo-13916254.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
-        },
-        {
-            id: 2,
-            name: "John Doeeeeeeeeeeeee",
-            img: "https://images.pexels.com/photos/13916254/pexels-photo-13916254.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
-        },
-        {
-            id: 3,
-            name: "John Doe",
-            img: "https://images.pexels.com/photos/13916254/pexels-photo-13916254.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
-        },
-        {
-            id: 4,
-            name: "John Doe",
-            img: "https://images.pexels.com/photos/13916254/pexels-photo-13916254.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
-        },
-        {
-            id: 5,
-            name: "John Doe",
-            img: "https://images.pexels.com/photos/13916254/pexels-photo-13916254.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
-        },
-        {
-            id: 6,
-            name: "John Doe",
-            img: "https://images.pexels.com/photos/13916254/pexels-photo-13916254.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
-        },
-        {
-            id: 7,
-            name: "John Doe",
-            img: "https://images.pexels.com/photos/13916254/pexels-photo-13916254.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
-        },
-    ];
+    const getStories = async (): Promise<GET_STORIES_TYPE> => {
+        const res = await axiosRequest.get("/stories");
+        return res.data;
+    };
 
+    const { isLoading, data, error } = useQuery({
+        queryKey: ["stories"],
+        queryFn: getStories,
+    });
+
+    if (isLoading) {
+        return <div className="story-container"></div>;
+    }
+
+    if (error || !data) throw Error("get_stories fetch failed from server!");
+    const stories = data;
     return (
         <Fragment>
             <div className="story-container">
