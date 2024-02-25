@@ -51,8 +51,8 @@
 
                 .user-items {
                     display: flex;
-                    gap: 4px;
-                    font-weight: bold;
+                    gap: 10px;
+                    font-weight: 500;
                     max-width: 300px;
 
                     span {
@@ -65,19 +65,51 @@
             }
         }
 
-        .logout-button {
-            padding: 0.75em 1em;
-            text-transform: uppercase;
-            border: 1px solid themed("button");
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 250ms ease-in-out;
+        .logout-button-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
 
-            &:hover {
-                background-color: themed("button");
-                color: white;
+            .logout-button {
+                padding: 0.75em 1em;
+                text-transform: uppercase;
+                border: 1px solid themed("button");
+                border-radius: 4px;
+                font-size: 0.75rem;
+                font-weight: bold;
+                cursor: pointer;
+                transition: all 250ms ease-in-out;
+
+                &:hover {
+                    background-color: themed("button");
+                    color: white;
+                }
+            }
+
+            .profile-edit {
+                display: none;
+
+                @include mobile {
+                    display: block;
+                    padding: 0.75em 1em;
+                    text-transform: uppercase;
+                    border: 1px solid themed("bgSoft");
+                    border-radius: 4px;
+                    font-size: 0.75rem;
+                    font-weight: bold;
+                    cursor: pointer;
+                    transition: all 250ms ease-in-out;
+                    text-decoration: none;
+                    color: themed("textColor");
+                    background-color: themed("border");
+
+                    &:hover {
+                        border: 1px solid themed("arrow");
+                        background-color: themed("bgSoft");
+                        color: themed("textColor");
+                    }
+                }
             }
         }
     }

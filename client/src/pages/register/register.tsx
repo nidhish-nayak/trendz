@@ -1,6 +1,6 @@
 import axios, { AxiosError } from "axios";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./register.scss";
 
 import config from "../../config/config";
@@ -14,6 +14,7 @@ const defaultFormFields: RegisterTypes = {
 };
 
 const Register = () => {
+    const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
     const [formFields, setFormFields] = useState(defaultFormFields);
     const { username, email, password, name } = formFields;
@@ -42,6 +43,8 @@ const Register = () => {
             });
             setResData({ err: false, msg: response.data });
             setIsLoading(false);
+            alert("User registration successful!");
+            navigate("/login");
         } catch (error) {
             const err = error as AxiosError;
             const res = JSON.parse(JSON.stringify(err.response?.data));
@@ -56,12 +59,19 @@ const Register = () => {
             <div className="card">
                 <div className="left">
                     <div className="left-heading">
-                        <h1>Trendz.</h1>
+                        <img
+                            src="/logo-light.svg"
+                            alt="logo-name"
+                            className="logo-name"
+                        />
+                        <h1>
+                            Trendz<span style={{ color: "#dd469e" }}>.</span>
+                        </h1>
                         <p>
                             Welcome to our vibrant social media community, where
-                            meaningful connections thrive. Immerse yourself in a
-                            world of shared experiences, as our platform
-                            seamlessly brings together like minded individuals.
+                            meaningful connections thrive. If you do not want to
+                            create a new account, you can login as <b>Guest</b>{" "}
+                            and enjoy the features for free!
                         </p>
                     </div>
                     <div className="left-register">

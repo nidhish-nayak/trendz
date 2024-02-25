@@ -1,46 +1,54 @@
 .login {
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: #000000;
+    color: white;
 
     .card {
         display: flex;
-        background-color: white;
-        height: 100vh;
-        width: 100vw;
-        overflow: hidden;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 100px;
 
         .left {
-            width: 50%;
-            background: linear-gradient(rgb(25, 25, 25), rgba(0, 0, 0, 0.5)),
-                url("https://ik.imagekit.io/fabric01/linkx/login.webp?updatedAt=1702474382653")
-                    center;
-            background-size: cover;
-            padding: 100px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            gap: 10em;
-            color: white;
-
             .left-heading {
                 display: flex;
                 flex-direction: column;
-                gap: 8px;
-                max-width: 580px;
+                gap: 20px;
+                max-width: 500px;
+
+                .logo {
+                    width: 250px;
+                    height: 250px;
+                }
 
                 h1 {
                     font-size: 4rem;
-                    line-height: 100px;
                 }
 
                 p {
                     font-size: 1.025rem;
+
+                    b {
+                        text-decoration: underline;
+                        text-decoration-style: wavy;
+                        text-decoration-color: #dd469e;
+                    }
                 }
             }
+        }
 
-            .left-register {
+        .right {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 50px;
+
+            .right-register {
                 display: flex;
                 flex-direction: column;
                 gap: 10px;
@@ -53,93 +61,121 @@
                 .register-btn {
                     width: min-content;
                     padding: 10px 30px;
-                    border: none;
+                    border: 1px solid black;
                     text-transform: uppercase;
+                    color: black;
                     background-color: white;
-                    font-weight: bold;
                     cursor: pointer;
                     border-radius: 2px;
                     transition: 250ms ease-in-out;
-
-                    &:hover {
-                        background-color: #e4e4e4;
-                    }
-                }
-                .guest-btn {
-                    width: min-content;
-                    padding: 10px 30px;
-                    text-transform: uppercase;
-                    background-color: #1f1f1f;
-                    color: white;
                     font-weight: bold;
-                    cursor: pointer;
-                    border-radius: 2px;
-                    border: 1px solid #555555;
-                    transition: 250ms ease-in-out;
 
                     &:hover {
-                        background-color: black;
+                        color: black;
+                        border: 1px solid white;
+                        background-image: linear-gradient(
+                            to right,
+                            #cecece,
+                            #fff
+                        );
                     }
                 }
             }
-        }
-
-        .right {
-            width: 50%;
-            padding: 100px;
-            display: flex;
-            flex-direction: column;
-            gap: 50px;
-            justify-content: center;
 
             div {
                 display: flex;
                 flex-direction: column;
                 gap: 10px;
-
-                h2 {
-                    color: black;
-                }
-
-                p {
-                    color: black;
-                }
             }
 
             form {
                 display: flex;
                 flex-direction: column;
                 gap: 30px;
+                margin-top: 10px;
 
-                input {
-                    border: none;
-                    border-bottom: 1px solid lightgray;
-                    padding: 10px 5px;
-                    font-size: 1rem;
+                div {
+                    position: relative;
 
-                    &::placeholder {
-                        font-size: 0.9rem;
+                    label {
+                        position: absolute;
+                        top: -25px;
+                        left: 0;
+                        color: #cecece;
+                        font-size: 0.875rem;
                     }
 
-                    &:focus {
-                        outline: none;
+                    input {
+                        border: none;
+                        border-radius: 10px;
+                        border-bottom: 1px solid lightgray;
+                        padding: 10px 15px;
+                        font-size: 1rem;
+
+                        &::placeholder {
+                            font-size: 0.9rem;
+                        }
+
+                        &:focus {
+                            outline: none;
+                        }
                     }
                 }
 
-                button {
-                    width: min-content;
-                    padding: 10px 30px;
-                    border: none;
-                    font-weight: bold;
-                    text-transform: uppercase;
-                    background-color: #222;
-                    color: white;
-                    cursor: pointer;
-                    border-radius: 2px;
-                    transition: 250ms ease-in-out;
+                .button-container {
+                    display: flex;
+                    flex-direction: row;
+                    gap: 20px;
 
-                    &:hover {
-                        background-color: #000;
+                    .login-button {
+                        width: min-content;
+                        padding: 10px 30px;
+                        border: 1px solid black;
+                        text-transform: uppercase;
+                        color: white;
+                        background-image: linear-gradient(
+                            to right,
+                            #ff0095,
+                            #ff6ec3
+                        );
+                        cursor: pointer;
+                        border-radius: 2px;
+                        transition: 250ms ease-in-out;
+                        font-weight: bold;
+
+                        &:hover {
+                            color: white;
+                            background-color: black;
+                            border: 1px solid white;
+                            background-image: linear-gradient(
+                                to right,
+                                #ff0095,
+                                #ff6ec3
+                            );
+                        }
+                    }
+
+                    .guest-button {
+                        width: min-content;
+                        padding: 10px 30px;
+                        border: 1px solid black;
+                        text-transform: uppercase;
+                        color: black;
+                        background-color: white;
+                        cursor: pointer;
+                        border-radius: 2px;
+                        transition: 250ms ease-in-out;
+                        font-weight: bold;
+
+                        &:hover {
+                            color: black;
+                            background-image: linear-gradient(
+                                to right,
+                                #cecece,
+                                #fff
+                            );
+                            border: 1px solid white;
+                        }
                     }
                 }
             }
@@ -147,14 +183,68 @@
 
         @media (max-width: 1024px) {
             .left {
+                padding: 20px;
                 gap: 60px;
-                padding: 50px;
                 width: 100%;
+
+                .left-heading {
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                    flex-direction: row;
+                    flex-wrap: wrap;
+                    gap: 40px;
+
+                    .logo {
+                        width: 100px;
+                        height: 100px;
+                    }
+                }
             }
 
             .right {
-                padding: 50px;
+                padding: 20px;
                 width: 100%;
+
+                .right-register {
+                    margin-top: -2em;
+                }
+
+                form {
+                    div {
+                        input {
+                            border-radius: 2px;
+                        }
+                    }
+                }
+            }
+        }
+
+        @media (max-width: 480px) {
+            .left {
+                .left-heading {
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                    flex-direction: row;
+                    flex-wrap: wrap;
+                    gap: 30px;
+
+                    .logo {
+                        width: 50px;
+                        height: 50px;
+                    }
+
+                    h1 {
+                        font-size: 40px;
+                        font-weight: bold;
+                        height: 100%;
+                    }
+
+                    p {
+                        display: none;
+                    }
+                }
             }
         }
     }
@@ -163,6 +253,7 @@
         .card {
             height: 100%;
             flex-direction: column;
+            gap: 10px;
         }
     }
 }

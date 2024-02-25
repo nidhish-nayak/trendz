@@ -1,14 +1,23 @@
 import axios, { AxiosError } from "axios";
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import config from "../../config/config";
 import "./logout.scss";
 import { LogoutProps } from "./logout.types";
 
 const Logout: React.FC<LogoutProps> = (props) => {
     const navigate = useNavigate();
-    const { isOpen, image, name, city, username, coverPic, website, email } =
-        props;
+    const {
+        isOpen,
+        id,
+        image,
+        name,
+        city,
+        username,
+        coverPic,
+        website,
+        email,
+    } = props;
 
     const userLogout = async () => {
         const API_URL = `${config.serverUrl}/api/auth/logout`;
@@ -63,9 +72,14 @@ const Logout: React.FC<LogoutProps> = (props) => {
                     ) : null}
                 </div>
             </div>
-            <button className="logout-button" onClick={userLogout}>
-                Logout
-            </button>
+            <div className="logout-button-container">
+                <button className="logout-button" onClick={userLogout}>
+                    Logout
+                </button>
+                <Link to={`/profile/${id}`} className="profile-edit">
+                    Profile
+                </Link>
+            </div>
         </div>
     ) : null;
 };

@@ -17,6 +17,10 @@ const config = {
             stories: "stories",
         },
     },
+    guestUser: {
+        username: "guest",
+        password: "password",
+    },
 };
 
 export default config;

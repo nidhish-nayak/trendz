@@ -7,10 +7,18 @@
         justify-content: flex-start;
         align-items: center;
 
+        @include tablet {
+            padding-left: 20px;
+        }
+
+        @include mobile {
+            padding-left: 0;
+        }
+
         .less-than {
             position: absolute;
             left: -20px;
-            top: 50px;
+            top: 55px;
             color: themed("arrow");
             cursor: pointer;
 
@@ -26,7 +34,7 @@
         .greater-than {
             position: absolute;
             right: -24px;
-            top: 50px;
+            top: 55px;
             color: themed("arrow");
             cursor: pointer;
 

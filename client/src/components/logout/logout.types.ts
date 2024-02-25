@@ -1,5 +1,6 @@
 export type LogoutProps = {
     isOpen: boolean;
+    id: number;
     image: string;
     name: string;
     city: string;

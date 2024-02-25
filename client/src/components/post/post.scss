@@ -9,9 +9,16 @@
             0 4px 6px -4px rgb(0 0 0 / 0.1);
 
         @include tablet {
-            border-radius: 0px;
-            margin: 0;
+            border-radius: 10px;
+            margin: 30px;
+            background-color: themed("bgSoft");
             box-shadow: none;
+        }
+
+        @include mobile {
+            border-radius: 0;
+            margin: 0;
+            background-color: themed("bg");
         }
 
         .container {
@@ -68,14 +75,14 @@
 
                     .delete {
                         position: absolute;
-                        right: 8px;
-                        top: 2em;
+                        right: 25px;
+                        top: 0;
                         display: flex;
                         justify-content: center;
                         align-items: flex-start;
                         background-color: themed("bgSoft");
                         border: 1px solid themed("border");
-                        border-radius: 10px 0px 10px 10px;
+                        border-radius: 10px;
                         color: themed("textColor");
                         overflow: hidden;
                         padding: 8px 12px;
@@ -105,7 +112,7 @@
                     margin: 10px 0 10px 0;
 
                     @include mobile {
-                        margin: 0px 10px;
+                        margin: 10px 10px;
                     }
                 }
             }

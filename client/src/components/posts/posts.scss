@@ -7,6 +7,10 @@
         gap: 50px;
         min-height: 80vh;
 
+        @include tablet {
+            gap: 0;
+        }
+
         @include mobile {
             gap: 30px;
         }

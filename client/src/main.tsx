@@ -15,6 +15,7 @@ import Register from "./pages/register/register.tsx";
 
 import { AuthContext, AuthProvider } from "./context/authContext.tsx";
 import { DarkModeProvider } from "./context/darkModeContext.tsx";
+import { PostProvider } from "./context/postContext.tsx";
 import { ProfileProvider } from "./context/profileContext.tsx";
 import { SearchProvider } from "./context/searchContext.tsx";
 import "./main.scss";
@@ -65,9 +66,11 @@ import.meta.env.MODE === "production"
           <DarkModeProvider>
               <AuthProvider>
                   <SearchProvider>
-                      <ProfileProvider>
-                          <RouterProvider router={router} />
-                      </ProfileProvider>
+                      <PostProvider>
+                          <ProfileProvider>
+                              <RouterProvider router={router} />
+                          </ProfileProvider>
+                      </PostProvider>
                   </SearchProvider>
               </AuthProvider>
           </DarkModeProvider>
@@ -77,9 +80,11 @@ import.meta.env.MODE === "production"
               <DarkModeProvider>
                   <AuthProvider>
                       <SearchProvider>
-                          <ProfileProvider>
-                              <RouterProvider router={router} />
-                          </ProfileProvider>
+                          <PostProvider>
+                              <ProfileProvider>
+                                  <RouterProvider router={router} />
+                              </ProfileProvider>
+                          </PostProvider>
                       </SearchProvider>
                   </AuthProvider>
               </DarkModeProvider>

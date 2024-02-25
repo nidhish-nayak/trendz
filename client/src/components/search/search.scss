@@ -11,6 +11,10 @@
         border-radius: 5px;
         padding: 4px;
 
+        @include mobile {
+            flex-direction: row-reverse;
+        }
+
         .search-icon {
             display: flex;
             align-items: center;

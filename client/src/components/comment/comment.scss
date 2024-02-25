@@ -46,23 +46,18 @@
                         display: flex;
                         justify-content: center;
                         align-items: center;
-                        background-color: themed("bgSoft");
                         border-radius: 5px;
-
-                        &:hover {
-                            background-color: themed("button");
-                        }
 
                         .delete {
                             position: absolute;
-                            right: 8px;
-                            top: 2em;
+                            right: 25px;
+                            top: 0;
                             display: flex;
                             justify-content: center;
                             align-items: flex-start;
                             background-color: themed("bgSoft");
                             border: 1px solid themed("border");
-                            border-radius: 10px 0px 10px 10px;
+                            border-radius: 10px;
                             color: themed("textColor");
                             overflow: hidden;
                             padding: 8px 12px;
