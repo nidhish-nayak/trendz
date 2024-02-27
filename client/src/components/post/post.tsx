@@ -20,14 +20,16 @@ import { LikedPost, PostTypes } from "./post.types";
 const Post = ({ post }: PostTypes) => {
     const queryClient = useQueryClient();
     const { currentUser } = useContext(AuthContext);
-    const { profilePic, userId, name, img, desc, createdAt, id } = post;
+
+    if (!currentUser) throw Error("User not logged in!");
+    if (!post) throw Error("Post is not rendered yet!");
 
     const [isOpen, setIsOpen] = useState(false);
     const [isLiked, setIsLiked] = useState(false);
     const [commentOpen, setCommentOpen] = useState(false);
 
+    const { profilePic, userId, name, img, desc, createdAt, id } = post;
     const time = formatTime(createdAt);
-    if (!currentUser) throw Error("User not logged in!");
 
     // Handle post delete
     const handleDelete = () => {
@@ -55,6 +57,7 @@ const Post = ({ post }: PostTypes) => {
 
     // Get Likes
     const getLikes = async () => {
+        if (!id) return;
         const res = await axiosRequest.get(
             `likes?postId=${id}&userId=${currentUser.id}`
         );

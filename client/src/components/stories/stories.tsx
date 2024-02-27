@@ -1,16 +1,27 @@
-import { Fragment, useContext } from "react";
-import { AuthContext } from "../../context/authContext";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { ChangeEvent, Fragment, useContext, useState } from "react";
 
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import AddIcon from "@mui/icons-material/Add";
-import { useQuery } from "@tanstack/react-query";
+import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
+import CloseIcon from "@mui/icons-material/Close";
+
+import config from "../../config/config";
+import { AuthContext } from "../../context/authContext";
 import { axiosRequest } from "../../utils/axios.utils";
+import upload from "../../utils/upload.utils";
+import Spinner from "../spinner/spinner";
 import "./stories.scss";
 import { GET_STORIES_TYPE } from "./stories.types";
 
 const Stories = () => {
     const { currentUser } = useContext(AuthContext);
-    const { profilePic } = currentUser!;
+    const queryClient = useQueryClient();
+
+    const [isPostOpen, setIsPostOpen] = useState(false);
+    const [localStory, setLocalStory] = useState<string | null>(null);
+    const [storyImg, setStoryImg] = useState<File | null>(null);
+    const [isSubmitLoading, setIsSubmitLoading] = useState(false);
 
     const moveLeft = () => {
         document
@@ -24,22 +35,80 @@ const Stories = () => {
             ?.scrollBy({ left: 300, behavior: "smooth" });
     };
 
+    // GET STORIES
     const getStories = async (): Promise<GET_STORIES_TYPE> => {
         const res = await axiosRequest.get("/stories");
         return res.data;
     };
 
-    const { isLoading, data, error } = useQuery({
+    const {
+        isLoading: getStoryLoading,
+        data: getStoryData,
+        error: getStoryError,
+    } = useQuery({
         queryKey: ["stories"],
         queryFn: getStories,
     });
 
-    if (isLoading) {
+    // POST STORY
+
+    const mutation = useMutation({
+        mutationFn: (img: string) =>
+            axiosRequest.post("/stories", { img: img }),
+        onSuccess: () => {
+            setIsSubmitLoading(false);
+            queryClient.invalidateQueries({ queryKey: ["stories"] });
+            setLocalStory(null);
+            setStoryImg(null);
+            setIsPostOpen(false);
+        },
+        onError(error) {
+            console.log(error);
+            setIsSubmitLoading(false);
+            return alert("Story upload failed!");
+        },
+    });
+
+    const handlePostClick = () => {
+        setIsPostOpen(!isPostOpen);
+    };
+
+    const handlePostSubmit = async () => {
+        if (!storyImg || storyImg === null) return alert("No image uploaded!");
+        setIsSubmitLoading(true);
+
+        const storyImgUrl = await upload(storyImg, config.s3.folders.stories);
+        if (!storyImgUrl) {
+            alert("Upload failed!");
+            return;
+        }
+        mutation.mutate(storyImgUrl);
+    };
+
+    const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+        if (!e.target.files) return;
+
+        const file = e.target.files[0];
+        if (file && file.size > 1048576) {
+            return alert("Please upload image less than 1MB!");
+        }
+        const imgUrl = await URL.createObjectURL(file);
+        setLocalStory(imgUrl);
+        setStoryImg(file);
+    };
+
+    if (getStoryLoading) {
         return <div className="story-container"></div>;
     }
 
-    if (error || !data) throw Error("get_stories fetch failed from server!");
-    const stories = data;
+    if (getStoryError || !getStoryData)
+        throw Error("get_stories fetch failed from server!");
+
+    if (!currentUser) return <div>User not found!</div>;
+
+    const { profilePic } = currentUser;
+    const stories = getStoryData;
+
     return (
         <Fragment>
             <div className="story-container">
@@ -49,11 +118,61 @@ const Stories = () => {
                     fontSize="small"
                 />
                 <div className="stories" id="scrollStories">
+                    {isPostOpen ? (
+                        <div className="story-upload">
+                            <div className="story-upload-header">
+                                <h2 className="story-upload-title">
+                                    Upload Story
+                                </h2>
+                                <div
+                                    className="story-upload-close"
+                                    onClick={handlePostClick}
+                                >
+                                    <CloseIcon />
+                                </div>
+                            </div>
+                            <div className="story-upload-container">
+                                <div className="image-wrapper">
+                                    {localStory ? (
+                                        <img
+                                            className="story-upload-image"
+                                            src={localStory}
+                                            alt="local-image"
+                                        />
+                                    ) : null}
+                                    <input
+                                        type="file"
+                                        id="file"
+                                        className="story-upload-image"
+                                        name="file`"
+                                        accept="image/*"
+                                        style={{ display: "none" }}
+                                        onChange={handleFileChange}
+                                    />
+                                    <label htmlFor="file">
+                                        <div className="image-upload-icon">
+                                            <AddPhotoAlternateIcon fontSize="large" />
+                                        </div>
+                                    </label>
+                                </div>
+                                <button
+                                    className="story-upload-button"
+                                    onClick={handlePostSubmit}
+                                >
+                                    {isSubmitLoading ? (
+                                        <Spinner />
+                                    ) : (
+                                        "Submit Story"
+                                    )}
+                                </button>
+                            </div>
+                        </div>
+                    ) : null}
                     <div className="story">
                         <div className="module-border-wrap">
                             <img src={profilePic} alt="user-image" />
                             <div className="user-name">Your story</div>
-                            <button>
+                            <button onClick={handlePostClick}>
                                 <AddIcon fontSize="small" />
                             </button>
                         </div>
