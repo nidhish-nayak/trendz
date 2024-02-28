@@ -240,6 +240,7 @@
                         object-fit: cover;
                         border-radius: 10px;
                         border: 1px solid themed("bgSoft");
+                        transition: all 500ms ease-in-out;
 
                         @include mobile {
                             border-radius: 50%;

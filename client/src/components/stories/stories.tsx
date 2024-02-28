@@ -13,6 +13,7 @@ import upload from "../../utils/upload.utils";
 import Spinner from "../spinner/spinner";
 import "./stories.scss";
 import { GET_STORIES_TYPE } from "./stories.types";
+import { GroupedStories, formatStories } from "./stories.util";
 
 const Stories = () => {
     const { currentUser } = useContext(AuthContext);
@@ -107,7 +108,8 @@ const Stories = () => {
     if (!currentUser) return <div>User not found!</div>;
 
     const { profilePic } = currentUser;
-    const stories = getStoryData;
+    const formattedStories: GroupedStories = formatStories(getStoryData);
+    console.log(formattedStories);
 
     return (
         <Fragment>
@@ -177,10 +179,10 @@ const Stories = () => {
                             </button>
                         </div>
                     </div>
-                    {stories.map((story) => (
-                        <div className="story" key={story.id}>
+                    {formattedStories.map((story) => (
+                        <div className="story" key={story.userId}>
                             <div className="module-border-wrap">
-                                <img src={story.img} alt="user-story" />
+                                <img src={story.img[0]} alt="user-story" />
                                 <span className="user-name" title={story.name}>
                                     {story.name}
                                 </span>
