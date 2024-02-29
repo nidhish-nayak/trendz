@@ -27,6 +27,10 @@ const Comment = ({ comment }: CommentTypes) => {
             });
             return setIsOpen(false);
         },
+        onError(error) {
+            console.log(error);
+            return alert("Comment deletion failed!");
+        },
     });
 
     const handleDelete = () => {

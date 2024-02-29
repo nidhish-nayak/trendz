@@ -26,7 +26,11 @@ export const formatStories = (arr: GET_STORIES_TYPE): GROUPED_STORIES_TYPE => {
         Object.values(groupedStories);
 
     // Sort all groups by createdAt date in descending order
-    formattedStories.reverse();
+    formattedStories.sort((a, b) => {
+        const aTime = new Date(a.createdAt);
+        const bTime = new Date(b.createdAt);
+        return bTime.getTime() - aTime.getTime();
+    });
 
     return formattedStories;
 };

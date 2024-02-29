@@ -1,7 +1,10 @@
 import { Close } from "@mui/icons-material";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../context/authContext";
+import { axiosRequest } from "../../utils/axios.utils";
+import Spinner from "../spinner/spinner";
 import { GET_STORIES_TYPE } from "../stories/stories.types";
 import "./story.scss";
 import { STORY_TYPE } from "./story.types";
@@ -16,11 +19,30 @@ const Story = ({
     storyData: STORY_TYPE;
 }) => {
     const { currentUser } = useContext(AuthContext);
+    const queryClient = useQueryClient();
     if (!currentUser) throw Error("User not found!");
+    const [isLoading, setIsLoading] = useState(false);
 
     const [count, setCount] = useState(0);
 
+    // Delete Story with ID
+    const mutation = useMutation({
+        mutationFn: (id: number) => axiosRequest.delete(`stories/${id}`),
+        onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: ["stories"],
+            });
+            setIsLoading(false);
+            return closeStory();
+        },
+        onError(error) {
+            console.log(error);
+            return alert("Story deletion failed!");
+        },
+    });
+
     const handleStoryDelete = (imgUrl: string) => {
+        setIsLoading(true);
         if (currentUser.id !== storyData.userId)
             return alert("User unauthorized");
 
@@ -35,6 +57,9 @@ const Story = ({
         }
 
         const storyToBeDeleted = filteredStory[0];
+        if (!storyToBeDeleted.id) return alert("Story not found!");
+
+        mutation.mutate(storyToBeDeleted.id);
     };
 
     return (
@@ -69,7 +94,7 @@ const Story = ({
                                 handleStoryDelete(storyData.img[count])
                             }
                         >
-                            <DeleteForeverIcon />
+                            {isLoading ? <Spinner /> : <DeleteForeverIcon />}
                         </div>
                     ) : null}
                 </div>
