@@ -2,6 +2,9 @@ import { supabase } from "$/db/connect";
 import { type Request, type Response } from "express";
 
 export const getCommentsCount = async (req: Request, res: Response) => {
+	if (!req.query.postId)
+		res.status(401).json("postId in getCound not found!");
+
 	const postIdString = req.query.postId as string;
 	const postId = parseInt(postIdString);
 

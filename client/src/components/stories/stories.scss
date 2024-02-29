@@ -82,6 +82,7 @@
                 .story-upload-header {
                     display: flex;
                     justify-content: space-between;
+                    align-items: center;
 
                     .story-upload-close {
                         display: flex;
@@ -101,6 +102,10 @@
                     }
                     .story-upload-title {
                         font-size: 2rem;
+
+                        @include mobile {
+                            font-size: 1.5rem;
+                        }
                     }
                 }
                 .story-upload-container {
@@ -119,6 +124,11 @@
 
                         &:hover {
                             border: 1px solid themed("textColor");
+                        }
+
+                        @include mobile {
+                            width: 100%;
+                            height: 300px;
                         }
 
                         .story-upload-image {
@@ -210,6 +220,26 @@
                     z-index: 0;
                     border-radius: 10px;
                     border: 0;
+
+                    .count-story {
+                        display: flex;
+                        gap: 4px;
+                        position: absolute;
+                        bottom: 8px;
+                        width: 80%;
+                        overflow: hidden;
+
+                        .bar {
+                            border-radius: 10px;
+                            width: 100%;
+                            height: 4px;
+                            background-color: themed("buttonBorder");
+                        }
+
+                        @include mobile {
+                            display: none;
+                        }
+                    }
 
                     @include mobile {
                         border: 2px solid themed("button");

@@ -11,9 +11,11 @@ import { AuthContext } from "../../context/authContext";
 import { axiosRequest } from "../../utils/axios.utils";
 import upload from "../../utils/upload.utils";
 import Spinner from "../spinner/spinner";
+import Story from "../story/story";
+import { STORY_TYPE } from "../story/story.types";
 import "./stories.scss";
 import { GET_STORIES_TYPE } from "./stories.types";
-import { GroupedStories, formatStories } from "./stories.util";
+import { GROUPED_STORIES_TYPE, formatStories } from "./stories.util";
 
 const Stories = () => {
     const { currentUser } = useContext(AuthContext);
@@ -23,6 +25,8 @@ const Stories = () => {
     const [localStory, setLocalStory] = useState<string | null>(null);
     const [storyImg, setStoryImg] = useState<File | null>(null);
     const [isSubmitLoading, setIsSubmitLoading] = useState(false);
+    const [isStoryOpen, setIsStoryOpen] = useState(false);
+    const [storyData, setStoryData] = useState<STORY_TYPE | null>(null);
 
     const moveLeft = () => {
         document
@@ -34,6 +38,13 @@ const Stories = () => {
         document
             .getElementById("scrollStories")
             ?.scrollBy({ left: 300, behavior: "smooth" });
+    };
+
+    // Open & Close story
+    const handleStory = (story: STORY_TYPE) => {
+        setIsStoryOpen(!isStoryOpen);
+        setStoryData(story);
+        return;
     };
 
     // GET STORIES
@@ -108,8 +119,8 @@ const Stories = () => {
     if (!currentUser) return <div>User not found!</div>;
 
     const { profilePic } = currentUser;
-    const formattedStories: GroupedStories = formatStories(getStoryData);
-    console.log(formattedStories);
+    const unformattedStories: GET_STORIES_TYPE = getStoryData;
+    const formattedStories: GROUPED_STORIES_TYPE = formatStories(getStoryData);
 
     return (
         <Fragment>
@@ -171,9 +182,12 @@ const Stories = () => {
                         </div>
                     ) : null}
                     <div className="story">
-                        <div className="module-border-wrap">
+                        <div
+                            className="module-border-wrap"
+                            onClick={handlePostClick}
+                        >
                             <img src={profilePic} alt="user-image" />
-                            <div className="user-name">Your story</div>
+                            <div className="user-name">Add story</div>
                             <button onClick={handlePostClick}>
                                 <AddIcon fontSize="small" />
                             </button>
@@ -181,12 +195,27 @@ const Stories = () => {
                     </div>
                     {formattedStories.map((story) => (
                         <div className="story" key={story.userId}>
-                            <div className="module-border-wrap">
+                            <div
+                                className="module-border-wrap"
+                                onClick={() => handleStory(story)}
+                            >
                                 <img src={story.img[0]} alt="user-story" />
                                 <span className="user-name" title={story.name}>
                                     {story.name}
                                 </span>
+                                <div className="count-story">
+                                    {story.img.map((_count, index) => (
+                                        <div className="bar" key={index} />
+                                    ))}
+                                </div>
                             </div>
+                            {isStoryOpen && storyData ? (
+                                <Story
+                                    closeStory={() => setIsStoryOpen(false)}
+                                    allStories={unformattedStories}
+                                    storyData={storyData}
+                                />
+                            ) : null}
                         </div>
                     ))}
                 </div>
