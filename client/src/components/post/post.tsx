@@ -32,10 +32,23 @@ const Post = ({ post }: PostTypes) => {
     const time = formatTime(createdAt);
 
     // Handle post delete
+    const mutation = useMutation({
+        mutationFn: (id: number) => axiosRequest.delete(`posts/${id}`),
+        onSuccess: () => {
+            setIsOpen(false);
+            queryClient.invalidateQueries({
+                queryKey: ["posts"],
+            });
+        },
+        onError(error) {
+            console.log(error);
+            return alert("Post deletion failed!");
+        },
+    });
+
     const handleDelete = () => {
-        // Will be added last
-        setIsOpen(false);
-        return;
+        if (currentUser.id !== userId) return;
+        return mutation.mutate(id);
     };
 
     // Get Comments
@@ -142,18 +155,20 @@ const Post = ({ post }: PostTypes) => {
                             <span className="date">{time}</span>
                         </div>
                     </div>
-                    <div
-                        className="post-delete"
-                        onClick={() => setIsOpen(!isOpen)}
-                    >
-                        <MoreVertIcon />
-                        {isOpen && (
-                            <div className="delete" onClick={handleDelete}>
-                                Delete
-                                <Delete />
-                            </div>
-                        )}
-                    </div>
+                    {currentUser.id === userId && (
+                        <div
+                            className="post-delete"
+                            onClick={() => setIsOpen(!isOpen)}
+                        >
+                            <MoreVertIcon />
+                            {isOpen && (
+                                <div className="delete" onClick={handleDelete}>
+                                    Delete
+                                    <Delete />
+                                </div>
+                            )}
+                        </div>
+                    )}
                 </div>
                 <div className="content">
                     {img ? <img src={img} alt="post-image" /> : <p>{desc}</p>}
