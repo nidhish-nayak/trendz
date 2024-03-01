@@ -43,10 +43,18 @@ const Leftbar = () => {
                             <span style={{ fontWeight: "500" }}>Profile</span>
                         </div>
                     </Link>
-                    <div className="item">
-                        <Diversity3Icon />
-                        <span>Friends</span>
-                    </div>
+                    <Link
+                        to="/friends"
+                        style={{
+                            textDecoration: "none",
+                            color: "inherit",
+                        }}
+                    >
+                        <div className="item">
+                            <Diversity3Icon />
+                            <span>Friends</span>
+                        </div>
+                    </Link>
                     <div className="item">
                         <MarkEmailReadOutlinedIcon />
                         <span>Notifications</span>

@@ -19,6 +19,7 @@ import { PostProvider } from "./context/postContext.tsx";
 import { ProfileProvider } from "./context/profileContext.tsx";
 import { SearchProvider } from "./context/searchContext.tsx";
 import "./main.scss";
+import Friends from "./pages/friends/friends.tsx";
 
 export const ProtectedRoute = ({ children }: { children: ReactNode }) => {
     const { currentUser } = useContext(AuthContext);
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
             {
                 path: "/profile/:id",
                 element: <Profile />,
+            },
+            {
+                path: "/friends",
+                element: <Friends />,
             },
         ],
     },
