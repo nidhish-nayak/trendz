@@ -5,6 +5,10 @@
 
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/nidhish-nayak/trendz/tree/main)
 
+## Preview
+
+![preview](https://github.com/nidhish-nayak/trendz/assets/76598208/43cd62df-005c-410a-9863-733a7c7129f5)
+
 ## About the Project
 
 Trendz is a full-stack application featuring social media functionalities such as posts, likes, uploads, etc. This project is built using Typescript, React, Express, React Query (Tanstack Query), PostgreSQL (Supabase) and Material UI. We will be implementing the features with Context APIs to maintain simplicity as much as possible so that anyone can understand the process. In case complexity increases we will be adding redux-toolkit or other client-side libraries.
