@@ -11,6 +11,7 @@ import { FOLLOW_MUTATION_TYPE, FOLLOW_TYPE } from "../profile.types";
 
 const FollowUser = () => {
     const { id } = useParams();
+    const [isSpin, setIsSpin] = useState(false);
     const queryClient = useQueryClient();
     const [isFollowed, setIsFollowed] = useState(false);
     const { currentUser } = useContext(AuthContext);
@@ -26,7 +27,7 @@ const FollowUser = () => {
     };
 
     const { isLoading, data, error } = useQuery({
-        queryKey: ["relationships"],
+        queryKey: ["relationships", id],
         queryFn: getFollowers,
     });
 
@@ -36,9 +37,12 @@ const FollowUser = () => {
     const followMutation = useMutation({
         mutationFn: (followDetails: FOLLOW_MUTATION_TYPE) =>
             axiosRequest.post("/relationships", followDetails),
-        onSuccess: () =>
-            queryClient.invalidateQueries({ queryKey: ["relationships"] }),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["relationships"] });
+            return setIsSpin(false);
+        },
         onError(error) {
+            setIsSpin(false);
             console.log(error);
             return alert("Follow user failed!");
         },
@@ -46,9 +50,12 @@ const FollowUser = () => {
 
     const unfollowMutation = useMutation({
         mutationFn: () => axiosRequest.delete(`/relationships/${id}`),
-        onSuccess: () =>
-            queryClient.invalidateQueries({ queryKey: ["relationships"] }),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["relationships"] });
+            return setIsSpin(false);
+        },
         onError(error) {
+            setIsSpin(false);
             console.log(error);
             return alert("Unfollow user failed!");
         },
@@ -56,6 +63,7 @@ const FollowUser = () => {
 
     // Follow user
     const handleFollow = () => {
+        setIsSpin(true);
         const followDetails = {
             followerUserId: currentUser.id,
             followedUserId: parseInt(id),
@@ -65,6 +73,7 @@ const FollowUser = () => {
 
     // Unfollow User
     const handleUnfollow = () => {
+        setIsSpin(true);
         unfollowMutation.mutate();
     };
 
@@ -95,8 +104,14 @@ const FollowUser = () => {
                     </button>
                 ) : (
                     <button className="follow-button" onClick={handleFollow}>
-                        <PersonAddAlt1Icon fontSize="small" />
-                        Follow
+                        {isSpin ? (
+                            <Spinner />
+                        ) : (
+                            <>
+                                <PersonAddAlt1Icon fontSize="small" />
+                                Follow
+                            </>
+                        )}
                     </button>
                 )}
             </>

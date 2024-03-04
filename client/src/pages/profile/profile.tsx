@@ -40,7 +40,7 @@ const Profile = () => {
     };
 
     const { isLoading, data, error } = useQuery({
-        queryKey: ["users"],
+        queryKey: ["users", id],
         queryFn: getUsers,
     });
 
@@ -116,6 +116,7 @@ const Profile = () => {
                             <a
                                 href={website!}
                                 title={website!}
+                                target="_blank"
                                 className="item"
                             >
                                 <LanguageIcon />

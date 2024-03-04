@@ -53,11 +53,7 @@ const Login = () => {
             <div className="card">
                 <div className="left">
                     <div className="left-heading">
-                        <img
-                            src="/logo-light.svg"
-                            alt="logo"
-                            className="logo"
-                        />
+                        <img src="/logo.svg" alt="logo" className="logo" />
                         <h1>
                             Trendz<span style={{ color: "#dd469e" }}>.</span>
                         </h1>

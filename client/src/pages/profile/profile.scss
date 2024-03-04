@@ -5,6 +5,10 @@
         background-color: themed("bgSoft");
         padding: 2em;
 
+        @include tablet {
+            background-color: themed("bg");
+        }
+
         @include mobile {
             background-color: themed("bg");
             padding: 0 0 70px 0;
@@ -19,7 +23,14 @@
             color: themed("textColor");
             margin-bottom: 20px;
 
+            @include tablet {
+                border: 1px solid themed("border");
+                overflow: hidden;
+            }
+
             @include mobile {
+                border: none;
+                overflow: hidden;
                 border-radius: 0;
                 border-bottom: 1px solid #333;
             }
@@ -175,6 +186,12 @@
                         align-items: center;
                         justify-content: space-around;
                         gap: 20px;
+
+                        a {
+                            &:hover {
+                                color: themed("button");
+                            }
+                        }
 
                         .item {
                             display: flex;

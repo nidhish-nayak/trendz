@@ -1,17 +1,19 @@
 import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Tutorials from "../../assets/11.png";
-import Courses from "../../assets/12.png";
-import Fund from "../../assets/13.png";
 import { AuthContext } from "../../context/authContext";
 import { PostContext } from "../../context/postContext";
 import "./leftbar.scss";
 
+import {
+    GitHub,
+    Groups3Outlined,
+    HomeOutlined,
+    MarkUnreadChatAltOutlined,
+    NotificationsActiveOutlined,
+} from "@mui/icons-material";
 import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
 import DisabledByDefaultOutlinedIcon from "@mui/icons-material/DisabledByDefaultOutlined";
-import Diversity3Icon from "@mui/icons-material/Diversity3";
 import ExploreIcon from "@mui/icons-material/Explore";
-import MarkEmailReadOutlinedIcon from "@mui/icons-material/MarkEmailReadOutlined";
 import PersonSearchOutlinedIcon from "@mui/icons-material/PersonSearchOutlined";
 
 const Leftbar = () => {
@@ -22,6 +24,10 @@ const Leftbar = () => {
     if (!currentUser) throw Error("User not logged in!");
     const { id, profilePic } = currentUser;
 
+    const handleProfileNavigate = () => {
+        return navigate(`/profile/${id}`);
+    };
+
     const handlePostOpen = () => {
         navigate("/");
         return setIsPostOpen();
@@ -31,16 +37,20 @@ const Leftbar = () => {
         <div className="leftbar">
             <div className="container">
                 <div className="menu">
+                    <div className="item" onClick={handleProfileNavigate}>
+                        <img src={profilePic} alt="user-image" />
+                        <span style={{ fontWeight: "500" }}>Profile</span>
+                    </div>
                     <Link
-                        to={`/profile/${id}`}
+                        to="/"
                         style={{
                             textDecoration: "none",
                             color: "inherit",
                         }}
                     >
                         <div className="item">
-                            <img src={profilePic} alt="user-image" />
-                            <span style={{ fontWeight: "500" }}>Profile</span>
+                            <HomeOutlined />
+                            <span>Home</span>
                         </div>
                     </Link>
                     <Link
@@ -51,14 +61,10 @@ const Leftbar = () => {
                         }}
                     >
                         <div className="item">
-                            <Diversity3Icon />
+                            <Groups3Outlined />
                             <span>Friends</span>
                         </div>
                     </Link>
-                    <div className="item">
-                        <MarkEmailReadOutlinedIcon />
-                        <span>Notifications</span>
-                    </div>
                 </div>
                 <hr />
                 <div className="menu">
@@ -68,7 +74,7 @@ const Leftbar = () => {
                         <span>Explore</span>
                     </div>
                     <div
-                        className={isPostOpen ? `item active` : "item"}
+                        className={isPostOpen ? `item active` : "item inactive"}
                         onClick={handlePostOpen}
                     >
                         {isPostOpen ? (
@@ -83,26 +89,59 @@ const Leftbar = () => {
                             </>
                         )}
                     </div>
-                    <div className="item">
-                        <PersonSearchOutlinedIcon />
-                        <span>Find People</span>
-                    </div>
+                    <Link
+                        to="/findPeople"
+                        style={{
+                            textDecoration: "none",
+                            color: "inherit",
+                        }}
+                    >
+                        <div className="item">
+                            <PersonSearchOutlinedIcon />
+                            <span>Find People</span>
+                        </div>
+                    </Link>
                 </div>
                 <hr />
                 <div className="menu">
                     <span className="menu-heading">Others</span>
-                    <div className="item">
-                        <img src={Fund} alt="other-items" />
-                        <span>Fundraiser</span>
-                    </div>
-                    <div className="item">
-                        <img src={Tutorials} alt="other-items" />
-                        <span>Tutorials</span>
-                    </div>
-                    <div className="item">
-                        <img src={Courses} alt="other-items" />
-                        <span>Courses</span>
-                    </div>
+                    <Link
+                        to="/"
+                        style={{
+                            textDecoration: "none",
+                            color: "inherit",
+                        }}
+                    >
+                        <div className="item">
+                            <NotificationsActiveOutlined />
+                            <span>Notifications</span>
+                        </div>
+                    </Link>
+                    <Link
+                        to="/"
+                        style={{
+                            textDecoration: "none",
+                            color: "inherit",
+                        }}
+                    >
+                        <div className="item">
+                            <MarkUnreadChatAltOutlined />
+                            <span>Chat</span>
+                        </div>
+                    </Link>
+                    <a
+                        href="https://github.com/nidhish-nayak/trendz"
+                        style={{
+                            textDecoration: "none",
+                            color: "inherit",
+                        }}
+                        target="_blank"
+                    >
+                        <div className="item">
+                            <GitHub />
+                            <span>Github</span>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>

@@ -11,6 +11,35 @@ export const postRelations = async (req: Request, res: Response) => {
 
 	const { followerUserId, followedUserId } = validationResult.data.body;
 
+	const { data: existingRecord, error: existingError } = await supabase
+		.from("relationships")
+		.select("*");
+
+	if (existingError)
+		return res
+			.status(400)
+			.json("Follow post failed at checking existing records");
+
+	const checkRecordExist = () => {
+		if (!existingRecord || existingRecord.length === 0) {
+			return false; // No records exist
+		}
+
+		for (const record of existingRecord) {
+			if (
+				record.followerUserId === followerUserId &&
+				record.followedUserId === followedUserId
+			) {
+				return true; // Record exists
+			}
+		}
+
+		return false; // No matching record found
+	};
+
+	if (checkRecordExist())
+		return res.status(400).json("Follow relationship already exists!");
+
 	const { data, error } = await supabase
 		.from("relationships")
 		.insert({

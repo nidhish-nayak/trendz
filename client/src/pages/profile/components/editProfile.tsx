@@ -58,8 +58,9 @@ const EditProfile = ({ closeModal }: { closeModal: () => void }) => {
                 })
             );
 
-            queryClient.invalidateQueries({ queryKey: ["users"] });
+            queryClient.invalidateQueries({ queryKey: ["users", id] });
             closeModal();
+            window.location.reload();
         },
         onError: (error) => {
             console.error("Error creating user:", error);

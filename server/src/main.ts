@@ -8,6 +8,7 @@ import { zodMiddleware } from "./middlewares/zod.middleware";
 
 import authRoutes from "./routes/auth.route";
 import commentRoutes from "./routes/comment.route";
+import friendRoutes from "./routes/friend.route";
 import likeRoutes from "./routes/like.route";
 import postRoutes from "./routes/post.route";
 import relationshipRoutes from "./routes/relationship.route";
@@ -40,6 +41,7 @@ app.use("/api/likes", likeRoutes);
 app.use("/api/relationships", relationshipRoutes);
 app.use("/api/stories", storyRoutes);
 app.use("/api/test", testRoutes);
+app.use("/api/friends", friendRoutes);
 
 // Listener
 app.listen(config.port, () => {

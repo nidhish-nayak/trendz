@@ -60,7 +60,7 @@ const Register = () => {
                 <div className="left">
                     <div className="left-heading">
                         <img
-                            src="/logo-light.svg"
+                            src="/logo.svg"
                             alt="logo-name"
                             className="logo-name"
                         />

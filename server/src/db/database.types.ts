@@ -216,6 +216,41 @@ export type Database = {
 			[_ in never]: never;
 		};
 		Functions: {
+			get_findpeople: {
+				Args: {
+					my_user_id: number;
+				};
+				Returns: {
+					id: number;
+					name: string;
+					username: string;
+					profilePic: string;
+				}[];
+			};
+			get_followers_id: {
+				Args: {
+					my_user_id: number;
+				};
+				Returns: {
+					followeruserid: number;
+				}[];
+			};
+			get_following_id: {
+				Args: {
+					my_user_id: number;
+				};
+				Returns: {
+					followinguserid: number;
+				}[];
+			};
+			get_friends_id: {
+				Args: {
+					my_user_id: number;
+				};
+				Returns: {
+					frienduserid: number;
+				}[];
+			};
 			get_post_likes: {
 				Args: {
 					post_id: number;

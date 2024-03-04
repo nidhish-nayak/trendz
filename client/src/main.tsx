@@ -19,6 +19,7 @@ import { PostProvider } from "./context/postContext.tsx";
 import { ProfileProvider } from "./context/profileContext.tsx";
 import { SearchProvider } from "./context/searchContext.tsx";
 import "./main.scss";
+import FindPeople from "./pages/findPeople/findPeople.tsx";
 import Friends from "./pages/friends/friends.tsx";
 
 export const ProtectedRoute = ({ children }: { children: ReactNode }) => {
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
             {
                 path: "/friends",
                 element: <Friends />,
+            },
+            {
+                path: "/findPeople",
+                element: <FindPeople />,
             },
         ],
     },
