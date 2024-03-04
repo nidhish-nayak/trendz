@@ -44,6 +44,9 @@ const FindPeople = () => {
             queryClient.invalidateQueries({
                 queryKey: ["users", currentUser.id],
             });
+            queryClient.invalidateQueries({
+                queryKey: ["suggested"],
+            });
             return setIsSpin(false);
         },
         onError(error) {

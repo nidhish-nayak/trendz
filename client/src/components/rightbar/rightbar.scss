@@ -33,6 +33,28 @@
                     color: themed("textColorSoft");
                 }
 
+                .item-title {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+
+                    span {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        color: themed("textColorSoft");
+
+                        svg {
+                            color: themed("textColor");
+                            cursor: pointer;
+
+                            &:hover {
+                                color: themed("button");
+                            }
+                        }
+                    }
+                }
+
                 .user {
                     display: flex;
                     align-items: center;
@@ -80,6 +102,34 @@
                             text-overflow: ellipsis;
                         }
 
+                        .username-wrapper {
+                            display: flex;
+                            flex-direction: column;
+                            max-width: 100px;
+
+                            .name {
+                                font-size: 0.875rem;
+                                font-weight: 500;
+                                color: themed("textColor");
+                                font-weight: 500;
+                                max-width: 100px;
+                                white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                            }
+
+                            .username {
+                                font-size: 0.875rem;
+                                font-weight: normal;
+                                color: themed("textColorSoft");
+                                font-weight: 300;
+                                max-width: 100px;
+                                white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                            }
+                        }
+
                         .activity-container {
                             display: flex;
                             flex-direction: column;
@@ -115,24 +165,15 @@
                         gap: 10px;
 
                         button {
-                            border: none;
-                            padding: 5px 10px;
-                            color: white;
+                            padding: 6px 10px;
                             cursor: pointer;
-                            border-radius: 2px;
+                            color: white;
+                            border-radius: 8px;
+                            background-color: #37996b;
+                            border: 1px solid hsl(153.1deg, 60.2%, 52.7%);
 
-                            &:first-child {
-                                background-color: themed("buttonBlue");
-                                &:hover {
-                                    background-color: themed("buttonBlueSoft");
-                                }
-                            }
-
-                            &:last-child {
-                                background-color: themed("buttonRed");
-                                &:hover {
-                                    background-color: themed("buttonRedSoft");
-                                }
+                            &:hover {
+                                background-color: hsl(152, 47%, 41%, 0.8);
                             }
                         }
                     }

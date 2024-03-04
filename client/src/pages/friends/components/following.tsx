@@ -54,6 +54,9 @@ const Following = () => {
             queryClient.invalidateQueries({
                 queryKey: ["relationships", currentUser.id],
             });
+            queryClient.invalidateQueries({
+                queryKey: ["suggested"],
+            });
             return setIsSpin(false);
         },
         onError(error) {
