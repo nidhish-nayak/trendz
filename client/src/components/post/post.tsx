@@ -150,7 +150,16 @@ const Post = ({ post }: PostTypes) => {
                                     color: "inherit",
                                 }}
                             >
-                                <span className="name">{name}</span>
+                                <div
+                                    className="name"
+                                    style={{
+                                        maxWidth: "150px",
+                                        overflow: "hidden",
+                                        textOverflow: "ellipsis",
+                                    }}
+                                >
+                                    {name}
+                                </div>
                             </Link>
                             <span className="date">{time}</span>
                         </div>

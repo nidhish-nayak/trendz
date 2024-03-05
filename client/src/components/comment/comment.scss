@@ -25,6 +25,18 @@
 
                 .comment-name {
                     font-weight: 500;
+
+                    @include tablet {
+                        max-width: 150px;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+
+                    @include mobile {
+                        max-width: 120px;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
                 }
 
                 .delete-container {

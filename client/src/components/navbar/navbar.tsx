@@ -84,7 +84,7 @@ const Navbar = () => {
                                 alt="logo"
                                 className="user-image"
                             />
-                            <span>{name}</span>
+                            <span title={name}>{name}</span>
                         </div>
                         <Logout
                             isOpen={logout}

@@ -55,10 +55,17 @@ const Friends = () => {
     const unfollowMutation = useMutation({
         mutationFn: (friendId: number) =>
             axiosRequest.delete(`/relationships/${friendId}`),
-        onSuccess: () =>
+        onSuccess: () => {
             queryClient.invalidateQueries({
                 queryKey: ["relationships", currentUser.id],
-            }),
+            });
+            queryClient.invalidateQueries({
+                queryKey: ["suggested"],
+            });
+            queryClient.invalidateQueries({
+                queryKey: ["following"],
+            });
+        },
         onError(error) {
             console.log(error);
             return alert("Unfollow user failed!");

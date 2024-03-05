@@ -54,6 +54,7 @@
                     padding: 10px;
                     gap: 10px;
                     cursor: pointer;
+                    position: relative;
 
                     &:hover {
                         background-color: themed("bgSoft");

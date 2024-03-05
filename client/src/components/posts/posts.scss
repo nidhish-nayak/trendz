@@ -15,6 +15,27 @@
             gap: 30px;
         }
 
+        .empty {
+            background-color: themed("bg");
+            padding: 8px 16px;
+            border-radius: 10px;
+            color: themed("textColor");
+            font-size: 1rem;
+            font-weight: 500;
+            border: 1px solid themed("border");
+
+            @include tablet {
+                background-color: themed("bgSoft");
+                margin: 30px;
+            }
+
+            @include mobile {
+                background-color: themed("bgSoft");
+                margin: 10px;
+                font-size: 0.875rem;
+            }
+        }
+
         .posts-error {
             padding: 10px 30px;
             margin-top: 10px;

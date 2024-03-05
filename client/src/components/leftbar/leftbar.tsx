@@ -15,6 +15,7 @@ import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
 import DisabledByDefaultOutlinedIcon from "@mui/icons-material/DisabledByDefaultOutlined";
 import ExploreIcon from "@mui/icons-material/Explore";
 import PersonSearchOutlinedIcon from "@mui/icons-material/PersonSearchOutlined";
+import Soon from "../soon/soon";
 
 const Leftbar = () => {
     const navigate = useNavigate();
@@ -115,6 +116,7 @@ const Leftbar = () => {
                         <div className="item">
                             <NotificationsActiveOutlined />
                             <span>Notifications</span>
+                            <Soon />
                         </div>
                     </Link>
                     <Link
@@ -127,6 +129,7 @@ const Leftbar = () => {
                         <div className="item">
                             <MarkUnreadChatAltOutlined />
                             <span>Chat</span>
+                            <Soon />
                         </div>
                     </Link>
                     <a

@@ -68,9 +68,16 @@ const Posts = () => {
 
         return (
             <div className="posts">
-                {filteredPosts.map((post) => (
-                    <Post post={post} key={post.id} />
-                ))}
+                {filteredPosts.length < 1 ? (
+                    <div className="empty">
+                        Follow someone to view their posts / Create your own
+                        post to view...
+                    </div>
+                ) : (
+                    filteredPosts.map((post) => (
+                        <Post post={post} key={post.id} />
+                    ))
+                )}
             </div>
         );
     }

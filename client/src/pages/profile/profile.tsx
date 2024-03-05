@@ -88,9 +88,14 @@ const Profile = () => {
                     <div className="left">
                         <div className="name">{name}</div>
                         <div className="desc">
-                            <b>Username:</b> {username}
-                            <br />
-                            <b>Email:</b> {email}
+                            <div className="desc-child">
+                                <p>Username:</p>
+                                <span title={username}>{username}</span>
+                            </div>
+                            <div className="desc-child">
+                                <p>Email:</p>
+                                <span title={email}>{email}</span>
+                            </div>
                         </div>
                         <FollowUser />
                     </div>

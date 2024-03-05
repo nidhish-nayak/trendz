@@ -30,7 +30,7 @@
 
             @include mobile {
                 border: none;
-                overflow: hidden;
+                // overflow: hidden;
                 border-radius: 0;
                 border-bottom: 1px solid #333;
             }
@@ -92,10 +92,36 @@
                     justify-content: flex-start;
                     align-items: flex-start;
                     gap: 10px;
+                    width: 100%;
 
                     .name {
                         font-size: 1.5rem;
                         font-weight: 500;
+                        max-width: 200px;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+
+                    .desc {
+                        .desc-child {
+                            display: flex;
+                            gap: 10px;
+
+                            p {
+                                font-weight: 500;
+                            }
+                            span {
+                                max-width: 200px;
+                                white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+
+                                @include mobile {
+                                    max-width: 150px;
+                                }
+                            }
+                        }
                     }
 
                     .item {

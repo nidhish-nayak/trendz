@@ -1,7 +1,10 @@
-import { Refresh } from "@mui/icons-material";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+
+import { Refresh } from "@mui/icons-material";
+import { AuthContext } from "../../../context/authContext";
+import { FOLLOW_MUTATION_TYPE } from "../../../pages/profile/profile.types";
 import { axiosRequest } from "../../../utils/axios.utils";
 import Spinner from "../../spinner/spinner";
 import "../rightbar.scss";
@@ -9,13 +12,49 @@ import { SUGGESTED_DATA_TYPES } from "./suggested.types";
 
 const Suggested = () => {
     const queryClient = useQueryClient();
+    const { currentUser } = useContext(AuthContext);
     const [isSpin, setIsSpin] = useState(false);
+
+    if (!currentUser) throw Error("User not found!");
 
     const handleRefresh = () => {
         queryClient.invalidateQueries({
             queryKey: ["suggested"],
         });
         return setIsSpin(true);
+    };
+
+    // Mutate Followers Data
+    const followMutation = useMutation({
+        mutationFn: (followDetails: FOLLOW_MUTATION_TYPE) =>
+            axiosRequest.post("/relationships", followDetails),
+        onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: ["relationships"],
+            });
+            queryClient.invalidateQueries({
+                queryKey: ["users", currentUser.id],
+            });
+            queryClient.invalidateQueries({
+                queryKey: ["suggested"],
+            });
+            return setIsSpin(false);
+        },
+        onError(error) {
+            setIsSpin(false);
+            console.log(error);
+            return alert("Follow user failed!");
+        },
+    });
+
+    const handleFollow = (peopleId: number) => {
+        setIsSpin(true);
+        const followDetails = {
+            followerUserId: currentUser.id,
+            followedUserId: peopleId,
+        };
+
+        followMutation.mutate(followDetails);
     };
 
     // FILTER SUGGESTED DATA
@@ -92,7 +131,10 @@ const Suggested = () => {
                                 </span>
                             </div>
                         </div>
-                        <div className="buttons">
+                        <div
+                            className="buttons"
+                            onClick={() => handleFollow(user.id)}
+                        >
                             <button>Follow</button>
                         </div>
                     </div>
