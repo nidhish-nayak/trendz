@@ -1,4 +1,4 @@
-# Trendz - Fullstack application
+# Trendz
 
 > **Warning**
 > This app is a work in progress. I am building this in public. You can follow the process on Github.
