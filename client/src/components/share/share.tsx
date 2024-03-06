@@ -4,7 +4,6 @@ import { ChangeEvent, useContext, useState } from "react";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SendIcon from "@mui/icons-material/Send";
-import TagIcon from "@mui/icons-material/Tag";
 
 import config from "../../config/config";
 import { AuthContext } from "../../context/authContext";
@@ -126,10 +125,6 @@ const Share = () => {
                                 <span>Add Image</span>
                             </div>
                         </label>
-                        <div className="item">
-                            <TagIcon fontSize="small" />
-                            <span>Tag Friends</span>
-                        </div>
                     </div>
                     <div className="right" title="Share">
                         {uploading ? (

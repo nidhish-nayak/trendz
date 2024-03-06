@@ -216,6 +216,20 @@ export type Database = {
 			[_ in never]: never;
 		};
 		Functions: {
+			get_explore_posts: {
+				Args: {
+					limit_no: number;
+				};
+				Returns: {
+					id: number;
+					desc: string;
+					img: string;
+					userId: number;
+					createdAt: string;
+					name: string;
+					profilePic: string;
+				}[];
+			};
 			get_findpeople: {
 				Args: {
 					my_user_id: number;

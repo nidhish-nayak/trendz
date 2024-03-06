@@ -70,10 +70,18 @@ const Leftbar = () => {
                 <hr />
                 <div className="menu">
                     <span className="menu-heading">Explore</span>
-                    <div className="item">
-                        <ExploreIcon />
-                        <span>Explore</span>
-                    </div>
+                    <Link
+                        to="/explore"
+                        style={{
+                            textDecoration: "none",
+                            color: "inherit",
+                        }}
+                    >
+                        <div className="item">
+                            <ExploreIcon />
+                            <span>Explore</span>
+                        </div>
+                    </Link>
                     <div
                         className={isPostOpen ? `item active` : "item inactive"}
                         onClick={handlePostOpen}
