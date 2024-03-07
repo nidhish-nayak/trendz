@@ -12,9 +12,8 @@ export const getStories = async (req: Request, res: Response) => {
 		.order("createdAt", { ascending: false })
 		.limit(15);
 
-	if (error) {
-		res.status(401).json("Error when fetching stories from DB!");
-	}
+	if (error)
+		return res.status(401).json("Error when fetching stories from DB!");
 
 	res.status(200).json(data);
 };

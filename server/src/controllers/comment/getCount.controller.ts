@@ -3,7 +3,7 @@ import { type Request, type Response } from "express";
 
 export const getCommentsCount = async (req: Request, res: Response) => {
 	if (!req.query.postId)
-		res.status(401).json("postId in getCound not found!");
+		return res.status(400).json("postId in getCound not found!");
 
 	const postIdString = req.query.postId as string;
 	const postId = parseInt(postIdString);
@@ -13,6 +13,10 @@ export const getCommentsCount = async (req: Request, res: Response) => {
 		.select("*", { count: "exact", head: true })
 		.eq("postId", postId);
 
-	if (error) throw Error(`Comments fetch failed for postId=${postId}!`);
-	res.status(200).json(count);
+	if (error)
+		return res
+			.status(400)
+			.json(`Comments fetch failed for postId=${postId}!`);
+
+	return res.status(200).json(count);
 };

@@ -12,8 +12,8 @@ export const getUser = async (req: Request, res: Response) => {
 			.eq("id", userId);
 
 		if (error) throw Error("User fetch from DB failed!");
-		res.status(200).json(data[0]);
+		return res.status(200).json(data[0]);
 	} catch (error) {
-		res.status(401).json(error);
+		return res.status(401).json(error);
 	}
 };

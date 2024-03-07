@@ -4,7 +4,7 @@ import { type Request, type Response } from "express";
 export const getLikes = async (req: Request, res: Response) => {
 	if (!req.query.postId || !req.query.userId) {
 		return res
-			.status(401)
+			.status(400)
 			.json("postIdString/userIdString not received in getLikes!");
 	}
 	const postIdString = req.query.postId as string;
@@ -18,8 +18,8 @@ export const getLikes = async (req: Request, res: Response) => {
 		user_id: userId,
 	});
 
-	if (error) throw new Error("Post likes fetch from DB failed!");
+	if (error) return res.status(400).json("Likes fetch failed from DB!");
 
 	const likesData = data[0];
-	res.status(200).json(likesData);
+	return res.status(200).json(likesData);
 };

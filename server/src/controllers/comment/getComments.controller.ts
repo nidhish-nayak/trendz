@@ -9,6 +9,10 @@ export const getComments = async (req: Request, res: Response) => {
 		post_id: postId,
 	});
 
-	if (error) throw Error(`Comments fetch failed for postId=${postId}!`);
-	res.status(200).json(comments);
+	if (error)
+		return res
+			.status(400)
+			.json(`Comments fetch failed for postId=${postId}`);
+
+	return res.status(200).json(comments);
 };

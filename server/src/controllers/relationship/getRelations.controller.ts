@@ -24,9 +24,7 @@ export const getRelations = async (req: Request, res: Response) => {
 		.eq("followerUserId", userId)
 		.eq("followedUserId", followedUserId);
 
-	if (error) {
-		res.status(400).json(error);
-		throw Error("Relationships fetch from DB failed!");
-	}
+	if (error) return res.status(400).json(error);
+
 	return res.status(200).json(data);
 };
