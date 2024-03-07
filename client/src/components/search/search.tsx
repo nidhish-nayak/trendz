@@ -4,10 +4,16 @@ import "./search.scss";
 
 import CancelIcon from "@mui/icons-material/Cancel";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
+import { useLocation } from "react-router-dom";
 
 const Search = () => {
+    const location = useLocation();
     const [searchData, setSearchData] = useState("");
     const { handleSearch } = useContext(SearchContext);
+
+    if (location.pathname !== "/") {
+        return <span />;
+    }
 
     return (
         <div className="search">

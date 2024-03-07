@@ -8,10 +8,10 @@ import authMiddleware from "$/middlewares/auth.middleware";
 
 const router = express.Router();
 
-router.get("/", authMiddleware, getComments);
+router.get("/", getComments);
 router.post("/", authMiddleware, addComment);
 router.delete("/:id", authMiddleware, deleteComment);
 
-router.get("/count", authMiddleware, getCommentsCount);
+router.get("/count", getCommentsCount);
 
 export default router;

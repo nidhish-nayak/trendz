@@ -365,9 +365,7 @@
                 display: flex;
                 align-items: center;
                 gap: 10px;
-                background-color: themed("bgSoft");
                 border-radius: 5px;
-                padding: 5px;
                 cursor: pointer;
 
                 input {
@@ -382,6 +380,75 @@
                 margin: 10px;
                 background-color: red;
                 color: red;
+            }
+        }
+    }
+}
+
+.menu-container {
+    @include themify($themes) {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background-color: themed("bgSoft");
+        top: 0px;
+        right: -1000px;
+        z-index: 1000;
+
+        &.menu-open {
+            right: 0px;
+            animation-name: slide;
+            animation-duration: 250ms;
+
+            @keyframes slide {
+                from {
+                    right: -1000px;
+                }
+                to {
+                    right: 0px;
+                }
+            }
+        }
+
+        .menu-list {
+            width: 100%;
+            height: 100vh;
+            background-color: themed("bgSoft");
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 20px;
+
+            .menu-close {
+                color: themed("textColor");
+                background-color: themed("bg");
+                border: 1px solid themed("border");
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                align-self: flex-end;
+                padding: 8px;
+                margin: 10px;
+                border-radius: 10px;
+            }
+
+            a {
+                position: relative;
+                width: 80%;
+                padding: 10px 20px;
+                text-decoration: none;
+                color: themed("textColor");
+                border-radius: 8px;
+                background-color: themed("border");
+                display: flex;
+                align-items: center;
+                gap: 10px;
+
+                .menu-items {
+                    font-size: 1.5rem;
+                }
             }
         }
     }

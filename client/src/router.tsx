@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
 
 import ErrorPage from "./pages/error/error";
+import SinglePost from "./pages/explore/components/singlePost";
 import Explore from "./pages/explore/explore";
 import FindPeople from "./pages/findPeople/findPeople";
 import Friends from "./pages/friends/friends";
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
             {
                 path: "/explore",
                 element: <Explore />,
+            },
+            {
+                path: "/post/:postId",
+                element: <SinglePost />,
             },
         ],
     },

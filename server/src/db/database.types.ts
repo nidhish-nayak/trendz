@@ -275,6 +275,20 @@ export type Database = {
 					count: number;
 				}[];
 			};
+			get_single_post: {
+				Args: {
+					my_post_id: number;
+				};
+				Returns: {
+					id: number;
+					desc: string;
+					img: string;
+					userId: number;
+					createdAt: string;
+					name: string;
+					profilePic: string;
+				}[];
+			};
 			get_stories: {
 				Args: {
 					user_id: number;
