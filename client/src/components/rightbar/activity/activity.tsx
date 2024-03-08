@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../../context/authContext";
 import { supabase } from "../../../supabase/db";
 import { axiosRequest } from "../../../utils/axios.utils";
 import formatTime from "../../../utils/date.utils";
@@ -13,6 +14,7 @@ import {
 
 const Activity = () => {
     const queryClient = useQueryClient();
+    const { currentUser } = useContext(AuthContext);
     const [activity, setActivity] = useState<REALTIME_TYPE | null>(null);
     const [prevAct, setPrevAct] = useState<REALTIME_TYPE | null>(null);
 
@@ -38,6 +40,9 @@ const Activity = () => {
                 (payload) => {
                     setPrevAct(activity);
                     setActivity(payload);
+                    queryClient.invalidateQueries({
+                        queryKey: ["activities"],
+                    });
                 }
             )
             .subscribe();
@@ -60,17 +65,21 @@ const Activity = () => {
             const activity_created_at: string = activity.commit_timestamp;
             const user_id: number = activity.new.userId;
 
-            activityMutation.mutate({
-                table_name: table_name,
-                table_id: table_id,
-                message: message,
-                activity_created_at: activity_created_at,
-                user_id: user_id,
-            });
+            if (user_id !== currentUser?.id) {
+                queryClient.invalidateQueries({
+                    queryKey: ["activities"],
+                });
+            } else {
+                return activityMutation.mutate({
+                    table_name: table_name,
+                    table_id: table_id,
+                    message: message,
+                    activity_created_at: activity_created_at,
+                    user_id: user_id,
+                });
+            }
         }
-    }, [activity, activityMutation, prevAct]);
-
-    console.log(activity);
+    }, [activity, activityMutation, currentUser?.id, prevAct, queryClient]);
 
     const getActivities = async (): Promise<ACTIVITY_GET_TYPES[]> => {
         const res = await axiosRequest.get("/activities");
