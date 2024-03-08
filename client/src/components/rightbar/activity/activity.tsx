@@ -43,6 +43,9 @@ const Activity = () => {
                     queryClient.invalidateQueries({
                         queryKey: ["activities"],
                     });
+                    queryClient.invalidateQueries({
+                        queryKey: ["posts"],
+                    });
                 }
             )
             .subscribe();
