@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { supabase } from "../../../supabase/db";
 import { axiosRequest } from "../../../utils/axios.utils";
+import formatTime from "../../../utils/date.utils";
 import Spinner from "../../spinner/spinner";
 import "../rightbar.scss";
 import {
@@ -42,13 +43,13 @@ const Activity = () => {
         return () => {
             postChannel.unsubscribe();
         };
-    }, []);
+    }, [activityMutation]);
 
     useEffect(() => {
         if (activity && activityMutation.isPending === false) {
             const table_name: string = activity.table;
             const table_id: number = activity.new.id;
-            const message = "Posted a new post";
+            const message = "Added a new post";
             const activity_created_at: string = activity.commit_timestamp;
             const user_id: number = activity.new.userId;
 
@@ -91,8 +92,8 @@ const Activity = () => {
                 <Spinner />
             ) : (
                 data.map((activity) => (
-                    <div className="user">
-                        <div className="userInfo" key={activity.id}>
+                    <div className="user" key={activity.id}>
+                        <div className="userInfo">
                             <img src={activity.profilePic} alt="user-image" />
                             <div className="activity-container">
                                 <div>
@@ -102,7 +103,13 @@ const Activity = () => {
                                     >
                                         {activity.name}
                                     </span>
-                                    <p className="user-time">1 min ago</p>
+                                    <p className="user-time">
+                                        {formatTime(
+                                            new Date(
+                                                activity.activity_created_at
+                                            )
+                                        )}
+                                    </p>
                                 </div>
 
                                 <p className="user-activity">
