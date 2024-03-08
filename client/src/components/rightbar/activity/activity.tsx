@@ -1,6 +1,23 @@
+import { useState } from "react";
+import { supabase } from "../../../supabase/db";
 import "../rightbar.scss";
+import { REALTIME_TYPE } from "./activity.types";
 
 const Activity = () => {
+    const [my, setMy] = useState<REALTIME_TYPE | null>(null);
+    const channels = supabase
+        .channel("inserted-post")
+        .on(
+            "postgres_changes",
+            { event: "*", schema: "public", table: "posts" },
+            (payload) => {
+                setMy(payload);
+                return console.log("Inserted post", payload);
+            }
+        )
+        .subscribe();
+    console.log(my);
+
     return (
         <div className="item">
             <span>Latest Activities</span>
@@ -13,12 +30,12 @@ const Activity = () => {
                     <div className="activity-container">
                         <div>
                             <span className="user-name" title="username">
-                                Keerthanajand Manjunathan Nayak
+                                John Doe
                             </span>
                             <p className="user-time">1 min ago</p>
                         </div>
                         <p className="user-activity">
-                            changed their cover picture
+                            {my?.new.id} Posted new post!
                         </p>
                     </div>
                 </div>

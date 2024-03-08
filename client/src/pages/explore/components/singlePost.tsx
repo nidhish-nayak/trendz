@@ -140,7 +140,6 @@ const SinglePost = () => {
     if (!postData || isPostLoading) return <Spinner />;
 
     const { id, userId, profilePic, name, img, desc, createdAt } = postData[0];
-    console.log(postData);
     const time = formatTime(createdAt);
 
     // HANDLERS
