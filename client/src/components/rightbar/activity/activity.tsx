@@ -14,9 +14,6 @@ import {
 const Activity = () => {
     const queryClient = useQueryClient();
     const [activity, setActivity] = useState<REALTIME_TYPE | null>(null);
-    const [prevActivity, setPrevActivity] = useState<REALTIME_TYPE | null>(
-        null
-    );
 
     const activityMutation = useMutation({
         mutationFn: (body: ACTIVITY_POST_TYPES) =>
@@ -38,7 +35,6 @@ const Activity = () => {
                 "postgres_changes",
                 { event: "INSERT", schema: "public", table: "posts" },
                 (payload) => {
-                    setPrevActivity(activity);
                     setActivity(payload);
                 }
             )
@@ -47,14 +43,10 @@ const Activity = () => {
         return () => {
             postChannel.unsubscribe();
         };
-    }, [activity, activityMutation]);
+    }, [activityMutation]);
 
     useEffect(() => {
-        if (
-            activity &&
-            activityMutation.isPending === false &&
-            prevActivity !== activity
-        ) {
+        if (activity && activityMutation.isPending === false) {
             const table_name: string = activity.table;
             const table_id: number = activity.new.id;
             const message = "Added a new post";
