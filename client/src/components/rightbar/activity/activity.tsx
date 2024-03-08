@@ -43,7 +43,7 @@ const Activity = () => {
         return () => {
             postChannel.unsubscribe();
         };
-    }, [activityMutation]);
+    }, [activity]);
 
     useEffect(() => {
         if (activity && activityMutation.isPending === false) {
