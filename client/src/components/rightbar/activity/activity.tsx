@@ -14,6 +14,7 @@ import {
 const Activity = () => {
     const queryClient = useQueryClient();
     const [activity, setActivity] = useState<REALTIME_TYPE | null>(null);
+    const [prevAct, setPrevAct] = useState<REALTIME_TYPE | null>(null);
 
     const activityMutation = useMutation({
         mutationFn: (body: ACTIVITY_POST_TYPES) =>
@@ -35,6 +36,7 @@ const Activity = () => {
                 "postgres_changes",
                 { event: "INSERT", schema: "public", table: "posts" },
                 (payload) => {
+                    setPrevAct(activity);
                     setActivity(payload);
                 }
             )
@@ -43,10 +45,14 @@ const Activity = () => {
         return () => {
             postChannel.unsubscribe();
         };
-    }, [activityMutation]);
+    }, [activity, activityMutation]);
 
     useEffect(() => {
-        if (activity && activityMutation.isPending === false) {
+        if (
+            activity &&
+            activityMutation.isPending === false &&
+            prevAct !== activity
+        ) {
             const table_name: string = activity.table;
             const table_id: number = activity.new.id;
             const message = "Added a new post";
@@ -61,9 +67,7 @@ const Activity = () => {
                 user_id: user_id,
             });
         }
-        // DO NOT PUT activityMutation as a dependency, this will re-render infinitely
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [activity]);
+    }, [activity, activityMutation, prevAct]);
 
     console.log(activity);
 
