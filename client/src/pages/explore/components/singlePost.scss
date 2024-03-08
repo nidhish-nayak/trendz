@@ -4,12 +4,12 @@
     @include themify($themes) {
         display: flex;
         flex-direction: column;
-        justify-content: center;
         align-items: flex-start;
         gap: 20px;
         padding: 30px;
         background-color: themed("bgSoft");
         width: 100%;
+        min-height: 100vh;
 
         @include tablet {
             background-color: themed("bg");

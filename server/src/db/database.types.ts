@@ -9,6 +9,41 @@ export type Json =
 export type Database = {
 	public: {
 		Tables: {
+			activities: {
+				Row: {
+					activity_created_at: string;
+					id: number;
+					message: string;
+					table_id: number;
+					table_name: string;
+					user_id: number;
+				};
+				Insert: {
+					activity_created_at?: string;
+					id?: number;
+					message: string;
+					table_id: number;
+					table_name: string;
+					user_id: number;
+				};
+				Update: {
+					activity_created_at?: string;
+					id?: number;
+					message?: string;
+					table_id?: number;
+					table_name?: string;
+					user_id?: number;
+				};
+				Relationships: [
+					{
+						foreignKeyName: "public_activities_user_id_fkey";
+						columns: ["user_id"];
+						isOneToOne: false;
+						referencedRelation: "users";
+						referencedColumns: ["id"];
+					},
+				];
+			};
 			comments: {
 				Row: {
 					createdAt: string | null;
@@ -216,6 +251,22 @@ export type Database = {
 			[_ in never]: never;
 		};
 		Functions: {
+			get_activities: {
+				Args: {
+					my_user_id: number;
+					activity_limit: number;
+				};
+				Returns: {
+					id: number;
+					table_name: string;
+					table_id: number;
+					message: string;
+					activity_created_at: string;
+					user_id: number;
+					name: string;
+					profilePic: string;
+				}[];
+			};
 			get_explore_posts: {
 				Args: {
 					limit_no: number;

@@ -6,6 +6,7 @@ import express, { type Application } from "express";
 import config from "./config/config";
 import { zodMiddleware } from "./middlewares/zod.middleware";
 
+import activityRoutes from "./routes/activity.route";
 import authRoutes from "./routes/auth.route";
 import commentRoutes from "./routes/comment.route";
 import friendRoutes from "./routes/friend.route";
@@ -42,6 +43,7 @@ app.use("/api/relationships", relationshipRoutes);
 app.use("/api/stories", storyRoutes);
 app.use("/api/test", testRoutes);
 app.use("/api/friends", friendRoutes);
+app.use("/api/activities", activityRoutes);
 
 // Listener
 app.listen(config.port, () => {
