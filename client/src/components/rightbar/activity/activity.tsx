@@ -47,7 +47,7 @@ const Activity = () => {
         return () => {
             postChannel.unsubscribe();
         };
-    }, [activity]);
+    }, [activity, setActivity]);
 
     useEffect(() => {
         if (
