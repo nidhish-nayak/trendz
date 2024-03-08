@@ -1,6 +1,6 @@
-import { RealtimePostgresChangesPayload } from "@supabase/supabase-js";
+import { RealtimePostgresInsertPayload } from "@supabase/supabase-js";
 
-export type REALTIME_TYPE = RealtimePostgresChangesPayload<{
+export type REALTIME_TYPE = RealtimePostgresInsertPayload<{
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     [key: string]: any;
 }>;

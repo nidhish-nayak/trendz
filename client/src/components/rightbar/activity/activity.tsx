@@ -9,13 +9,15 @@ const Activity = () => {
         .channel("inserted-post")
         .on(
             "postgres_changes",
-            { event: "*", schema: "public", table: "posts" },
+            { event: "INSERT", schema: "public", table: "posts" },
             (payload) => {
                 setMy(payload);
                 return console.log("Inserted post", payload);
             }
         )
         .subscribe();
+
+    console.log(channels);
     console.log(my);
 
     return (
