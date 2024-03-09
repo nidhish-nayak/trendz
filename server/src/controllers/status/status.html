@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Server Status</title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			body {
+				display: flex;
+				justify-content: flex-start;
+				align-items: center;
+				margin: 0;
+				padding: 30px;
+				background-color: #0e0e0e;
+				color: white;
+				font-family: Inter, system-ui, Avenir, Helvetica, Arial,
+					sans-serif;
+				font-synthesis: none;
+				text-rendering: optimizeLegibility;
+				-webkit-font-smoothing: antialiased;
+			}
+
+			.server-status {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				gap: 10px;
+				padding: 10px 20px;
+				background-color: #202020;
+				border: 1px solid grey;
+			}
+
+			.container {
+				display: flex;
+				flex-direction: column;
+				gap: 40px;
+			}
+
+			.status {
+				font-size: 1rem;
+			}
+
+			.server {
+				display: flex;
+				flex-direction: column;
+				gap: 10px;
+			}
+
+			.server-wrapper {
+				display: flex;
+				flex-direction: column;
+				flex-wrap: wrap;
+			}
+
+			.spinner-container {
+				padding: 5px;
+			}
+
+			.spinner {
+				width: 30px;
+				height: 30px;
+				border-radius: 50%;
+				border: 4px solid #41cf7c;
+				border-top-color: transparent;
+				animation: spin 1s linear infinite;
+			}
+
+			@keyframes spin {
+				to {
+					transform: rotate(360deg);
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<h1>Trendz Server</h1>
+			<div class="server">
+				<h3 class="title">Server status:</h3>
+				<div class="server-wrapper">
+					<div class="server-status">
+						<div class="status">Server is running</div>
+						<div class="spinner-container">
+							<div class="spinner" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
