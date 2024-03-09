@@ -1,12 +1,15 @@
 {
+	"exclude": ["./coverage", "./dist", "__tests__", "jest.config.js"],
 	"ts-node": {
-		"require": ["tsconfig-paths/register"]
+		"require": ["tsconfig-paths/register"],
+		"transpileOnly": true,
+		"files": true
 	},
 	"compilerOptions": {
 		"target": "ES6",
 		"module": "CommonJS",
-		"outDir": "dist",
-		"rootDir": "src",
+		"outDir": "./dist",
+		"rootDir": "./src",
 		"allowJs": true,
 		"strict": true,
 		"moduleResolution": "Node",

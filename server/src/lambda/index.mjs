@@ -35,7 +35,7 @@ const delete_old_stories = async (ids) => {
 		if (ids.length < 1) return "No stories to delete";
 
 		const { data, error } = await supabase
-			.from("table_name")
+			.from("stories")
 			.delete()
 			.in("id", ids);
 

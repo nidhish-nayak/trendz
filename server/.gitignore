@@ -38,3 +38,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Tests
+/coverage
+/jest.config.js
