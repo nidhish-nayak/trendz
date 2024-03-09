@@ -7,18 +7,19 @@ export default function ErrorPage() {
 
     return (
         <div className="error-page">
-            <h2>Oops!</h2>
-            <div>
-                <p>Sorry, an unexpected error has occurred.</p>
-                <p>
-                    <p>Client error:</p>
-                    <i>{error.statusText || error.message}</i>
+            <h2 className="error-title">Oops!</h2>
+            <div className="error-container">
+                <p className="para">Sorry, an unexpected error has occurred.</p>
+                <p className="para">
+                    <p className="para">Client error:</p>
+                    <i className="ital">{error.statusText || error.message}</i>
                 </p>
-                <p>Might be an issue with the server:</p>
-                <p>
-                    <p style={{ color: "#41cf7c" }}>
+                <p className="para">Might be an issue with the server:</p>
+                <p className="para">
+                    <p className="para" style={{ color: "#41cf7c" }}>
                         Check if server is running:{" "}
                         <a
+                            className="link"
                             href="https://linkx-server.onrender.com/api/test"
                             target="_blank"
                         >
