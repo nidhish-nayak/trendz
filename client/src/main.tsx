@@ -8,7 +8,7 @@ import { PostProvider } from "./context/postContext.tsx";
 import { ProfileProvider } from "./context/profileContext.tsx";
 import { SearchProvider } from "./context/searchContext.tsx";
 import "./main.scss";
-import router from "./router.tsx";
+import router from "./routes/router.tsx";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 

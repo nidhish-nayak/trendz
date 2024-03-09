@@ -16,7 +16,9 @@ const Activity = () => {
     const queryClient = useQueryClient();
     const { currentUser } = useContext(AuthContext);
     const [activity, setActivity] = useState<REALTIME_TYPE | null>(null);
-    const [prevAct, setPrevAct] = useState<REALTIME_TYPE | null>(null);
+    const [prevActivity, setPrevActivity] = useState<REALTIME_TYPE | null>(
+        null
+    );
 
     const activityMutation = useMutation({
         mutationFn: (body: ACTIVITY_POST_TYPES) =>
@@ -38,7 +40,7 @@ const Activity = () => {
                 "postgres_changes",
                 { event: "INSERT", schema: "public", table: "posts" },
                 (payload) => {
-                    setPrevAct(activity);
+                    setPrevActivity(activity);
                     setActivity(payload);
                     queryClient.invalidateQueries({
                         queryKey: ["activities"],
@@ -60,7 +62,7 @@ const Activity = () => {
         if (
             activity &&
             activityMutation.isPending === false &&
-            prevAct !== activity
+            prevActivity !== activity
         ) {
             const table_name: string = activity.table;
             const table_id: number = activity.new.id;
@@ -82,7 +84,14 @@ const Activity = () => {
                 });
             }
         }
-    }, [activity, activityMutation, currentUser?.id, prevAct, queryClient]);
+    }, [
+        activity,
+        activityMutation,
+        currentUser?.id,
+        prevActivity,
+        queryClient,
+    ]);
+    console.log(activity);
 
     const getActivities = async (): Promise<ACTIVITY_GET_TYPES[]> => {
         const res = await axiosRequest.get("/activities");
@@ -128,9 +137,8 @@ const Activity = () => {
                                         )}
                                     </p>
                                 </div>
-
                                 <p className="user-activity">
-                                    {activity.message} #{activity.table_id}
+                                    {activity.message}
                                 </p>
                             </div>
                         </div>
