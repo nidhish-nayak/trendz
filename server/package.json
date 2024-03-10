@@ -11,7 +11,7 @@
 		"start": "nodemon src/main.ts --ext ts",
 		"build": "tsc",
 		"prettier": "prettier --write .",
-		"test": "jest --coverage"
+		"test": "jest --coverage && node ./src/utils/coverage.util.mjs"
 	},
 	"devDependencies": {
 		"@types/bcryptjs": "^2.4.6",

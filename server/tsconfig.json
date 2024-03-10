@@ -20,5 +20,11 @@
 			"$/*": ["./src/*"]
 		}
 	},
-	"include": ["./src/**/*.ts", "./src/**/*.js", ".eslintrc", ".prettierrc"]
+	"include": [
+		"./src/**/*.ts",
+		"./src/**/*.js",
+		".eslintrc",
+		".prettierrc",
+		"src/utils/coverage.util.mjs"
+	]
 }

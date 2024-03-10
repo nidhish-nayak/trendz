@@ -14,7 +14,7 @@ const config = {
 		origin:
 			process.env.NODE_ENV === "production"
 				? process.env.CLIENT_URL
-				: process.env.LOCAL_CLIENT_URL,
+				: ["http://localhost:5173", "http://localhost:3000"],
 		credentials: true,
 		optionSuccessStatus: 200,
 	},
