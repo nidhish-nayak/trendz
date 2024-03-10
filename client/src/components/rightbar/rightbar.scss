@@ -34,6 +34,58 @@
                     color: themed("textColor");
                 }
 
+                .item-container {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    gap: 80px;
+
+                    .item-title-realtime {
+                        color: themed("textColorSoft");
+                    }
+
+                    .item-realtime {
+                        padding: 5px 10px;
+                        border-radius: 6px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        gap: 6px;
+                        background-color: themed("border");
+                        cursor: pointer;
+                        border: 1px solid themed("border");
+                        transition: all 150ms ease-in-out;
+
+                        &:hover {
+                            border: 1px solid themed("arrow");
+                        }
+
+                        .realtime-title {
+                            font-size: 0.75rem;
+                        }
+
+                        .realtime-circle {
+                            width: 5px;
+                            height: 5px;
+                            border-radius: 100%;
+                            background-color: #3cf09c;
+                        }
+
+                        .realtime-circle.offline {
+                            width: 5px;
+                            height: 5px;
+                            border-radius: 100%;
+                            background-color: rgb(255, 23, 69);
+                        }
+                    }
+                }
+
+                .user.offline {
+                    font-size: 0.875rem;
+                    color: themed("textColor");
+                    max-width: 200px;
+                }
+
                 .item-title {
                     display: flex;
                     justify-content: space-between;

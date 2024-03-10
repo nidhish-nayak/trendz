@@ -1,3 +1,4 @@
+import { RealtimeChannel } from "@supabase/supabase-js";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../context/authContext";
@@ -6,6 +7,7 @@ import { axiosRequest } from "../../../utils/axios.utils";
 import formatTime from "../../../utils/date.utils";
 import Spinner from "../../spinner/spinner";
 import "../rightbar.scss";
+import ActivityError from "./activity.error";
 import {
     ACTIVITY_GET_TYPES,
     ACTIVITY_POST_TYPES,
@@ -19,6 +21,10 @@ const Activity = () => {
     const [prevActivity, setPrevActivity] = useState<REALTIME_TYPE | null>(
         null
     );
+    const [isRealtime, setIsRealtime] = useState(false);
+    const setIsRealtimeFunction = () => {
+        setIsRealtime(!isRealtime);
+    };
 
     const activityMutation = useMutation({
         mutationFn: (body: ACTIVITY_POST_TYPES) =>
@@ -34,29 +40,35 @@ const Activity = () => {
 
     // Subscribe to INSERT events for posts table
     useEffect(() => {
-        const postChannel = supabase
-            .channel("inserted-post")
-            .on(
-                "postgres_changes",
-                { event: "INSERT", schema: "public", table: "posts" },
-                (payload) => {
-                    setPrevActivity(activity);
-                    setActivity(payload);
-                    queryClient.invalidateQueries({
-                        queryKey: ["activities"],
-                    });
-                    queryClient.invalidateQueries({
-                        queryKey: ["posts"],
-                    });
-                }
-            )
-            .subscribe();
+        let postChannel: RealtimeChannel;
+
+        if (isRealtime === true) {
+            postChannel = supabase
+                .channel("inserted-post")
+                .on(
+                    "postgres_changes",
+                    { event: "INSERT", schema: "public", table: "posts" },
+                    (payload) => {
+                        setPrevActivity(activity);
+                        setActivity(payload);
+                        queryClient.invalidateQueries({
+                            queryKey: ["activities"],
+                        });
+                        queryClient.invalidateQueries({
+                            queryKey: ["posts"],
+                        });
+                    }
+                )
+                .subscribe();
+        }
 
         return () => {
-            postChannel.unsubscribe();
+            if (postChannel) {
+                postChannel.unsubscribe();
+            }
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [isRealtime]);
 
     useEffect(() => {
         if (
@@ -91,6 +103,7 @@ const Activity = () => {
         prevActivity,
         queryClient,
     ]);
+
     console.log(activity);
 
     const getActivities = async (): Promise<ACTIVITY_GET_TYPES[]> => {
@@ -103,17 +116,41 @@ const Activity = () => {
         queryFn: getActivities,
     });
 
-    if (error)
+    if (error) {
+        return <ActivityError setFunction={setIsRealtimeFunction} />;
+    }
+
+    if (!isRealtime)
         return (
             <div className="item">
-                <span>Latest Activities</span>
-                <p>Server Error</p>
+                <div className="item-container">
+                    <div className="item-title-realtime">Latest Activities</div>
+                    <div
+                        className="item-realtime"
+                        title="Realtime updates cause heavy load on servers. Default state is set to disabled."
+                        onClick={() => setIsRealtime(true)}
+                    >
+                        <p className="realtime-title">Realtime</p>
+                        <div className="realtime-circle offline" />
+                    </div>
+                </div>
+                <div className="user offline">Realtime activities off</div>
             </div>
         );
 
     return (
         <div className="item">
-            <span>Latest Activities</span>
+            <div className="item-container">
+                <div className="item-title-realtime">Latest Activities</div>
+                <div
+                    className="item-realtime"
+                    title="Realtime updates cause heavy load on servers. Default state is set to disabled."
+                    onClick={() => setIsRealtime(false)}
+                >
+                    <p className="realtime-title">Realtime</p>
+                    <div className="realtime-circle" />
+                </div>
+            </div>
             {isLoading || !data ? (
                 <Spinner />
             ) : (

@@ -5,6 +5,7 @@
         border-radius: 10px;
         background-color: themed("bg");
         color: themed("textColor");
+        // border: 1px solid themed("border");
         box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
             0 4px 6px -4px rgb(0 0 0 / 0.1);
 
@@ -17,6 +18,7 @@
 
         @include mobile {
             border-radius: 0;
+            border: none;
             margin: 0;
             background-color: themed("bg");
         }

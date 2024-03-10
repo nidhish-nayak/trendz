@@ -1,10 +1,15 @@
 import { supabase } from "../db";
 
-export const channels = supabase
-    .channel("inserted-post")
-    .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "posts" },
-        (payload) => console.log(payload)
-    )
-    .subscribe();
+export const postChannel = () => {
+    let payloadData;
+    supabase
+        .channel("inserted-post")
+        .on(
+            "postgres_changes",
+            { event: "INSERT", schema: "public", table: "posts" },
+            (payload) => {
+                payloadData = payload;
+            }
+        );
+    return payloadData;
+};

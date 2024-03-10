@@ -5,7 +5,7 @@ import { Request, Response } from "express";
 export const getActivities = async (req: Request, res: Response) => {
 	const userId = getUserIdFromCookie(req);
 	// set limit for the no.of rows fetched
-	const limit = 5;
+	const limit = 4;
 
 	const { data, error } = await supabase.rpc("get_activities", {
 		my_user_id: userId,
