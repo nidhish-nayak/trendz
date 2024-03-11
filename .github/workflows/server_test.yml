@@ -1,6 +1,9 @@
 name: Server Test
 
 on:
+    pull_request:
+        branches:
+            - main
     push:
         branches:
             - main # Adjust this according to your default branch name
@@ -17,6 +20,11 @@ jobs:
               run: |
                   cd server
                   npm install
+
+            - name: Set up environment variables
+              env:
+                  DB_URL: ${{ secrets.DB_URL }}
+                  DB_SERVICE_ROLE_KEY: ${{ secrets.DB_SERVICE_ROLE_KEY }}
 
             - name: Run tests
               run: |
