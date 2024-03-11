@@ -1,8 +1,20 @@
 {
     "devDependencies": {
-        "husky": "^9.0.11"
+        "husky": "^9.0.11",
+        "lint-staged": "^15.2.2"
     },
     "scripts": {
-        "prepare": "husky"
+        "prepare": "husky install"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged && npm run test"
+        }
+    },
+    "lint-staged": {
+        "server/**/*.js": [
+            "npm run prettier --",
+            "git add"
+        ]
     }
 }
