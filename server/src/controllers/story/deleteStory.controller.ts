@@ -11,10 +11,12 @@ export const deleteStory = async (req: Request, res: Response) => {
 			.delete()
 			.eq("id", storyId);
 
-		if (error) throw Error("Story deletion from DB failed!");
-		res.status(200).json(data);
+		if (error)
+			return res.status(400).json("Story deletion from DB failed!");
+
+		return res.status(200).json(data);
 	} catch (error) {
 		console.error(error);
-		res.status(401).json(error);
+		return res.status(401).json(error);
 	}
 };

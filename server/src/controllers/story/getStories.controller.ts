@@ -15,5 +15,5 @@ export const getStories = async (req: Request, res: Response) => {
 	if (error)
 		return res.status(401).json("Error when fetching stories from DB!");
 
-	res.status(200).json(data);
+	return res.status(200).json(data);
 };

@@ -25,7 +25,8 @@ export const updateUser = async (req: Request, res: Response) => {
 		.eq("username", username)
 		.neq("id", userId);
 
-	if (existingUserError) throw Error("Error during username check!");
+	if (existingUserError)
+		return res.status(400).json("Error during username check!");
 
 	if (existingUser.length > 0) {
 		return res.status(409).json("Username already exists!");
@@ -45,8 +46,7 @@ export const updateUser = async (req: Request, res: Response) => {
 		.match({ id: id });
 
 	if (error) {
-		res.status(409).json("Profile update failed to DB!");
-		throw Error("User profile update failed to DB!");
+		return res.status(409).json("Profile update failed to DB!");
 	}
 
 	return res.status(200).json(data);

@@ -5,10 +5,9 @@ import { type Request, type Response } from "express";
 export const getFollowers = async (req: Request, res: Response) => {
 	const userId = getUserIdFromCookie(req);
 
-	const { data: followerIdData, error: followerIdError } = await supabase.rpc(
-		"get_followers_id",
-		{ my_user_id: userId }
-	);
+	const { data: followerIdData, error: followerIdError } = await supabase
+		.rpc("get_followers_id", { my_user_id: userId })
+		.limit(20);
 
 	if (followerIdError)
 		return res.status(400).json("FollowersID fetch rpc failed!");

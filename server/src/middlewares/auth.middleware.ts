@@ -7,7 +7,7 @@ const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
 	const key = config.jwtKey;
 
 	if (!token) return res.status(401).send("Not logged in!");
-	if (!key) return res.status(401).send("Server error - JWT key not found!");
+	if (!key) return res.status(404).send("Server error - JWT key not found!");
 
 	try {
 		const verified = jwt.verify(token, key);

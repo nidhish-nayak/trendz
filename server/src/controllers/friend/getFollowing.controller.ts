@@ -5,10 +5,9 @@ import { type Request, type Response } from "express";
 export const getFollowing = async (req: Request, res: Response) => {
 	const userId = getUserIdFromCookie(req);
 
-	const { data: followingData, error: followingError } = await supabase.rpc(
-		"get_following_id",
-		{ my_user_id: userId }
-	);
+	const { data: followingData, error: followingError } = await supabase
+		.rpc("get_following_id", { my_user_id: userId })
+		.limit(20);
 
 	if (followingError)
 		return res.status(400).json("RPC function fail in server!");

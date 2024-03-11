@@ -23,7 +23,7 @@ export const addPost = async (req: Request, res: Response) => {
 			])
 			.select();
 
-		if (error) throw Error("Post upload to DB has failed!");
+		if (error) res.status(400).json("Post upload to DB has failed!");
 
 		res.status(200).json(data);
 	} catch (error) {

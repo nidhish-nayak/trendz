@@ -15,7 +15,8 @@ export const addLike = async (req: Request, res: Response) => {
 		.eq("postId", postId)
 		.eq("userId", userId);
 
-	if (existingLikeError) throw Error("Error");
+	if (existingLikeError)
+		return res.status(400).json("Existing like check failed from DB!");
 
 	if (existingLike.length >= 1) {
 		return res.status(401).json("User has already liked the post!");
@@ -25,7 +26,8 @@ export const addLike = async (req: Request, res: Response) => {
 			.insert({ postId: postId, userId: userId })
 			.select();
 
-		if (error) throw Error("Adding like to DB failed!");
+		if (error) res.status(400).json("Adding like to DB failed!");
+
 		return res.status(200).json(data);
 	}
 };

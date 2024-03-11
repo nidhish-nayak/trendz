@@ -15,7 +15,7 @@ export const addComment = async (req: Request, res: Response) => {
 			.insert({ desc: desc, userId: userId, postId: postId })
 			.select();
 
-		if (error) throw Error("Comment upload to DB failed!");
+		if (error) return res.status(400).json("Comment insert to DB failed!");
 
 		res.status(200).json(data);
 	} catch (error) {

@@ -23,7 +23,8 @@ export const deleteLike = async (req: Request, res: Response) => {
 			.eq("postId", postId)
 			.eq("userId", userId);
 
-		if (error) throw Error("Deleting like from DB failed!");
+		if (error) return res.status(400).json("Deleting like from DB failed!");
+
 		return res.status(200).json(data);
 	} else {
 		return res.status(401).json("User has not yet liked the post!");
