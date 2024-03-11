@@ -24,4 +24,4 @@ jobs:
             - name: Run tests
               run: |
                   cd server
-                  npm test
+                  DB_URL=$DB_URL DB_SERVICE_ROLE_KEY=$DB_SERVICE_ROLE_KEY npm test
