@@ -1,0 +1,6 @@
+cd server
+
+npm run prettier
+npm run test
+
+cd ..

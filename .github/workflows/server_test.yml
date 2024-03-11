@@ -1,0 +1,24 @@
+name: Server Test
+
+on:
+    push:
+        branches:
+            - main # Adjust this according to your default branch name
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Install dependencies
+              run: |
+                  cd server
+                  npm install
+
+            - name: Run tests
+              run: |
+                  cd server
+                  npm test
