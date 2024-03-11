@@ -1,9 +1,6 @@
 name: Server Test
 
 on:
-    pull_request:
-        branches:
-            - main
     push:
         branches:
             - main # Adjust this according to your default branch name
