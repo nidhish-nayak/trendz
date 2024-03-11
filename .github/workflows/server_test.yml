@@ -12,16 +12,14 @@ jobs:
         steps:
             - name: Checkout code
               uses: actions/checkout@v2
+              env:
+                  DB_URL: ${{ secrets.DB_URL }}
+                  DB_SERVICE_ROLE_KEY: ${{ secrets.DB_SERVICE_ROLE_KEY }}
 
             - name: Install dependencies
               run: |
                   cd server
                   npm install
-
-            - name: Set up environment variables
-              env:
-                  DB_URL: ${{ secrets.DB_URL }}
-                  DB_SERVICE_ROLE_KEY: ${{ secrets.DB_SERVICE_ROLE_KEY }}
 
             - name: Run tests
               run: |
