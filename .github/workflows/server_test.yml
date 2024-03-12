@@ -4,6 +4,9 @@ on:
     push:
         branches:
             - main # Adjust this according to your default branch name
+    pull_request:
+        branches:
+            - main
 
 jobs:
     test:
@@ -12,18 +15,17 @@ jobs:
         steps:
             - name: Checkout code
               uses: actions/checkout@v2
-              env:
-                  DB_URL: ${{ secrets.DB_URL }}
-                  DB_SERVICE_ROLE_KEY: ${{ secrets.DB_SERVICE_ROLE_KEY }}
 
             - name: Install dependencies
               run: |
                   cd server
                   npm install
+                  touch .env
+                  echo "DB_URL=${{ secrets.DB_URL }}" > .env
+                  echo "DB_URL=${{ secrets.DB_SERVICE_ROLE_KEY }}" > .env
 
             - name: Run tests
               run: |
                   cd server
-                  export DB_URL=$DB_URL
-                  export DB_SERVICE_ROLE_KEY=$DB_SERVICE_ROLE_KEY
                   npm test
+                  rm -rf .env
