@@ -26,9 +26,12 @@ jobs:
                   cd server
                   touch .env
                   echo "DB_URL=${{ secrets.DB_URL }}" > .env
-                  echo "DB_URL=${{ secrets.DB_SERVICE_ROLE_KEY }}" > .env
+                  echo "DB_SERVICE_ROLE_KEY=${{ secrets.DB_SERVICE_ROLE_KEY }}" > .env
+                  cat .env
                   npm test
 
             - name: Remove .env
               run: |
+                  cd server
+                  cat .env
                   rm .env
