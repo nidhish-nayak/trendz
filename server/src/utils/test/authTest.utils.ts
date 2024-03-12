@@ -18,3 +18,8 @@ export const RegisterPass = {
 	name: "Admin",
 	email: "admin@gmail.com",
 };
+
+export const DeregisterPass = {
+	username: "admin",
+	password: "password",
+};

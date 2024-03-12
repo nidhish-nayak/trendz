@@ -9,6 +9,7 @@ import { zodMiddleware } from "../../middlewares/zod.middleware";
 
 import authRoutes from "../../routes/auth.route";
 import {
+	DeregisterPass,
 	RegisterInputFail,
 	RegisterPass,
 	RegisterUserExists,
@@ -57,6 +58,30 @@ describe("Auth controllers test", () => {
 		const response = await request(app)
 			.post("/api/auth/register")
 			.send(RegisterPass);
+		expect(response.status).toBe(200);
+	});
+
+	it("Login for register cleanup", async () => {
+		const response = await request(app)
+			.post("/api/auth/login")
+			.send(DeregisterPass);
+
+		userId = response.body.id;
+
+		const cookies = response.headers["set-cookie"];
+		accessToken = getAccessToken(cookies);
+
+		expect(accessToken).toBeDefined();
+		expect(response.status).toBe(200);
+	});
+
+	// Temporary
+	it("Register cleanup", async () => {
+		const response = await request(app)
+			.post("/api/auth/deregister")
+			.set("Cookie", [`accessToken=${accessToken}`])
+			.send(DeregisterPass);
+
 		expect(response.status).toBe(200);
 	});
 
