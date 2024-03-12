@@ -28,4 +28,7 @@ jobs:
                   echo "DB_URL=${{ secrets.DB_URL }}" > .env
                   echo "DB_URL=${{ secrets.DB_SERVICE_ROLE_KEY }}" > .env
                   npm test
-                  rm -rf .env
+
+            - name: Remove .env
+              run: |
+                  rm .env
