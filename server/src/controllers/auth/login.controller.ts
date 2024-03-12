@@ -23,7 +23,8 @@ export const login = async (req: Request, res: Response) => {
 			.select("*")
 			.eq("username", username);
 
-		if (existingError) throw existingError;
+		if (existingError)
+			return res.status(500).json("Error when checking existing user!");
 
 		if (existingUser.length === 0) {
 			return res

@@ -68,14 +68,14 @@
                             width: 5px;
                             height: 5px;
                             border-radius: 100%;
-                            background-color: #3cf09c;
+                            background-color: themed("activityOn");
                         }
 
                         .realtime-circle.offline {
                             width: 5px;
                             height: 5px;
                             border-radius: 100%;
-                            background-color: rgb(255, 23, 69);
+                            background-color: themed("activityOff");
                         }
                     }
                 }
@@ -224,10 +224,15 @@
                         gap: 10px;
 
                         button {
-                            padding: 5px 10px;
+                            padding: 4px 10px;
+                            border-radius: 6px;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            gap: 6px;
                             cursor: pointer;
                             color: white;
-                            border-radius: 6px;
+                            transition: all 150ms ease-in-out;
                             background-color: #37996b;
                             border: 1px solid hsl(153.1deg, 60.2%, 52.7%);
 

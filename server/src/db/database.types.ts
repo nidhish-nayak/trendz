@@ -369,6 +369,8 @@ export type Database = {
 			get_user_posts: {
 				Args: {
 					my_id: number;
+					page?: number;
+					page_size?: number;
 				};
 				Returns: {
 					id: number;

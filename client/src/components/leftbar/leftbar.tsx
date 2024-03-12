@@ -10,11 +10,11 @@ import {
     HomeOutlined,
     MarkUnreadChatAltOutlined,
     NotificationsActiveOutlined,
+    TravelExploreOutlined,
 } from "@mui/icons-material";
 import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
 import DisabledByDefaultOutlinedIcon from "@mui/icons-material/DisabledByDefaultOutlined";
 import ExploreIcon from "@mui/icons-material/Explore";
-import PersonSearchOutlinedIcon from "@mui/icons-material/PersonSearchOutlined";
 import Soon from "../soon/soon";
 
 const Leftbar = () => {
@@ -106,7 +106,7 @@ const Leftbar = () => {
                         }}
                     >
                         <div className="item">
-                            <PersonSearchOutlinedIcon />
+                            <TravelExploreOutlined />
                             <span>Find People</span>
                         </div>
                     </Link>

@@ -2,15 +2,10 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 
 import EditIcon from "@mui/icons-material/Edit";
-import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
-import FacebookTwoToneIcon from "@mui/icons-material/FacebookTwoTone";
-import InstagramIcon from "@mui/icons-material/Instagram";
 import LanguageIcon from "@mui/icons-material/Language";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import PinterestIcon from "@mui/icons-material/Pinterest";
 import PlaceIcon from "@mui/icons-material/Place";
-import TwitterIcon from "@mui/icons-material/Twitter";
 
+import { Email } from "@mui/icons-material";
 import { useContext, useState } from "react";
 import Posts from "../../components/posts/posts";
 import Spinner from "../../components/spinner/spinner";
@@ -102,7 +97,9 @@ const Profile = () => {
 
                     <div className="right">
                         <div className="more">
-                            <EmailOutlinedIcon />
+                            <a href={`mailto:${email}`}>
+                                <Email />
+                            </a>
                             {currentUser.id !== parseInt(id) ? null : (
                                 <div className="edit" onClick={handleClick}>
                                     <EditIcon fontSize="small" />
@@ -116,7 +113,7 @@ const Profile = () => {
                         <div className="info">
                             <div className="item city">
                                 <PlaceIcon />
-                                <div>{city}</div>
+                                <div>{city ? city : "Unknown"}</div>
                             </div>
                             <a
                                 href={website!}
@@ -125,23 +122,6 @@ const Profile = () => {
                                 className="item"
                             >
                                 <LanguageIcon />
-                            </a>
-                        </div>
-                        <div className="social-links">
-                            <a href="http://facebook.com">
-                                <FacebookTwoToneIcon fontSize="medium" />
-                            </a>
-                            <a href="http://facebook.com">
-                                <InstagramIcon fontSize="medium" />
-                            </a>
-                            <a href="http://facebook.com">
-                                <TwitterIcon fontSize="medium" />
-                            </a>
-                            <a href="http://facebook.com">
-                                <LinkedInIcon fontSize="medium" />
-                            </a>
-                            <a href="http://facebook.com">
-                                <PinterestIcon fontSize="medium" />
                             </a>
                         </div>
                     </div>

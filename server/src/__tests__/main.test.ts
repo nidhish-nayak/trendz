@@ -32,6 +32,10 @@ let accessToken: string;
 let userId: number;
 let postIdArray: number[];
 let followingIdArray: number[];
+const userCredentials = {
+	username: "guest",
+	password: "password",
+};
 
 // Reusable function to parse accessToken from cookie
 const getAccessToken = (cookies: string): string => {
@@ -41,14 +45,13 @@ const getAccessToken = (cookies: string): string => {
 	return token;
 };
 
-describe("Express Application Setup", () => {
+describe("Express application setup & Routes test", () => {
 	beforeAll(async () => {
 		// Auth for requests
 		app.use("/api/auth", authRoutes);
-		const response = await request(app).post("/api/auth/login").send({
-			username: "guest",
-			password: "password",
-		});
+		const response = await request(app)
+			.post("/api/auth/login")
+			.send(userCredentials);
 
 		userId = response.body.id;
 
