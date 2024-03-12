@@ -20,12 +20,12 @@ jobs:
               run: |
                   cd server
                   npm install
-                  touch .env
-                  echo "DB_URL=${{ secrets.DB_URL }}" > .env
-                  echo "DB_URL=${{ secrets.DB_SERVICE_ROLE_KEY }}" > .env
 
             - name: Run tests
               run: |
                   cd server
+                  touch .env
+                  echo "DB_URL=${{ secrets.DB_URL }}" > .env
+                  echo "DB_URL=${{ secrets.DB_SERVICE_ROLE_KEY }}" > .env
                   npm test
                   rm -rf .env
