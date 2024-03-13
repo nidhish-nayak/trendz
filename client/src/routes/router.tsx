@@ -8,6 +8,7 @@ import {
     FindPeople,
     Friends,
     Home,
+    MobileRightbar,
     Profile,
     Register,
     SinglePost,
@@ -70,6 +71,14 @@ const router = createBrowserRouter([
                 element: (
                     <Suspense>
                         <SinglePost />
+                    </Suspense>
+                ),
+            },
+            {
+                path: "/activities",
+                element: (
+                    <Suspense>
+                        <MobileRightbar />
                     </Suspense>
                 ),
             },

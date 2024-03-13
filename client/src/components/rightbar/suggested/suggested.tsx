@@ -17,13 +17,6 @@ const Suggested = () => {
 
     if (!currentUser) throw Error("User not found!");
 
-    const handleRefresh = () => {
-        queryClient.invalidateQueries({
-            queryKey: ["suggested"],
-        });
-        return setIsSpin(true);
-    };
-
     // Mutate Followers Data
     const followMutation = useMutation({
         mutationFn: (followDetails: FOLLOW_MUTATION_TYPE) =>
@@ -82,6 +75,14 @@ const Suggested = () => {
     });
 
     if (error) return <div className="item">Error - Data fetch failed!</div>;
+
+    const handleRefresh = () => {
+        queryClient.invalidateQueries({
+            queryKey: ["suggested"],
+        });
+
+        return setIsSpin(true);
+    };
 
     if (isLoading || !data || isSpin)
         return (

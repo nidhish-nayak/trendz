@@ -7,7 +7,7 @@ import PlaceIcon from "@mui/icons-material/Place";
 
 import { Email, PersonAddDisabled } from "@mui/icons-material";
 import { AxiosError } from "axios";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import Posts from "../../components/posts/posts";
 import Spinner from "../../components/spinner/spinner";
 import { AuthContext } from "../../context/authContext";
@@ -26,14 +26,6 @@ type DELETE_FORM_TYPES = {
 const Profile = () => {
     const navigate = useNavigate();
     const queryClient = useQueryClient();
-    const [isButtonLoading, setIsButtonLoading] = useState(false);
-    const [isEditOpen, setIsEditOpen] = useState(false);
-    const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-    const [mutationError, setMutationError] = useState<string | null>(null);
-    const [deleteForm, setDeleteForm] = useState<DELETE_FORM_TYPES>({
-        username: null,
-        password: null,
-    });
 
     const { id } = useParams();
     const { currentUser } = useContext(AuthContext);
@@ -41,6 +33,23 @@ const Profile = () => {
         useContext(ProfileContext);
 
     if (!currentUser || !id) throw Error("User not found!");
+
+    const inputRef = useRef<HTMLInputElement | null>(null);
+    const [isButtonLoading, setIsButtonLoading] = useState(false);
+    const [isEditOpen, setIsEditOpen] = useState(false);
+    const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+    const [mutationError, setMutationError] = useState<string | null>(null);
+    const [deleteForm, setDeleteForm] = useState<DELETE_FORM_TYPES>({
+        username: currentUser.username,
+        password: null,
+    });
+
+    useEffect(() => {
+        if (inputRef.current) {
+            inputRef.current.focus();
+        }
+        return;
+    }, [isDeleteOpen]);
 
     const mutation = useMutation({
         mutationFn: async (deleteForm: DELETE_FORM_TYPES) => {
@@ -132,6 +141,7 @@ const Profile = () => {
                                     <input
                                         type="text"
                                         required
+                                        value={currentUser.username}
                                         placeholder="username"
                                         onChange={(e) =>
                                             setDeleteForm({
@@ -146,6 +156,7 @@ const Profile = () => {
                                     <input
                                         type="password"
                                         required
+                                        ref={inputRef}
                                         placeholder="!@#$%^&*()_+"
                                         onChange={(e) =>
                                             setDeleteForm({

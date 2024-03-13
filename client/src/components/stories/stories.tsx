@@ -68,8 +68,8 @@ const Stories = () => {
         mutationFn: (img: string) =>
             axiosRequest.post("/stories", { img: img }),
         onSuccess: () => {
-            setIsSubmitLoading(false);
             queryClient.invalidateQueries({ queryKey: ["stories"] });
+            setIsSubmitLoading(false);
             setLocalStory(null);
             setStoryImg(null);
             setIsPostOpen(false);

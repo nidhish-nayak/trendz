@@ -223,6 +223,8 @@
 
                     .count-story {
                         display: flex;
+                        align-items: center;
+                        justify-content: flex-start;
                         gap: 4px;
                         position: absolute;
                         bottom: 8px;
@@ -230,10 +232,10 @@
                         overflow: hidden;
 
                         .bar {
-                            border-radius: 10px;
-                            width: 100%;
-                            height: 5px;
-                            background-color: themed("buttonBorder");
+                            border-radius: 100%;
+                            width: 6px;
+                            height: 6px;
+                            background-color: white;
                         }
 
                         @include mobile {
@@ -270,7 +272,7 @@
                         object-fit: cover;
                         border-radius: 10px;
                         border: 1px solid themed("bgSoft");
-                        transition: all 500ms ease-in-out;
+                        transition: all 250ms ease-in-out;
 
                         @include mobile {
                             border-radius: 50%;

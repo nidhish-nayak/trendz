@@ -11,6 +11,9 @@ export const SinglePost = lazy(
     () => import("../pages/explore/components/singlePost")
 );
 export const Register = lazy(() => import("../pages/register/register"));
+export const MobileRightbar = lazy(
+    () => import("../components/rightbar/mobile/mobileRightbar")
+);
 
 // Reusable suspense wrapper
 export const Suspense = ({ children }: { children: ReactNode }) => {

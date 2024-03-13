@@ -21,6 +21,7 @@ import {
     Groups3Outlined,
     Home,
     Menu,
+    MonitorHeart,
     NotificationAdd,
     PersonSearchOutlined,
     SearchOff,
@@ -227,6 +228,13 @@ const Navbar = () => {
                         >
                             <Groups3Outlined className="large" />
                             <li className="menu-items">Friend List</li>
+                        </Link>
+                        <Link
+                            to="/activities"
+                            onClick={() => setIsMenuOpen(!isMenuOpen)}
+                        >
+                            <MonitorHeart className="large" />
+                            <li className="menu-items">Activities</li>
                         </Link>
                         <Link to="/" onClick={() => setIsMenuOpen(!isMenuOpen)}>
                             <Soon />
