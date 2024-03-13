@@ -52,7 +52,7 @@ const Posts = () => {
 
     if (error) {
         console.error(error.message);
-        localStorage.removeItem("user");
+        sessionStorage.removeItem("user");
         navigate("/login");
         alert("Please login again!");
         return <PostsError />;

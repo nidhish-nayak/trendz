@@ -1,11 +1,12 @@
-import { useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useNavigate, useParams } from "react-router-dom";
 
 import EditIcon from "@mui/icons-material/Edit";
 import LanguageIcon from "@mui/icons-material/Language";
 import PlaceIcon from "@mui/icons-material/Place";
 
-import { Email } from "@mui/icons-material";
+import { Email, PersonAddDisabled } from "@mui/icons-material";
+import { AxiosError } from "axios";
 import { useContext, useState } from "react";
 import Posts from "../../components/posts/posts";
 import Spinner from "../../components/spinner/spinner";
@@ -17,10 +18,22 @@ import FollowUser from "./components/followUser";
 import "./profile.scss";
 import { USER_TYPES } from "./profile.types";
 
-// DO NOT TOUCH AREA - You will regret refactoring this component & its components!!!
+type DELETE_FORM_TYPES = {
+    username: string | null;
+    password: string | null;
+};
 
 const Profile = () => {
+    const navigate = useNavigate();
+    const queryClient = useQueryClient();
+    const [isButtonLoading, setIsButtonLoading] = useState(false);
     const [isEditOpen, setIsEditOpen] = useState(false);
+    const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+    const [mutationError, setMutationError] = useState<string | null>(null);
+    const [deleteForm, setDeleteForm] = useState<DELETE_FORM_TYPES>({
+        username: null,
+        password: null,
+    });
 
     const { id } = useParams();
     const { currentUser } = useContext(AuthContext);
@@ -28,6 +41,38 @@ const Profile = () => {
         useContext(ProfileContext);
 
     if (!currentUser || !id) throw Error("User not found!");
+
+    const mutation = useMutation({
+        mutationFn: async (deleteForm: DELETE_FORM_TYPES) => {
+            const res = await axiosRequest.post("auth/deregister", deleteForm);
+            return res.data;
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["users", id] });
+            sessionStorage.clear();
+            setIsButtonLoading(false);
+            return navigate("/login");
+        },
+        onError(error: AxiosError) {
+            setIsButtonLoading(false);
+            console.log(error);
+            setMutationError(
+                JSON.parse(
+                    JSON.stringify(
+                        error.response ? error.response.data : error.message
+                    )
+                )
+            );
+        },
+    });
+
+    const handleAccountDelete = () => {
+        if (!deleteForm.username || !deleteForm.password) {
+            return alert("Please fill all the fields!");
+        }
+        setIsButtonLoading(true);
+        return mutation.mutate(deleteForm);
+    };
 
     const getUsers = async (): Promise<USER_TYPES> => {
         const res = await axiosRequest.get(`/users/find/${id}`);
@@ -52,7 +97,7 @@ const Profile = () => {
 
     // Only set latest user profile if user is viewing his own profile
     if (data && data.id === currentUser.id) {
-        localStorage.setItem("user", JSON.stringify(data));
+        sessionStorage.setItem("user", JSON.stringify(data));
     }
 
     const { username, email, name, coverPic, city, website, profilePic } = data;
@@ -72,6 +117,70 @@ const Profile = () => {
         <div className="profile" id="profile">
             <div className="user-container">
                 <div className="images">
+                    <div className="delete-account">
+                        <div
+                            className="delete-icon"
+                            onClick={() => setIsDeleteOpen(!isDeleteOpen)}
+                        >
+                            <PersonAddDisabled fontSize="small" />
+                        </div>
+                        {isDeleteOpen && (
+                            <div className="delete-modal">
+                                <h2>Delete Account?</h2>
+                                <div className="inputs">
+                                    <label>Username</label>
+                                    <input
+                                        type="text"
+                                        required
+                                        placeholder="username"
+                                        onChange={(e) =>
+                                            setDeleteForm({
+                                                ...deleteForm,
+                                                username: e.target.value,
+                                            })
+                                        }
+                                    />
+                                </div>
+                                <div className="inputs">
+                                    <label>Password</label>
+                                    <input
+                                        type="password"
+                                        required
+                                        placeholder="!@#$%^&*()_+"
+                                        onChange={(e) =>
+                                            setDeleteForm({
+                                                ...deleteForm,
+                                                password: e.target.value,
+                                            })
+                                        }
+                                    />
+                                </div>
+                                <div className="delete-buttons">
+                                    <button
+                                        className="delete-button"
+                                        onClick={handleAccountDelete}
+                                    >
+                                        {isButtonLoading ? (
+                                            <Spinner />
+                                        ) : (
+                                            "Delete"
+                                        )}
+                                    </button>
+                                    <button
+                                        className="delete-cancel"
+                                        onClick={() =>
+                                            setIsDeleteOpen(!isDeleteOpen)
+                                        }
+                                    >
+                                        Cancel
+                                    </button>
+                                </div>
+                                {mutationError ? (
+                                    <div>{mutationError}</div>
+                                ) : null}
+                            </div>
+                        )}
+                    </div>
                     <img src={coverPic!} alt="Cover Photo" className="cover" />
                     <img
                         src={profilePic!}

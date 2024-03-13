@@ -25,12 +25,12 @@ export const AuthContext = createContext<AuthContextTypes>({
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [currentUser, setCurrentUser] = useState(() => {
-        const storedUser = localStorage.getItem("user");
+        const storedUser = sessionStorage.getItem("user");
         return JSON.parse(storedUser!);
     });
 
     useEffect(() => {
-        localStorage.setItem("user", JSON.stringify(currentUser));
+        sessionStorage.setItem("user", JSON.stringify(currentUser));
     }, [currentUser]);
 
     const login = async (inputs: LoginTypes): Promise<LoginResponseTypes> => {

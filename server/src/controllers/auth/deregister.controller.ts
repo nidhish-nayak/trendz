@@ -31,8 +31,13 @@ export const deregister = async (req: Request, res: Response) => {
 	const hashedPassword = existingUser[0].password;
 	const isPasswordValid = await bcrypt.compare(password, hashedPassword);
 
-	if (!isPasswordValid || userId !== existingUser[0].id)
-		return res.status(401).json("User not authorized to delete account!");
+	if (userId !== existingUser[0].id)
+		return res
+			.status(401)
+			.json("You are not authorized to delete other's account!");
+
+	if (!isPasswordValid)
+		return res.status(401).json("Wrong password, Unauthorized!");
 
 	const { error } = await supabase.from("users").delete().eq("id", userId);
 

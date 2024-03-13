@@ -33,32 +33,9 @@ const EditProfile = ({ closeModal }: { closeModal: () => void }) => {
             axiosRequest.put("/users", formData),
         onSuccess: () => {
             if (formData === null) return alert("Null formData sent to server");
-
-            if (!userImg && coverImg) {
-                localStorage.setItem(
-                    "user",
-                    JSON.stringify({ ...formData, coverPic: coverImg })
-                );
-            }
-            if (userImg && !coverImg) {
-                localStorage.setItem(
-                    "user",
-                    JSON.stringify({ ...formData, profilePic: userImg })
-                );
-            }
-            if (!userImg && !coverImg) {
-                localStorage.setItem("user", JSON.stringify({ ...formData }));
-            }
-            localStorage.setItem(
-                "user",
-                JSON.stringify({
-                    ...formData,
-                    profilePic: userImg,
-                    coverPic: coverImg,
-                })
-            );
-
+            sessionStorage.setItem("user", JSON.stringify(formData));
             queryClient.invalidateQueries({ queryKey: ["users", id] });
+
             closeModal();
             window.location.reload();
         },
@@ -84,10 +61,12 @@ const EditProfile = ({ closeModal }: { closeModal: () => void }) => {
 
         // Very important code - DO NOT TOUCH!!!
         if (!userImg && coverImg) {
-            return mutation.mutate({ ...formData, coverPic: coverImg });
+            setFormData({ ...formData, coverPic: coverImg });
+            return mutation.mutate(formData);
         }
 
         if (userImg && !coverImg) {
+            setFormData({ ...formData, profilePic: userImg });
             return mutation.mutate({ ...formData, profilePic: userImg });
         }
 
@@ -97,11 +76,12 @@ const EditProfile = ({ closeModal }: { closeModal: () => void }) => {
             return mutation.mutate(formData);
         }
 
-        return mutation.mutate({
+        setFormData({
             ...formData,
             profilePic: userImg,
             coverPic: coverImg,
         });
+        return mutation.mutate(formData);
     };
 
     if (formData === null) {

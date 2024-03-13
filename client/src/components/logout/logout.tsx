@@ -25,7 +25,7 @@ const Logout: React.FC<LogoutProps> = (props) => {
         try {
             const res = await axios.post(API_URL);
             if (res.status === 200) {
-                localStorage.removeItem("user");
+                sessionStorage.removeItem("user");
                 navigate("/login");
             } else {
                 console.log(res.data);

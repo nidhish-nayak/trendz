@@ -16,6 +16,8 @@ const Login = () => {
     const { login } = useContext(AuthContext);
     const [err, setErr] = useState<string | null>(null);
     const [formFields, setFormFields] = useState(defaultFormFields);
+    const [isLoading, setIsLoading] = useState(false);
+    const [isGuestLoading, setIsGuestLoading] = useState(false);
 
     const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
@@ -27,14 +29,18 @@ const Login = () => {
 
     const handleLoginSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
+        setIsLoading(true);
         const res = await login(formFields);
         if (res.isLoggedIn === true) {
+            setIsLoading(false);
             navigate("/");
         }
+        setIsLoading(false);
         setErr(res.response);
     };
 
     const handleGuestLogin = async () => {
+        setIsGuestLoading(true);
         const guestUser = config.guestUser.username;
         const guestPassword = config.guestUser.password;
 
@@ -43,8 +49,10 @@ const Login = () => {
             password: guestPassword,
         });
         if (res.isLoggedIn === true) {
+            setIsGuestLoading(false);
             navigate("/");
         }
+        setIsGuestLoading(false);
         setErr(res.response);
     };
 
@@ -93,15 +101,21 @@ const Login = () => {
                             />
                         </div>
                         <div className="button-container">
-                            <button type="submit" className="login-button">
-                                Login
+                            <button
+                                type="submit"
+                                className="login-button"
+                                disabled={isLoading ? true : false}
+                            >
+                                {isLoading ? "Loading..." : "Login"}
                             </button>
+
                             <button
                                 type="button"
                                 onClick={handleGuestLogin}
                                 className="guest-button"
+                                disabled={isGuestLoading ? true : false}
                             >
-                                Guest
+                                {isGuestLoading ? "Loading..." : "Guest"}
                             </button>
                         </div>
                         <div style={{ color: "crimson" }}>{err}</div>
