@@ -20,6 +20,7 @@ import { GROUPED_STORIES_TYPE, formatStories } from "./stories.util";
 const Stories = () => {
     const { currentUser } = useContext(AuthContext);
     const queryClient = useQueryClient();
+    if (!currentUser) throw Error("User not found!");
 
     const [isPostOpen, setIsPostOpen] = useState(false);
     const [localStory, setLocalStory] = useState<string | null>(null);
@@ -115,8 +116,6 @@ const Stories = () => {
 
     if (getStoryError || !getStoryData)
         throw Error("get_stories fetch failed from server!");
-
-    if (!currentUser) return <div>User not found!</div>;
 
     const { profilePic } = currentUser;
     const unformattedStories: GET_STORIES_TYPE = getStoryData;

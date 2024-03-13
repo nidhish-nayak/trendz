@@ -38,12 +38,24 @@ const Activity = () => {
         },
     });
 
+    const activityDeleteMutation = useMutation({
+        mutationFn: (table_id: number) =>
+            axiosRequest.delete(`/activities/${table_id}`),
+        onSuccess: () => {
+            setActivity(null);
+            return queryClient.invalidateQueries({ queryKey: ["activities"] });
+        },
+        onError(error) {
+            console.error("Activity deletion failed: ", error);
+        },
+    });
+
     // Subscribe to INSERT events for posts table
     useEffect(() => {
-        let postChannel: RealtimeChannel;
+        let postAddChannel: RealtimeChannel;
 
         if (isRealtime === true) {
-            postChannel = supabase
+            postAddChannel = supabase
                 .channel("inserted-post")
                 .on(
                     "postgres_changes",
@@ -59,12 +71,30 @@ const Activity = () => {
                         });
                     }
                 )
+                .on(
+                    "postgres_changes",
+                    {
+                        event: "DELETE",
+                        schema: "public",
+                        table: "posts",
+                    },
+                    (payload) => {
+                        setPrevActivity(activity);
+                        setActivity(payload);
+                        queryClient.invalidateQueries({
+                            queryKey: ["activities"],
+                        });
+                        queryClient.invalidateQueries({
+                            queryKey: ["posts"],
+                        });
+                    }
+                )
                 .subscribe();
         }
 
         return () => {
-            if (postChannel) {
-                postChannel.unsubscribe();
+            if (postAddChannel) {
+                postAddChannel.unsubscribe();
             }
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -74,12 +104,13 @@ const Activity = () => {
         if (
             activity &&
             activityMutation.isPending === false &&
-            prevActivity !== activity
+            prevActivity !== activity &&
+            activity.eventType === "INSERT"
         ) {
             const table_name: string = activity.table;
-            const table_id: number = activity.new.id;
             const message = "Added a new post";
             const activity_created_at: string = activity.commit_timestamp;
+            const table_id: number = activity.new.id;
             const user_id: number = activity.new.userId;
 
             if (user_id !== currentUser?.id) {
@@ -96,15 +127,25 @@ const Activity = () => {
                 });
             }
         }
+
+        if (
+            activity &&
+            activityMutation.isPending === false &&
+            prevActivity !== activity &&
+            activity.eventType === "DELETE"
+        ) {
+            const table_id: number = activity.old.id;
+
+            return activityDeleteMutation.mutate(table_id);
+        }
     }, [
         activity,
+        activityDeleteMutation,
         activityMutation,
         currentUser?.id,
         prevActivity,
         queryClient,
     ]);
-
-    console.log(activity);
 
     const getActivities = async (): Promise<ACTIVITY_GET_TYPES[]> => {
         const res = await axiosRequest.get("/activities");

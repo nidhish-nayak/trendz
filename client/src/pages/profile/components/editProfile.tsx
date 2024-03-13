@@ -33,7 +33,7 @@ const EditProfile = ({ closeModal }: { closeModal: () => void }) => {
             axiosRequest.put("/users", formData),
         onSuccess: () => {
             if (formData === null) return alert("Null formData sent to server");
-            sessionStorage.setItem("user", JSON.stringify(formData));
+            localStorage.setItem("user", JSON.stringify(formData));
             queryClient.invalidateQueries({ queryKey: ["users", id] });
 
             closeModal();

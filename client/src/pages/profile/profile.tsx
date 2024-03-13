@@ -58,7 +58,7 @@ const Profile = () => {
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["users", id] });
-            sessionStorage.clear();
+            localStorage.clear();
             setIsButtonLoading(false);
             return navigate("/login");
         },
@@ -106,7 +106,7 @@ const Profile = () => {
 
     // Only set latest user profile if user is viewing his own profile
     if (data && data.id === currentUser.id) {
-        sessionStorage.setItem("user", JSON.stringify(data));
+        localStorage.setItem("user", JSON.stringify(data));
     }
 
     const { username, email, name, coverPic, city, website, profilePic } = data;
@@ -134,61 +134,63 @@ const Profile = () => {
                             <PersonAddDisabled fontSize="small" />
                         </div>
                         {isDeleteOpen && (
-                            <div className="delete-modal">
-                                <h2>Delete Account?</h2>
-                                <div className="inputs">
-                                    <label>Username</label>
-                                    <input
-                                        type="text"
-                                        required
-                                        value={currentUser.username}
-                                        placeholder="username"
-                                        onChange={(e) =>
-                                            setDeleteForm({
-                                                ...deleteForm,
-                                                username: e.target.value,
-                                            })
-                                        }
-                                    />
+                            <div className="delete">
+                                <div className="delete-modal">
+                                    <h2>Delete Account?</h2>
+                                    <div className="inputs">
+                                        <label>Username</label>
+                                        <input
+                                            type="text"
+                                            required
+                                            value={currentUser.username}
+                                            placeholder="username"
+                                            onChange={(e) =>
+                                                setDeleteForm({
+                                                    ...deleteForm,
+                                                    username: e.target.value,
+                                                })
+                                            }
+                                        />
+                                    </div>
+                                    <div className="inputs">
+                                        <label>Password</label>
+                                        <input
+                                            type="password"
+                                            required
+                                            ref={inputRef}
+                                            placeholder="!@#$%^&*()_+"
+                                            onChange={(e) =>
+                                                setDeleteForm({
+                                                    ...deleteForm,
+                                                    password: e.target.value,
+                                                })
+                                            }
+                                        />
+                                    </div>
+                                    <div className="delete-buttons">
+                                        <button
+                                            className="delete-button"
+                                            onClick={handleAccountDelete}
+                                        >
+                                            {isButtonLoading ? (
+                                                <Spinner />
+                                            ) : (
+                                                "Delete"
+                                            )}
+                                        </button>
+                                        <button
+                                            className="delete-cancel"
+                                            onClick={() =>
+                                                setIsDeleteOpen(!isDeleteOpen)
+                                            }
+                                        >
+                                            Cancel
+                                        </button>
+                                    </div>
+                                    {mutationError ? (
+                                        <div>{mutationError}</div>
+                                    ) : null}
                                 </div>
-                                <div className="inputs">
-                                    <label>Password</label>
-                                    <input
-                                        type="password"
-                                        required
-                                        ref={inputRef}
-                                        placeholder="!@#$%^&*()_+"
-                                        onChange={(e) =>
-                                            setDeleteForm({
-                                                ...deleteForm,
-                                                password: e.target.value,
-                                            })
-                                        }
-                                    />
-                                </div>
-                                <div className="delete-buttons">
-                                    <button
-                                        className="delete-button"
-                                        onClick={handleAccountDelete}
-                                    >
-                                        {isButtonLoading ? (
-                                            <Spinner />
-                                        ) : (
-                                            "Delete"
-                                        )}
-                                    </button>
-                                    <button
-                                        className="delete-cancel"
-                                        onClick={() =>
-                                            setIsDeleteOpen(!isDeleteOpen)
-                                        }
-                                    >
-                                        Cancel
-                                    </button>
-                                </div>
-                                {mutationError ? (
-                                    <div>{mutationError}</div>
-                                ) : null}
                             </div>
                         )}
                     </div>

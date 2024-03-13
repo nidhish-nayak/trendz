@@ -12,13 +12,13 @@ export const DarkModeContext = createContext<DarkModeContextTypes>({
 
 export const DarkModeProvider = ({ children }: { children: ReactNode }) => {
     const [darkMode, setDarkMode] = useState(() => {
-        const storedDarkMode = sessionStorage.getItem("darkMode");
+        const storedDarkMode = localStorage.getItem("darkMode");
         // Set default mode = dark
         return storedDarkMode ? JSON.parse(storedDarkMode) : true;
     });
 
     useEffect(() => {
-        sessionStorage.setItem("darkMode", darkMode);
+        localStorage.setItem("darkMode", darkMode);
     }, [darkMode]);
 
     const toggleTheme = () => {
