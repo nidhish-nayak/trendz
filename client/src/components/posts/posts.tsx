@@ -1,7 +1,7 @@
 import { useIntersection } from "@mantine/hooks";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useContext, useEffect, useRef } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { axiosRequest } from "../../utils/axios.utils";
 
 import Spinner from "../spinner/spinner";
@@ -15,7 +15,6 @@ import { PostPageTypes, PostsTypes } from "./posts.types";
 
 const Posts = () => {
     const param = useParams();
-    const navigate = useNavigate();
     const { search } = useContext(SearchContext);
     const profileUserId = param.id ? parseInt(param.id) : undefined;
     const lastPostRef = useRef<HTMLElement>(null);
@@ -52,9 +51,6 @@ const Posts = () => {
 
     if (error) {
         console.error(error.message);
-        localStorage.removeItem("user");
-        navigate("/login");
-        alert("Please login again!");
         return <PostsError />;
     }
 

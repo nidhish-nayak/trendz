@@ -23,6 +23,9 @@ const AddComment = ({ postId }: { postId: number }) => {
             queryClient.invalidateQueries({
                 queryKey: ["comments"],
             });
+            queryClient.invalidateQueries({
+                queryKey: ["commentsCount"],
+            });
             return setUploading(false);
         },
         onError(error) {

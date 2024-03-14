@@ -62,7 +62,7 @@ const Post = ({ post }: PostTypes) => {
         data: count,
         error: commentsError,
     } = useQuery({
-        queryKey: ["comments", post],
+        queryKey: ["commentsCount", id],
         queryFn: getCommentsCount,
     });
 

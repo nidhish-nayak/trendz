@@ -212,8 +212,20 @@
                             }
 
                             .user-activity {
+                                display: flex;
+                                flex-direction: row;
+                                align-items: center;
+                                justify-content: flex-start;
+                                gap: 4px;
                                 font-size: 0.875rem;
                                 color: themed("textColorSoft");
+
+                                a {
+                                    text-decoration: underline;
+                                    text-underline-offset: 2px;
+                                    text-decoration-color: themed("activityOn");
+                                    color: themed("button");
+                                }
                             }
                         }
                     }

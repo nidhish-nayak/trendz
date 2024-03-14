@@ -1,9 +1,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import Delete from "@mui/icons-material/Delete";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 
+import { useParams } from "react-router-dom";
 import { AuthContext } from "../../context/authContext";
 import { axiosRequest } from "../../utils/axios.utils";
 import formatTime from "../../utils/date.utils";
@@ -11,6 +12,7 @@ import "./comment.scss";
 import { CommentTypes } from "./comment.types";
 
 const Comment = ({ comment }: CommentTypes) => {
+    const postId = useParams();
     const { id, profilePic, name, createdAt, desc, userId } = comment;
     const [isOpen, setIsOpen] = useState(false);
 
@@ -18,6 +20,10 @@ const Comment = ({ comment }: CommentTypes) => {
     const { currentUser } = useContext(AuthContext);
 
     const time = formatTime(createdAt);
+
+    useEffect(() => {
+        setIsOpen(false);
+    }, [postId]);
 
     const mutation = useMutation({
         mutationFn: () => axiosRequest.delete(`comments/${id}`),

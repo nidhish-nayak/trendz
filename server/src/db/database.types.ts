@@ -12,29 +12,46 @@ export type Database = {
 			activities: {
 				Row: {
 					activity_created_at: string;
+					comment_id: number | null;
 					id: number;
 					message: string;
-					table_id: number;
+					post_id: number | null;
 					table_name: string;
 					user_id: number;
 				};
 				Insert: {
 					activity_created_at?: string;
+					comment_id?: number | null;
 					id?: number;
 					message: string;
-					table_id: number;
+					post_id?: number | null;
 					table_name: string;
 					user_id: number;
 				};
 				Update: {
 					activity_created_at?: string;
+					comment_id?: number | null;
 					id?: number;
 					message?: string;
-					table_id?: number;
+					post_id?: number | null;
 					table_name?: string;
 					user_id?: number;
 				};
 				Relationships: [
+					{
+						foreignKeyName: "public_activities_comment_id_fkey";
+						columns: ["comment_id"];
+						isOneToOne: false;
+						referencedRelation: "comments";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "public_activities_post_id_fkey";
+						columns: ["post_id"];
+						isOneToOne: false;
+						referencedRelation: "posts";
+						referencedColumns: ["id"];
+					},
 					{
 						foreignKeyName: "public_activities_user_id_fkey";
 						columns: ["user_id"];
@@ -259,10 +276,11 @@ export type Database = {
 				Returns: {
 					id: number;
 					table_name: string;
-					table_id: number;
 					message: string;
 					activity_created_at: string;
 					user_id: number;
+					post_id: number;
+					comment_id: number;
 					name: string;
 					profilePic: string;
 				}[];

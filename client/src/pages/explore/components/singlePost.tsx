@@ -24,6 +24,12 @@ const SinglePost = () => {
     const queryClient = useQueryClient();
     const { currentUser } = useContext(AuthContext);
 
+    if (!postId) throw Error("PostID not found!");
+
+    // Redeclaring since useParams values can't be mutated
+    const postIdString = postId;
+    const post_id = parseInt(postIdString);
+
     if (!currentUser) throw Error("User not logged in!");
 
     const [isOpen, setIsOpen] = useState(false);
@@ -35,7 +41,9 @@ const SinglePost = () => {
         mutationFn: (likedPost: LikedPost) =>
             axiosRequest.post("/likes", likedPost),
         onSuccess: () => {
-            return queryClient.invalidateQueries({ queryKey: ["likes", id] });
+            return queryClient.invalidateQueries({
+                queryKey: ["likes", post_id],
+            });
         },
         onError(error) {
             console.log(error);
@@ -45,9 +53,11 @@ const SinglePost = () => {
 
     // Dislike Post
     const dislikeMutation = useMutation({
-        mutationFn: () => axiosRequest.delete(`likes/${id}`),
+        mutationFn: () => axiosRequest.delete(`likes/${post_id}`),
         onSuccess: () => {
-            return queryClient.invalidateQueries({ queryKey: ["likes", id] });
+            return queryClient.invalidateQueries({
+                queryKey: ["likes", post_id],
+            });
         },
         onError(error) {
             console.log(error);
@@ -57,7 +67,8 @@ const SinglePost = () => {
 
     // Handle post delete
     const mutation = useMutation({
-        mutationFn: (id: number) => axiosRequest.delete(`posts/${id}`),
+        mutationFn: (post_id: number) =>
+            axiosRequest.delete(`posts/${post_id}`),
         onSuccess: () => {
             setIsOpen(false);
             queryClient.invalidateQueries({
@@ -72,7 +83,7 @@ const SinglePost = () => {
 
     // GET POST DATA
     const getSinglePost = async (): Promise<EXPLORE_DATA_TYPES> => {
-        const res = await axiosRequest.get(`/posts/${Number(postId)}`);
+        const res = await axiosRequest.get(`/posts/${post_id}`);
         return res.data;
     };
 
@@ -81,15 +92,13 @@ const SinglePost = () => {
         data: postData,
         error: postError,
     } = useQuery({
-        queryKey: ["singlePost"],
+        queryKey: ["singlePost", post_id],
         queryFn: getSinglePost,
     });
 
     // Get Comments
     const getCommentsCount = async () => {
-        const res = await axiosRequest.get(
-            `/comments/count?postId=${Number(postId)}`
-        );
+        const res = await axiosRequest.get(`/comments/count?postId=${post_id}`);
         return res.data;
     };
 
@@ -98,15 +107,15 @@ const SinglePost = () => {
         data: count,
         error: commentsError,
     } = useQuery({
-        queryKey: ["comments", Number(postId)],
+        queryKey: ["commentsCount", post_id],
         queryFn: getCommentsCount,
     });
 
     // Get Likes
     const getLikes = async () => {
-        if (!postId) return;
+        if (!post_id) return;
         const res = await axiosRequest.get(
-            `likes?postId=${Number(postId)}&userId=${currentUser.id}`
+            `likes?postId=${post_id}&userId=${currentUser.id}`
         );
         if (res.data) setIsLiked(res.data.liked);
         return res.data;
@@ -117,7 +126,7 @@ const SinglePost = () => {
         data: likesData,
         error: likesError,
     } = useQuery({
-        queryKey: ["likes", Number(postId)],
+        queryKey: ["likes", post_id],
         queryFn: getLikes,
     });
 
@@ -139,17 +148,17 @@ const SinglePost = () => {
 
     if (!postData || isPostLoading) return <Spinner />;
 
-    const { id, userId, profilePic, name, img, desc, createdAt } = postData[0];
+    const { userId, profilePic, name, img, desc, createdAt } = postData[0];
     const time = formatTime(createdAt);
 
     // HANDLERS
     const handleDelete = () => {
         if (currentUser.id !== userId) return;
-        return mutation.mutate(id);
+        return mutation.mutate(post_id);
     };
 
     const handleLike = () => {
-        likeMutation.mutate({ postId: id, userId: currentUser.id });
+        likeMutation.mutate({ postId: post_id, userId: currentUser.id });
     };
 
     const handleDislike = () => {
@@ -264,12 +273,12 @@ const SinglePost = () => {
                         ) : count === 0 ? (
                             "No Comments"
                         ) : (
-                            `View all ${count} comments`
+                            `View all ${count ? count : "#"} comments`
                         )}
                         {commentOpen ? <span>-</span> : <span>+</span>}
                     </div>
 
-                    {commentOpen && <Comments postId={id} />}
+                    {commentOpen && <Comments postId={post_id} />}
 
                     <div className="time-stamp">
                         <span className="stamps">{time}</span>

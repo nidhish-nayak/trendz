@@ -8,8 +8,14 @@ export const postActivity = async (req: Request, res: Response) => {
 	if (!validationResult.success)
 		return res.status(400).json("Input validation failed!");
 
-	const { table_name, table_id, message, activity_created_at, user_id } =
-		validationResult.data.body;
+	const {
+		table_name,
+		message,
+		activity_created_at,
+		user_id,
+		post_id,
+		comment_id,
+	} = validationResult.data.body;
 
 	const userId = getUserIdFromCookie(req);
 	if (user_id !== userId)
@@ -20,10 +26,11 @@ export const postActivity = async (req: Request, res: Response) => {
 		.insert([
 			{
 				table_name: table_name,
-				table_id: table_id,
 				message: message,
 				activity_created_at: activity_created_at,
 				user_id: user_id,
+				post_id: post_id,
+				comment_id: comment_id ? comment_id : null,
 			},
 		])
 		.select();

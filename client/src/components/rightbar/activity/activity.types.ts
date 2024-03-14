@@ -15,19 +15,21 @@ export type REALTIME_TYPE =
 
 export type ACTIVITY_POST_TYPES = {
     table_name: string;
-    table_id: number;
     message: string;
     activity_created_at: string;
     user_id: number;
+    post_id: number;
+    comment_id?: number;
 };
 
 export type ACTIVITY_GET_TYPES = {
     id: number;
     table_name: string;
-    table_id: number;
     message: string;
     activity_created_at: string;
     user_id: number;
+    post_id: number;
+    comment_id: number | null;
     name: string;
     profilePic: string;
 };
