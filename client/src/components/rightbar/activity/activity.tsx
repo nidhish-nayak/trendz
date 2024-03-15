@@ -16,7 +16,7 @@ import ActivityItem from "./activityItem";
 const Activity = () => {
     const queryClient = useQueryClient();
     const { currentUser } = useContext(AuthContext);
-    const { isRealtime, setIsRealtime, activity } = useContext(ActivityContext);
+    const { isRealtime, setIsRealtime } = useContext(ActivityContext);
 
     if (!currentUser) throw Error("User not found!");
 
@@ -32,7 +32,6 @@ const Activity = () => {
     // Mutate activity table on changes detected from channels
     usePostActivity();
     useCommentActivity();
-    console.log(activity);
 
     const getActivities = async (): Promise<ACTIVITY_GET_TYPES[]> => {
         const res = await axiosRequest.get("/activities");
