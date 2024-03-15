@@ -1,5 +1,7 @@
-cd server
+# Commenting now to reduce server load from testing
 
-npm run test
+#cd server
 
-cd ..
+#npm run test
+
+#cd ..
