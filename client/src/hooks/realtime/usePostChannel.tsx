@@ -1,10 +1,10 @@
 import { RealtimeChannel } from "@supabase/supabase-js";
 import { useQueryClient } from "@tanstack/react-query";
 import { useContext, useEffect } from "react";
-import { ActivityContext } from "../context/activityContext";
-import { supabase } from "../supabase/db";
+import { ActivityContext } from "../../context/activityContext";
+import { supabase } from "../../supabase/db";
 
-const usePostRealtime = () => {
+const usePostChannel = () => {
     const queryClient = useQueryClient();
     const { isRealtime, activity, setActivity, setPrevActivity } =
         useContext(ActivityContext);
@@ -60,4 +60,4 @@ const usePostRealtime = () => {
     }, [isRealtime]);
 };
 
-export default usePostRealtime;
+export default usePostChannel;

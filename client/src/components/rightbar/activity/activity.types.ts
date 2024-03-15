@@ -19,6 +19,14 @@ export type ACTIVITY_POST_TYPES = {
     activity_created_at: string;
     user_id: number;
     post_id: number;
+};
+
+export type ACTIVITY_COMMENT_TYPES = {
+    table_name: string;
+    message: string;
+    activity_created_at: string;
+    user_id: number;
+    post_id: number;
     comment_id?: number;
 };
 
