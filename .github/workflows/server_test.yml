@@ -37,11 +37,6 @@ jobs:
                   cd server
                   npm ci
 
-            - name: Install dependencies
-              run: |
-                  cd server
-                  npm install
-
             - name: Run tests
               run: |
                   cd server
