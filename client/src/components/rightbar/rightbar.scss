@@ -225,6 +225,10 @@
                                     text-underline-offset: 2px;
                                     text-decoration-color: themed("activityOn");
                                     color: themed("button");
+
+                                    &:hover {
+                                        background-color: #000;
+                                    }
                                 }
                             }
                         }

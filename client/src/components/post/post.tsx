@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import TextsmsOutlinedIcon from "@mui/icons-material/TextsmsOutlined";
 
 import Delete from "@mui/icons-material/Delete";
@@ -13,6 +12,7 @@ import { AuthContext } from "../../context/authContext";
 import { axiosRequest } from "../../utils/axios.utils";
 import formatTime from "../../utils/date.utils";
 import Comments from "../comments/comments";
+import WebShare from "../share/web/webShare";
 import Spinner from "../spinner/spinner";
 import "./post.scss";
 import { LikedPost, PostTypes } from "./post.types";
@@ -207,7 +207,7 @@ const Post = ({ post }: PostTypes) => {
                         <TextsmsOutlinedIcon />
                     </div>
                     <div className="item">
-                        <ShareOutlinedIcon />
+                        <WebShare post={post} />
                     </div>
                 </div>
                 <span className="mobile-likes">

@@ -6,12 +6,12 @@ import Delete from "@mui/icons-material/Delete";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import TextsmsOutlinedIcon from "@mui/icons-material/TextsmsOutlined";
 
 import { ArrowBackIosNew } from "@mui/icons-material";
 import Comments from "../../../components/comments/comments";
 import { LikedPost } from "../../../components/post/post.types";
+import WebShare from "../../../components/share/web/webShare";
 import Spinner from "../../../components/spinner/spinner";
 import { AuthContext } from "../../../context/authContext";
 import { axiosRequest } from "../../../utils/axios.utils";
@@ -252,7 +252,7 @@ const SinglePost = () => {
                             <TextsmsOutlinedIcon />
                         </div>
                         <div className="item">
-                            <ShareOutlinedIcon />
+                            <WebShare post={postData[0]} />
                         </div>
                     </div>
                     <span className="mobile-likes">
