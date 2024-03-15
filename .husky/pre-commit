@@ -1,6 +1,6 @@
 cd server
 
-npx run prettier
+npm run prettier
 
 npm run test
 
