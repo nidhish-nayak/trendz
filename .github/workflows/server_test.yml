@@ -16,14 +16,24 @@ jobs:
               with:
                   node-version: "20.x" # Adjust version according to your requirements
                   cache: "npm"
+                  cache-dependency-path: server/package-lock.json
 
             - name: Cache node modules
+              id: cache-nodemodules
               uses: actions/cache@v3
+              env:
+                  cache-name: cache-node-modules
               with:
-                  path: ~/.npm # Adjust the path accordingly if necessary
-                  key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+                  path: server/node_modules # Update path to cache the node_modules directory inside the /server sub-folder
+                  key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('server/**/package-lock.json') }} # Update path to hash package-lock.json inside the /server sub-folder
                   restore-keys: |
-                      ${{ runner.os }}-npm-
+                      ${{ runner.os }}-build-${{ env.cache-name }}-
+                      ${{ runner.os }}-build-
+                      ${{ runner.os }}-
+
+            - name: Install Dependencies
+              if: steps.cache-nodemodules.outputs.cache-hit != 'true'
+              run: npm ci
 
             - name: Install dependencies
               run: |
