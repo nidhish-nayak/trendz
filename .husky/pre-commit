@@ -1,9 +1,10 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
+npx lint-staged
+
 cd server
 
-npx lint-staged
 npm run test
 
 cd ..
