@@ -29,6 +29,7 @@ jobs:
                   echo "DB_URL=${{ secrets.DB_URL }}" >> .env
                   echo "DB_SERVICE_ROLE_KEY=${{ secrets.DB_SERVICE_ROLE_KEY }}" >> .env
                   echo "DB_DIRECT_URL=${{ secrets.DB_DIRECT_URL }}" >> .env
+                  echo "JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }}" >> .env
                   npm test
 
             - name: Remove .env

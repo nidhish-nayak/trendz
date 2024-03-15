@@ -1,6 +1,9 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
 cd server
 
-npm run prettier
+npx lint-staged
 npm run test
 
 cd ..
