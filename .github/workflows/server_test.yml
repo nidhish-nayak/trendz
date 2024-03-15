@@ -25,7 +25,7 @@ jobs:
                   cache-name: cache-node-modules
               with:
                   path: server/node_modules # Update path to cache the node_modules directory inside the /server sub-folder
-                  key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('server/**/package-lock.json') }} # Update path to hash package-lock.json inside the /server sub-folder
+                  key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }} # Update path to hash package-lock.json inside the /server sub-folder
                   restore-keys: |
                       ${{ runner.os }}-build-${{ env.cache-name }}-
                       ${{ runner.os }}-build-
