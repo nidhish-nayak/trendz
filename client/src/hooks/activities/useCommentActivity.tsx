@@ -1,9 +1,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useContext, useEffect } from "react";
-import { ACTIVITY_COMMENT_TYPES } from "../components/rightbar/activity/activity.types";
-import { ActivityContext } from "../context/activityContext";
-import { AuthContext } from "../context/authContext";
-import { axiosRequest } from "../utils/axios.utils";
+
+import { ACTIVITY_COMMENT_TYPES } from "../../components/rightbar/activity/activity.types";
+import { ActivityContext } from "../../context/activityContext";
+import { AuthContext } from "../../context/authContext";
+import { axiosRequest } from "../../utils/axios.utils";
 
 const useCommentActivity = () => {
     const queryClient = useQueryClient();

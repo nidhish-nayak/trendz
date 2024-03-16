@@ -1,9 +1,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useContext, useEffect } from "react";
-import { ACTIVITY_POST_TYPES } from "../components/rightbar/activity/activity.types";
-import { ActivityContext } from "../context/activityContext";
-import { AuthContext } from "../context/authContext";
-import { axiosRequest } from "../utils/axios.utils";
+
+import { ACTIVITY_POST_TYPES } from "../../components/rightbar/activity/activity.types";
+import { ActivityContext } from "../../context/activityContext";
+import { AuthContext } from "../../context/authContext";
+import { axiosRequest } from "../../utils/axios.utils";
 
 const usePostActivity = () => {
     const queryClient = useQueryClient();

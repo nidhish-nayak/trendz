@@ -5,6 +5,7 @@ import { RouterProvider } from "react-router-dom";
 import { ActivityProvider } from "./context/activityContext.tsx";
 import { AuthProvider } from "./context/authContext.tsx";
 import { DarkModeProvider } from "./context/darkModeContext.tsx";
+import { OnlineProvider } from "./context/onlineContext.tsx";
 import { PostProvider } from "./context/postContext.tsx";
 import { ProfileProvider } from "./context/profileContext.tsx";
 import { SearchProvider } from "./context/searchContext.tsx";
@@ -17,15 +18,17 @@ root.render(
     <React.StrictMode>
         <DarkModeProvider>
             <AuthProvider>
-                <ActivityProvider>
-                    <SearchProvider>
-                        <PostProvider>
-                            <ProfileProvider>
-                                <RouterProvider router={router} />
-                            </ProfileProvider>
-                        </PostProvider>
-                    </SearchProvider>
-                </ActivityProvider>
+                <OnlineProvider>
+                    <ActivityProvider>
+                        <SearchProvider>
+                            <PostProvider>
+                                <ProfileProvider>
+                                    <RouterProvider router={router} />
+                                </ProfileProvider>
+                            </PostProvider>
+                        </SearchProvider>
+                    </ActivityProvider>
+                </OnlineProvider>
             </AuthProvider>
         </DarkModeProvider>
     </React.StrictMode>

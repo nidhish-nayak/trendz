@@ -1,17 +1,20 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Fragment, useContext } from "react";
+
 import { ActivityContext } from "../../../context/activityContext";
 import { AuthContext } from "../../../context/authContext";
-import useCommentChannel from "../../../hooks/realtime/useCommentChannel";
-import usePostChannel from "../../../hooks/realtime/usePostChannel";
-import useCommentActivity from "../../../hooks/useCommentActivity";
-import usePostActivity from "../../../hooks/usePostActivity";
 import { axiosRequest } from "../../../utils/axios.utils";
+import { ACTIVITY_GET_TYPES } from "./activity.types";
+
 import Spinner from "../../spinner/spinner";
 import "../rightbar.scss";
 import ActivityError from "./activity.error";
-import { ACTIVITY_GET_TYPES } from "./activity.types";
 import ActivityItem from "./activityItem";
+
+import useCommentActivity from "../../../hooks/activities/useCommentActivity";
+import usePostActivity from "../../../hooks/activities/usePostActivity";
+import useCommentChannel from "../../../hooks/realtime/useCommentChannel";
+import usePostChannel from "../../../hooks/realtime/usePostChannel";
 
 const Activity = () => {
     const queryClient = useQueryClient();

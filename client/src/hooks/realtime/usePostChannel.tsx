@@ -1,6 +1,7 @@
 import { RealtimeChannel } from "@supabase/supabase-js";
 import { useQueryClient } from "@tanstack/react-query";
 import { useContext, useEffect } from "react";
+
 import { ActivityContext } from "../../context/activityContext";
 import { supabase } from "../../supabase/db";
 

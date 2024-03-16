@@ -17,12 +17,12 @@ export const register = async (req: Request, res: Response) => {
 	const { data: existingUser, error: existingError } = await supabase
 		.from("users")
 		.select("username")
-		.eq("username", username);
+		.or(`email.eq.${email}, username.eq.${username}`);
 
 	if (existingError) throw existingError;
 
 	if (existingUser.length > 0) {
-		return res.status(409).send("User already exists!");
+		return res.status(409).send("User/Email already exists!");
 	}
 
 	// Hash password
