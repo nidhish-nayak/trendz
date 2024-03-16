@@ -62,22 +62,24 @@
 
                         .delete {
                             position: absolute;
-                            right: 25px;
-                            top: 0;
+                            right: 12px;
+                            top: 28px;
                             display: flex;
                             justify-content: center;
-                            align-items: flex-start;
+                            align-items: center;
                             background-color: themed("bgSoft");
                             border: 1px solid themed("border");
                             border-radius: 10px;
                             color: themed("textColor");
                             overflow: hidden;
-                            padding: 8px 12px;
-                            gap: 10px;
+                            padding: 8px 14px 8px 10px;
+                            gap: 5px;
                             transition: 250ms ease-in-out;
+                            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
 
                             &:hover {
-                                background-color: themed("button");
+                                background-color: crimson;
+                                color: white;
                             }
                         }
                     }
