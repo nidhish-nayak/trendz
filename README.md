@@ -7,7 +7,7 @@
 
 ## Preview
 
-![preview](https://github.com/nidhish-nayak/trendz/assets/76598208/a40c20aa-fc1e-4899-a693-b7db80a98296)
+![app-preview](https://github.com/nidhish-nayak/trendz/assets/76598208/e0315d1a-0fc7-4dd8-ab21-01c04b7085b4)
 
 ## About the Project
 
