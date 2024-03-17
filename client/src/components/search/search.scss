@@ -12,7 +12,7 @@
         padding: 4px;
 
         @include mobile {
-            flex-direction: row-reverse;
+            flex-direction: row;
         }
 
         .search-icon {

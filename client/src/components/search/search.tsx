@@ -17,16 +17,20 @@ const Search = () => {
 
     return (
         <div className="search">
-            <div className="search-icon" title="Search">
-                <SearchOutlinedIcon
-                    fontSize="small"
-                    onClick={() => handleSearch(searchData)}
-                />
+            <div
+                className="search-icon"
+                title="Search"
+                onClick={() => handleSearch(searchData)}
+            >
+                <SearchOutlinedIcon fontSize="small" />
             </div>
             <input
                 type="text"
                 placeholder="Search..."
                 value={searchData}
+                onKeyDown={(e) => {
+                    if (e.key === "Enter") return handleSearch(searchData);
+                }}
                 onChange={(e) => setSearchData(e.target.value)}
             />
             <div
@@ -37,18 +41,20 @@ const Search = () => {
                     handleSearch("");
                 }}
             >
-                <CancelIcon />
+                {searchData === "" ? null : <CancelIcon />}
             </div>
-            <button
-                className="clear-btn"
-                title="Clear Filter"
-                onClick={() => {
-                    setSearchData("");
-                    handleSearch("");
-                }}
-            >
-                clear
-            </button>
+            {searchData === "" ? null : (
+                <button
+                    className="clear-btn"
+                    title="Clear Filter"
+                    onClick={() => {
+                        setSearchData("");
+                        handleSearch("");
+                    }}
+                >
+                    clear
+                </button>
+            )}
         </div>
     );
 };
