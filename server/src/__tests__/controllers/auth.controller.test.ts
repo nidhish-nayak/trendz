@@ -9,7 +9,15 @@ import { zodMiddleware } from "../../middlewares/zod.middleware";
 
 import authRoutes from "../../routes/auth.route";
 import {
+	DeregisterAnotherUser,
+	DeregisterInputFail,
 	DeregisterPass,
+	DeregisterUnauthorized,
+	DeregisterWrongPassword,
+	LoginInputFail,
+	LoginUserDoesNotExist,
+	LoginUserPass,
+	LoginWrongPassword,
 	RegisterInputFail,
 	RegisterPass,
 	RegisterUserExists,
@@ -27,8 +35,6 @@ app.use(zodMiddleware);
 // Test Globals
 let accessToken: string;
 let userId: number;
-let postIdArray: number[];
-let followingIdArray: number[];
 
 // Reusable function to parse accessToken from cookie
 const getAccessToken = (cookies: string): string => {
@@ -44,7 +50,7 @@ describe("Auth controllers test", () => {
 		app.use("/api/auth", authRoutes);
 	});
 
-	it("responds with status 200 for GET /api/auth/register", async () => {
+	it("responds for GET /api/auth/register", async () => {
 		const resInputValFail = await request(app)
 			.post("/api/auth/register")
 			.send(RegisterInputFail);
@@ -61,10 +67,25 @@ describe("Auth controllers test", () => {
 		expect(response.status).toBe(200);
 	});
 
-	it("Login for register cleanup", async () => {
+	it("responds for GET /api/auth/login", async () => {
+		const resInputValFail = await request(app)
+			.post("/api/auth/login")
+			.send(LoginInputFail);
+		expect(resInputValFail.status).toBe(400);
+
+		const resNonExistingUser = await request(app)
+			.post("/api/auth/login")
+			.send(LoginUserDoesNotExist);
+		expect(resNonExistingUser.status).toBe(404);
+
+		const resWrongPassword = await request(app)
+			.post("/api/auth/login")
+			.send(LoginWrongPassword);
+		expect(resWrongPassword.status).toBe(401);
+
 		const response = await request(app)
 			.post("/api/auth/login")
-			.send(DeregisterPass);
+			.send(LoginUserPass);
 
 		userId = response.body.id;
 
@@ -75,13 +96,46 @@ describe("Auth controllers test", () => {
 		expect(response.status).toBe(200);
 	});
 
+	it("responds for GET /api/auth/logout", async () => {
+		const response = await request(app).post("/api/auth/logout");
+		expect(response.status).toBe(200);
+	});
+
 	// Temporary
-	it("Register cleanup", async () => {
+	it("responds for GET /api/auth/deregister", async () => {
+		const resNoCookie = await request(app)
+			.post("/api/auth/deregister")
+			.send(DeregisterPass);
+		expect(resNoCookie.status).toBe(401);
+
+		const resInputValFail = await request(app)
+			.post("/api/auth/deregister")
+			.set("Cookie", [`accessToken=${accessToken}`])
+			.send(DeregisterInputFail);
+		expect(resInputValFail.status).toBe(400);
+
+		const resUnauthorized = await request(app)
+			.post("/api/auth/deregister")
+			.set("Cookie", [`accessToken=${accessToken}`])
+			.send(DeregisterUnauthorized);
+		expect(resUnauthorized.status).toBe(404);
+
+		const resAnotherUser = await request(app)
+			.post("/api/auth/deregister")
+			.set("Cookie", [`accessToken=${accessToken}`])
+			.send(DeregisterAnotherUser);
+		expect(resAnotherUser.status).toBe(401);
+
+		const resWrongPassword = await request(app)
+			.post("/api/auth/deregister")
+			.set("Cookie", [`accessToken=${accessToken}`])
+			.send(DeregisterWrongPassword);
+		expect(resWrongPassword.status).toBe(401);
+
 		const response = await request(app)
 			.post("/api/auth/deregister")
 			.set("Cookie", [`accessToken=${accessToken}`])
 			.send(DeregisterPass);
-
 		expect(response.status).toBe(200);
 	});
 
