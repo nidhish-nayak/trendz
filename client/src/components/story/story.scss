@@ -39,6 +39,11 @@
                 z-index: 100;
                 cursor: pointer;
 
+                &:active {
+                    border-style: none;
+                    -webkit-tap-highlight-color: transparent;
+                }
+
                 &::before {
                     content: "<";
                     position: absolute;
@@ -76,6 +81,11 @@
                 justify-content: center;
                 z-index: 100;
                 cursor: pointer;
+
+                &:active {
+                    border-style: none;
+                    -webkit-tap-highlight-color: transparent;
+                }
 
                 &::before {
                     content: ">";

@@ -64,7 +64,6 @@ const Stories = () => {
     });
 
     // POST STORY
-
     const mutation = useMutation({
         mutationFn: (img: string) =>
             axiosRequest.post("/stories", { img: img }),
