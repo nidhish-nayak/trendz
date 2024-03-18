@@ -1,5 +1,11 @@
 // TEST CASES - CREDENTIALS
 
+// GET REQUEST EXISTING USER
+export const DefaultUser = {
+	username: "guest",
+	password: "password",
+};
+
 // REGISTER TEST
 export const RegisterInputFail = {
 	username: 10,

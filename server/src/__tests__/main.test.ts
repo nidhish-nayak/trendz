@@ -7,6 +7,7 @@ import request from "supertest";
 import config from "../config/config";
 import { zodMiddleware } from "../middlewares/zod.middleware";
 
+import { DefaultUser } from "$/utils/test/authTest.utils";
 import activityRoutes from "../routes/activity.route";
 import authRoutes from "../routes/auth.route";
 import commentRoutes from "../routes/comment.route";
@@ -32,10 +33,6 @@ let accessToken: string;
 let userId: number;
 let postIdArray: number[];
 let followingIdArray: number[];
-const userCredentials = {
-	username: "guest",
-	password: "password",
-};
 
 // Reusable function to parse accessToken from cookie
 const getAccessToken = (cookies: string): string => {
@@ -51,7 +48,7 @@ describe("Express application setup & Routes test", () => {
 		app.use("/api/auth", authRoutes);
 		const response = await request(app)
 			.post("/api/auth/login")
-			.send(userCredentials);
+			.send(DefaultUser);
 
 		userId = response.body.id;
 
@@ -72,6 +69,7 @@ describe("Express application setup & Routes test", () => {
 		app.use("/api/activities", activityRoutes);
 	});
 
+	// Test all Routes
 	it("responds with status 200 for GET /api/test", async () => {
 		const response = await request(app).get("/api/test");
 		expect(response.status).toBe(200);

@@ -50,7 +50,8 @@ describe("Auth controllers test", () => {
 		app.use("/api/auth", authRoutes);
 	});
 
-	it("responds for GET /api/auth/register", async () => {
+	// Test Register User
+	it("responds for POST /api/auth/register", async () => {
 		const resInputValFail = await request(app)
 			.post("/api/auth/register")
 			.send(RegisterInputFail);
@@ -67,7 +68,8 @@ describe("Auth controllers test", () => {
 		expect(response.status).toBe(200);
 	});
 
-	it("responds for GET /api/auth/login", async () => {
+	// Test Login User
+	it("responds for POST /api/auth/login", async () => {
 		const resInputValFail = await request(app)
 			.post("/api/auth/login")
 			.send(LoginInputFail);
@@ -96,13 +98,14 @@ describe("Auth controllers test", () => {
 		expect(response.status).toBe(200);
 	});
 
-	it("responds for GET /api/auth/logout", async () => {
+	// Test User Logout
+	it("responds for POST /api/auth/logout", async () => {
 		const response = await request(app).post("/api/auth/logout");
 		expect(response.status).toBe(200);
 	});
 
-	// Temporary
-	it("responds for GET /api/auth/deregister", async () => {
+	// Test delete user account
+	it("responds for POST /api/auth/deregister", async () => {
 		const resNoCookie = await request(app)
 			.post("/api/auth/deregister")
 			.send(DeregisterPass);
