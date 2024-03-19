@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/authContext";
 import "./login.scss";
 
-import config from "../../config/config";
 import { LoginTypes } from "./login.types";
 
 const defaultFormFields: LoginTypes = {
@@ -17,7 +16,6 @@ const Login = () => {
     const [err, setErr] = useState<string | null>(null);
     const [formFields, setFormFields] = useState(defaultFormFields);
     const [isLoading, setIsLoading] = useState(false);
-    const [isGuestLoading, setIsGuestLoading] = useState(false);
 
     const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
@@ -36,23 +34,6 @@ const Login = () => {
             navigate("/");
         }
         setIsLoading(false);
-        setErr(res.response);
-    };
-
-    const handleGuestLogin = async () => {
-        setIsGuestLoading(true);
-        const guestUser = config.guestUser.username;
-        const guestPassword = config.guestUser.password;
-
-        const res = await login({
-            username: guestUser,
-            password: guestPassword,
-        });
-        if (res.isLoggedIn === true) {
-            setIsGuestLoading(false);
-            navigate("/");
-        }
-        setIsGuestLoading(false);
         setErr(res.response);
     };
 
@@ -107,15 +88,6 @@ const Login = () => {
                                 disabled={isLoading ? true : false}
                             >
                                 {isLoading ? "Loading..." : "Login"}
-                            </button>
-
-                            <button
-                                type="button"
-                                onClick={handleGuestLogin}
-                                className="guest-button"
-                                disabled={isGuestLoading ? true : false}
-                            >
-                                {isGuestLoading ? "Loading..." : "Guest"}
                             </button>
                         </div>
                         <div style={{ color: "crimson" }}>{err}</div>

@@ -41,3 +41,4 @@ dist-ssr
 
 # Tests
 /coverage
+/src/utils/test
