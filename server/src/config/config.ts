@@ -12,6 +12,10 @@ const config = {
 		// supabaseDirectUrl: process.env.DB_DIRECT_URL,
 	},
 	jwtKey: process.env.JWT_SECRET_KEY || "invalid_key",
+	server:
+		process.env.NODE_ENV === "production"
+			? process.env.SERVER_DOMAIN
+			: "localhost",
 	corsOptions: {
 		origin:
 			process.env.NODE_ENV === "production"

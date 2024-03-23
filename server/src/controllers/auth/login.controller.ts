@@ -42,9 +42,10 @@ export const login = async (req: Request, res: Response) => {
 			const token = jwt.sign({ id: userId }, jwtKey);
 			return res
 				.cookie("accessToken", token, {
-					httpOnly: true,
-					secure: true,
 					sameSite: "none",
+					secure: true,
+					httpOnly: true,
+					domain: config.server,
 					// set 1 day token expiry
 					maxAge: 24 * 60 * 60 * 1000,
 				})
