@@ -18,8 +18,6 @@ const config = {
 				? process.env.CLIENT_URL
 				: ["http://localhost:5173", "http://localhost:3000"],
 		credentials: true,
-		sameSite: "lax", // Set the SameSite attribute to 'lax
-		include: ["credentials"], // Only include credentials if required
 		optionSuccessStatus: 200,
 	},
 	awsConfig: {
