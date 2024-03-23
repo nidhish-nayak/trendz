@@ -45,6 +45,14 @@ jobs:
                   echo "DB_SERVICE_ROLE_KEY=${{ secrets.DB_SERVICE_ROLE_KEY }}" >> .env
                   echo "DB_DIRECT_URL=${{ secrets.DB_DIRECT_URL }}" >> .env
                   echo "JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }}" >> .env
+                  echo "QA_NAME=${{ secrets.QA_NAME }}" >> .env
+                  echo "QA_EMAIL=${{ secrets.QA_EMAIL }}" >> .env
+                  echo "QA_USERNAME=${{ secrets.QA_USERNAME }}" >> .env
+                  echo "QA_PASSWORD=${{ secrets.QA_PASSWORD }}" >> .env
+                  echo "QA_NAME_EXISTS=${{ secrets.QA_NAME_EXISTS }}" >> .env
+                  echo "QA_EMAIL_EXISTS=${{ secrets.QA_EMAIL_EXISTS }}" >> .env
+                  echo "QA_USERNAME_EXISTS=${{ secrets.QA_USERNAME_EXISTS }}" >> .env
+                  echo "QA_PASSWORD_EXISTS=${{ secrets.QA_PASSWORD_EXISTS }}" >> .env
                   npm test
 
             - name: Remove .env

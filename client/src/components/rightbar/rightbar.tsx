@@ -4,15 +4,15 @@ import "./rightbar.scss";
 import Suggested from "./suggested/suggested";
 
 const Rightbar = () => {
-    return (
-        <div className="rightbar">
-            <div className="container">
-                <Suggested />
-                <Activity />
-                <Online />
-            </div>
-        </div>
-    );
+	return (
+		<div className="rightbar">
+			<div className="container">
+				<Suggested />
+				<Activity />
+				<Online />
+			</div>
+		</div>
+	);
 };
 
 export default Rightbar;

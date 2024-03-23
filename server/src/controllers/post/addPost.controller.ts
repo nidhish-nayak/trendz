@@ -1,6 +1,6 @@
-import config from "$/config/config";
 import { supabase } from "$/db/connect";
 import { getUserIdFromCookie } from "$/utils/getUserId.util";
+import { prefix } from "$/utils/prefix.util";
 import { AddPostSchema } from "$/validations/post.validation";
 import { type Request, type Response } from "express";
 
@@ -11,18 +11,17 @@ export const addPost = async (req: Request, res: Response) => {
 		// Zod validations
 		const validationResult = AddPostSchema.safeParse(req);
 		if (!validationResult.success) {
-			return res.status(400).send("Input validation failed!");
+			return res.status(401).send("Unauthorized!");
 		}
 
 		const { desc, img, userId, filename } = validationResult.data.body;
 
 		if (img) {
+			if (!req.session.check) {
+				return res.status(401).send("Unauthorized!");
+			}
 			if (!filename) return res.status(401).send("Unauthorized!");
-
-			const prefixLink = config.s3Config.cloudfrontLink + "/posts/";
-			const prefixFile = filename;
-
-			if (!img.includes(prefixLink) || !img.includes(prefixFile)) {
+			if (!img.includes(prefix.prefixPosts) || !img.includes(filename)) {
 				return res.status(401).send("Unauthorized!");
 			}
 		}

@@ -5,9 +5,12 @@ export const uploadFile = (req: Request, res: Response) => {
 	if (!req.file) throw new Error("File from multer middleware not sent!");
 
 	const file = req.file as Express.MulterS3.File;
-
-	if (!file) return res.status(401).send("File not found in server!");
-
-	// Get Cloudfront link - recommended
-	res.status(200).json(config.s3Config.cloudfrontLink + "/" + file.key);
+	if (!file) {
+		req.session.check = false;
+		return res.status(401).send("File not found in server!");
+	}
+	req.session.check = true;
+	return res
+		.status(200)
+		.json(config.s3Config.cloudfrontLink + "/" + file.key);
 };

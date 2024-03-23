@@ -1,7 +1,4 @@
-# Commenting now to reduce server load from testing
+# !/bin/sh
+. "$(dirname "$0")/_/husky.sh"
 
-# cd server
-
-# npm run test
-
-# cd ..
+pnpm lint-staged

@@ -6,6 +6,7 @@ import express, { type Application } from "express";
 import config from "./config/config";
 import { zodMiddleware } from "./middlewares/zod.middleware";
 
+import session from "express-session";
 import activityRoutes from "./routes/activity.route";
 import authRoutes from "./routes/auth.route";
 import commentRoutes from "./routes/comment.route";
@@ -29,6 +30,18 @@ app.use(cookieParser());
 
 // Global catches using zod
 app.use(zodMiddleware);
+
+// Session middleware setup
+app.use(
+	session({
+		secret: config.jwtKey,
+		resave: false,
+		saveUninitialized: true,
+		cookie: {
+			maxAge: 10 * 1000,
+		},
+	})
+);
 
 // Upload to client API
 app.use("/api/upload", uploadRoutes);
