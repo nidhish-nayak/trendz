@@ -45,7 +45,7 @@ export const login = async (req: Request, res: Response) => {
 					sameSite: "none",
 					secure: true,
 					httpOnly: true,
-					domain: config.server,
+					domain: ".vercel.app",
 					// set 1 day token expiry
 					maxAge: 24 * 60 * 60 * 1000,
 				})
