@@ -19,9 +19,6 @@ export const postStory = async (req: Request, res: Response) => {
 	}
 
 	if (img) {
-		if (!req.session.check) {
-			return res.status(401).send("Unauthorized!");
-		}
 		if (!img.includes(prefix.prefixStories)) {
 			return res.status(401).send("Unauthorized!");
 		}

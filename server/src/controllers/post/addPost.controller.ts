@@ -17,9 +17,6 @@ export const addPost = async (req: Request, res: Response) => {
 		const { desc, img, userId, filename } = validationResult.data.body;
 
 		if (img) {
-			if (!req.session.check) {
-				return res.status(401).send("Unauthorized!");
-			}
 			if (!filename) return res.status(401).send("Unauthorized!");
 			if (!img.includes(prefix.prefixPosts) || !img.includes(filename)) {
 				return res.status(401).send("Unauthorized!");
