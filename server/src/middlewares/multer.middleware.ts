@@ -7,6 +7,9 @@ import multerS3 from "multer-s3";
 if (!config.s3Config.bucketLink)
 	throw new Error("AWS S3 bucket link not found!");
 
+// Define custom file size limit middleware
+const fileSizeLimit = 1024 * 1024; // 1MB in bytes
+
 export const uploadMulter = multer({
 	storage: multerS3({
 		s3: s3,
@@ -22,4 +25,7 @@ export const uploadMulter = multer({
 			);
 		},
 	}),
+	limits: {
+		fileSize: fileSizeLimit,
+	},
 });

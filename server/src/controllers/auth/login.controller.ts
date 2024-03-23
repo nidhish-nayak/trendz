@@ -44,9 +44,9 @@ export const login = async (req: Request, res: Response) => {
 				.cookie("accessToken", token, {
 					httpOnly: true,
 					secure: true,
-					sameSite: "none",
-					// set 1yr token expiry
-					maxAge: 365 * 24 * 60 * 60 * 1000,
+					sameSite: "lax",
+					// set 1 day token expiry
+					maxAge: 24 * 60 * 60 * 1000,
 				})
 				.status(200)
 				.json(other);

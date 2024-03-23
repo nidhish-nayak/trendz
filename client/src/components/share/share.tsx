@@ -34,6 +34,7 @@ const Share = () => {
         },
         onError(error) {
             console.log(error);
+            setUploading(false);
             return alert("Post upload failed!");
         },
     });
@@ -52,17 +53,24 @@ const Share = () => {
 
         setUploading(true);
         let imgUrl: string | null = null;
+        let filename: string | null = null;
 
         // Upload file to server and get imgUrl back
         if (file) {
             imgUrl = await upload(file, config.s3.folders.posts);
+            filename = file.name;
             if (!imgUrl) {
                 alert("Upload failed!");
                 return;
             }
         }
 
-        mutation.mutate({ desc: desc, userId: currentUser.id, img: imgUrl });
+        mutation.mutate({
+            desc: desc,
+            userId: currentUser.id,
+            img: imgUrl,
+            filename: filename,
+        });
     };
 
     const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {

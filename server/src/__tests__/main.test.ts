@@ -7,7 +7,7 @@ import request from "supertest";
 import config from "../config/config";
 import { zodMiddleware } from "../middlewares/zod.middleware";
 
-import { DefaultUser } from "$/utils/test/authTest.utils";
+import { ExistingUser } from "$/config/test.config";
 import activityRoutes from "../routes/activity.route";
 import authRoutes from "../routes/auth.route";
 import commentRoutes from "../routes/comment.route";
@@ -46,9 +46,12 @@ describe("Express application setup & Routes test", () => {
 	beforeAll(async () => {
 		// Auth for requests
 		app.use("/api/auth", authRoutes);
-		const response = await request(app)
-			.post("/api/auth/login")
-			.send(DefaultUser);
+
+		// LOGIN
+		const response = await request(app).post("/api/auth/login").send({
+			username: ExistingUser.username,
+			password: ExistingUser.password,
+		});
 
 		userId = response.body.id;
 

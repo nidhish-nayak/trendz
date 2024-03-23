@@ -7,7 +7,7 @@ import request from "supertest";
 import config from "../../config/config";
 import { zodMiddleware } from "../../middlewares/zod.middleware";
 
-import { DefaultUser } from "$/utils/test/authTest.utils";
+import { ExistingUser } from "$/config/test.config";
 import authRoutes from "../../routes/auth.route";
 import postRoutes from "../../routes/post.route";
 
@@ -36,9 +36,10 @@ describe("Post controllers test", () => {
 	beforeAll(async () => {
 		// Login before testing posts
 		app.use("/api/auth", authRoutes);
-		const response = await request(app)
-			.post("/api/auth/login")
-			.send(DefaultUser);
+		const response = await request(app).post("/api/auth/login").send({
+			username: ExistingUser.username,
+			password: ExistingUser.password,
+		});
 
 		userId = response.body.id;
 
@@ -50,7 +51,7 @@ describe("Post controllers test", () => {
 		app.use("/api/posts", postRoutes);
 	});
 
-	it("responds for GET /api/auth/posts", async () => {
+	it("responds for GET /api/posts", async () => {
 		const resNoCookie = await request(app).get("/api/posts");
 		expect(resNoCookie.status).toBe(401);
 

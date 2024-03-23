@@ -21,7 +21,6 @@ const Online = () => {
 
     // Send your userId to add your presence
     useOnlineChannel(currentUser.id);
-    console.log(userData);
 
     useEffect(() => {
         const getUsers = async () => {

@@ -8,6 +8,17 @@ export const deletePost = async (req: Request, res: Response) => {
 	const param = req.params.postId;
 	const postId: number = parseInt(param);
 
+	const { data: existingPost, error: existingError } = await supabase
+		.from("posts")
+		.select("*")
+		.eq("id", postId)
+		.eq("userId", userId);
+
+	if (existingError)
+		return res.status(400).json("Error checking existing posts!");
+
+	if (existingPost.length < 1) return res.status(400).json("Post not found!");
+
 	const { data, error } = await supabase
 		.from("posts")
 		.delete()

@@ -7,7 +7,6 @@ import request from "supertest";
 import config from "../../config/config";
 import { zodMiddleware } from "../../middlewares/zod.middleware";
 
-import authRoutes from "../../routes/auth.route";
 import {
 	DeregisterAnotherUser,
 	DeregisterInputFail,
@@ -21,7 +20,8 @@ import {
 	RegisterInputFail,
 	RegisterPass,
 	RegisterUserExists,
-} from "../../utils/test/authTest.utils";
+} from "../../config/test.config";
+import authRoutes from "../../routes/auth.route";
 
 // Configs
 const app: Application = express();

@@ -2,7 +2,6 @@ import { supabase } from "$/db/connect";
 import { Request, Response } from "express";
 
 // This is not required since we are CASCADING on post & comments removal
-// Only use this for running JOBS for activity cleanup tasks from DB
 export const deleteActivity = async (req: Request, res: Response) => {
 	const id = req.params.postId;
 	const postId = parseInt(id);

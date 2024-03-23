@@ -7,12 +7,12 @@
 	},
 	"compilerOptions": {
 		"target": "ES6",
-		"module": "CommonJS",
+		"module": "NodeNext",
 		"outDir": "./dist",
 		"rootDir": "./src",
 		"allowJs": true,
 		"strict": true,
-		"moduleResolution": "Node",
+		"moduleResolution": "NodeNext",
 		"esModuleInterop": true,
 		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true,
@@ -25,6 +25,7 @@
 		"./src/**/*.js",
 		".eslintrc",
 		".prettierrc",
-		"src/utils/coverage.util.mjs"
+		"src/utils/coverage.util.ts",
+		"src/utils/coverage.util.mts"
 	]
 }

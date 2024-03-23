@@ -7,7 +7,9 @@ const config = {
 	dbConfig: {
 		supabaseUrl: process.env.DB_URL,
 		supabaseKey: process.env.DB_SERVICE_ROLE_KEY,
-		supabaseDirectUrl: process.env.DB_DIRECT_URL,
+
+		// Incase you use RAW SQL statements - enable below
+		// supabaseDirectUrl: process.env.DB_DIRECT_URL,
 	},
 	jwtKey: process.env.JWT_SECRET_KEY || "invalid_key",
 	corsOptions: {
@@ -16,6 +18,8 @@ const config = {
 				? process.env.CLIENT_URL
 				: ["http://localhost:5173", "http://localhost:3000"],
 		credentials: true,
+		sameSite: "lax", // Set the SameSite attribute to 'lax
+		include: ["credentials"], // Only include credentials if required
 		optionSuccessStatus: 200,
 	},
 	awsConfig: {

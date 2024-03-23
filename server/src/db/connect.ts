@@ -1,6 +1,5 @@
 import config from "$/config/config";
 import { createClient } from "@supabase/supabase-js";
-import postgres from "postgres";
 import { type Database } from "./database.types";
 
 // API Connect
@@ -10,8 +9,11 @@ if (!supabaseUrl || !supabaseKey)
 
 export const supabase = createClient<Database>(supabaseUrl, supabaseKey);
 
-// Direct Connect using Postgres
+/* 
+// Direct Connect incase you want to use RAW SQL statements
+
 const { supabaseDirectUrl } = config.dbConfig;
 if (!supabaseDirectUrl) throw new Error("Supabase Direct URL not found!");
 
 export const sql = postgres(supabaseDirectUrl);
+*/
