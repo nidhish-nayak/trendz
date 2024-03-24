@@ -38,10 +38,10 @@ export const addPost = async (req: Request, res: Response) => {
 			])
 			.select();
 
-		if (error) res.status(400).json("Post upload to DB has failed!");
+		if (error) return res.status(400).json("Post upload to DB has failed!");
 
-		res.status(200).json(data);
+		return res.status(200).json(data);
 	} catch (error) {
-		res.status(401).json(error);
+		return res.status(401).json(error);
 	}
 };

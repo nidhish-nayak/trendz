@@ -32,6 +32,16 @@ export const login = async (req: Request, res: Response) => {
 				.send("User is not registered. Please sign up.");
 		}
 
+		const { data: banCheck, error: banError } = await supabase
+			.from("bans")
+			.select("*")
+			.eq("user_id", existingUser[0].id);
+
+		if (banError) return res.status(400).send("Failed banCheck!");
+		if (banCheck.length >= 1) {
+			return res.status(401).send("You are banned!");
+		}
+
 		// Compare passwords
 		const hashedPassword = existingUser[0].password;
 		const isPasswordValid = await bcrypt.compare(password, hashedPassword);
@@ -42,10 +52,9 @@ export const login = async (req: Request, res: Response) => {
 			const token = jwt.sign({ id: userId }, jwtKey);
 			return res
 				.cookie("accessToken", token, {
-					sameSite: "none",
-					secure: true,
 					httpOnly: true,
-					domain: ".vercel.app",
+					secure: true,
+					sameSite: "none",
 					// set 1 day token expiry
 					maxAge: 24 * 60 * 60 * 1000,
 				})

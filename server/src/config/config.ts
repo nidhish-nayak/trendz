@@ -34,6 +34,11 @@ const config = {
 		bucketLink: process.env.s3BucketLink,
 		cloudfrontLink: process.env.s3CloudfrontLink,
 	},
+	modOptions: {
+		modUrl: process.env.MOD_URL,
+		modKey: process.env.MOD_KEY,
+		modHost: process.env.MOD_HOST,
+	},
 };
 
 export default config;

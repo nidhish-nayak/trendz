@@ -1,9 +1,17 @@
-import { useRouteError } from "react-router-dom";
+import { useEffect } from "react";
+import { useNavigate, useRouteError } from "react-router-dom";
 import "./error.scss";
 
 export default function ErrorPage() {
+	const navigate = useNavigate();
 	const error = useRouteError();
 	console.error(error);
+
+	useEffect(() => {
+		localStorage.clear();
+		navigate("/login");
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return (
 		<div className="error-page">
