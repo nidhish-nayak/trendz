@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { ChangeEvent, useContext, useState } from "react";
+import { ChangeEvent, SyntheticEvent, useContext, useState } from "react";
 
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -7,6 +7,7 @@ import SendIcon from "@mui/icons-material/Send";
 
 import config from "../../config/config";
 import { AuthContext } from "../../context/authContext";
+import { PostContext } from "../../context/postContext";
 import { axiosRequest } from "../../utils/axios.utils";
 import upload from "../../utils/upload.utils";
 import Spinner from "../spinner/spinner";
@@ -16,11 +17,22 @@ import { NEW_POST_TYPES } from "./share.types";
 const Share = () => {
 	const queryClient = useQueryClient();
 	const { currentUser } = useContext(AuthContext);
+	const { setIsPostOpen } = useContext(PostContext);
 
 	const [desc, setDesc] = useState("");
 	const [file, setFile] = useState<File | null>(null);
 	const [uploading, setUploading] = useState(false);
 	const [localImgUrl, setLocalImgUrl] = useState<string | null>(null);
+
+	const checkImageDimensions = (
+		e: SyntheticEvent<HTMLImageElement, Event>
+	) => {
+		const { naturalWidth, naturalHeight } = e.target as HTMLImageElement;
+		if (naturalWidth > 1920 || naturalHeight > 1080) {
+			alert("Image dimensions too large!");
+			setFile(null);
+		}
+	};
 
 	const mutation = useMutation({
 		mutationFn: (newPost: NEW_POST_TYPES) =>
@@ -28,7 +40,7 @@ const Share = () => {
 		onSuccess: () => {
 			setDesc("");
 			setFile(null);
-
+			setIsPostOpen(); // close post after uploading
 			queryClient.invalidateQueries({ queryKey: ["posts"] });
 			return setUploading(false);
 		},
@@ -112,6 +124,7 @@ const Share = () => {
 								src={localImgUrl}
 								className="file"
 								alt="uploaded-img"
+								onLoad={checkImageDimensions}
 							/>
 						)}
 					</div>

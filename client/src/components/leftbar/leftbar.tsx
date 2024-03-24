@@ -31,6 +31,7 @@ const Leftbar = () => {
 
 	const handlePostOpen = () => {
 		navigate("/");
+		window.scrollTo(0, 0);
 		return setIsPostOpen();
 	};
 

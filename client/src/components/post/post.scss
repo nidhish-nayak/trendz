@@ -46,7 +46,15 @@
 
 				.userInfo {
 					display: flex;
+					align-items: center;
+					justify-content: center;
 					gap: 20px;
+
+					a {
+						display: flex;
+						justify-content: flex-start;
+						align-items: center;
+					}
 
 					img {
 						width: 40px;
@@ -58,9 +66,12 @@
 					.details {
 						display: flex;
 						flex-direction: column;
+						align-items: flex-start;
+						justify-content: space-between;
 
 						.name {
 							font-weight: 500;
+							align-items: center;
 						}
 
 						.date {
