@@ -23,21 +23,25 @@
 
 		.single-post-back {
 			display: flex;
-			justify-content: space-between;
+			justify-content: center;
 			align-items: center;
 			gap: 4px;
-			padding: 6px 8px;
+			padding: 6px 10px 6px 4px;
 			font-size: 0.875rem;
 			font-weight: bold;
 			outline: none;
 			border-radius: 6px;
 			cursor: pointer;
 			color: white;
-			background-color: hsl(152, 47%, 41%, 0.8);
+			background-color: #1e794e;
 			border: 1px solid hsl(153.1deg, 60.2%, 52.7%);
 
 			&:hover {
 				background-color: #37996b;
+			}
+
+			svg {
+				font-size: 1rem;
 			}
 
 			@include mobile {
@@ -122,22 +126,24 @@
 
 						.delete {
 							position: absolute;
-							right: 40px;
-							top: -10px;
+							right: 12px;
+							top: 28px;
 							display: flex;
 							justify-content: center;
-							align-items: flex-start;
+							align-items: center;
 							background-color: themed("bgSoft");
 							border: 1px solid themed("border");
 							border-radius: 10px;
 							color: themed("textColor");
 							overflow: hidden;
-							padding: 8px 12px;
-							gap: 10px;
+							padding: 6px 12px 8px 10px;
+							gap: 5px;
 							transition: 250ms ease-in-out;
+							box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
 
 							&:hover {
-								background-color: themed("button");
+								background-color: crimson;
+								color: white;
 							}
 						}
 					}

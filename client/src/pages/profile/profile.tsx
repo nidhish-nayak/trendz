@@ -29,7 +29,7 @@ const Profile = () => {
 
 	const { id } = useParams();
 	const { currentUser } = useContext(AuthContext);
-	const { setProfileDataHandler, setUserImgHandler, setCoverImgHandler } =
+	const { setFormDataHandler, setUserImgHandler, setCoverImgHandler } =
 		useContext(ProfileContext);
 
 	if (!currentUser || !id) throw Error("User not found!");
@@ -112,7 +112,7 @@ const Profile = () => {
 	const { username, email, name, coverPic, city, website, profilePic } = data;
 
 	const handleClick = async () => {
-		setProfileDataHandler(data);
+		setFormDataHandler(data);
 		setIsEditOpen(!isEditOpen);
 	};
 
@@ -126,74 +126,80 @@ const Profile = () => {
 		<div className="profile" id="profile">
 			<div className="user-container">
 				<div className="images">
-					<div className="delete-account">
-						<div
-							className="delete-icon"
-							onClick={() => setIsDeleteOpen(!isDeleteOpen)}
-						>
-							<PersonAddDisabled fontSize="small" />
-						</div>
-						{isDeleteOpen && (
-							<div className="delete">
-								<div className="delete-modal">
-									<h2>Delete Account?</h2>
-									<div className="inputs">
-										<label>Username</label>
-										<input
-											type="text"
-											required
-											value={currentUser.username}
-											placeholder="username"
-											onChange={(e) =>
-												setDeleteForm({
-													...deleteForm,
-													username: e.target.value,
-												})
-											}
-										/>
-									</div>
-									<div className="inputs">
-										<label>Password</label>
-										<input
-											type="password"
-											required
-											ref={inputRef}
-											placeholder="!@#$%^&*()_+"
-											onChange={(e) =>
-												setDeleteForm({
-													...deleteForm,
-													password: e.target.value,
-												})
-											}
-										/>
-									</div>
-									<div className="delete-buttons">
-										<button
-											className="delete-button"
-											onClick={handleAccountDelete}
-										>
-											{isButtonLoading ? (
-												<Spinner />
-											) : (
-												"Delete"
-											)}
-										</button>
-										<button
-											className="delete-cancel"
-											onClick={() =>
-												setIsDeleteOpen(!isDeleteOpen)
-											}
-										>
-											Cancel
-										</button>
-									</div>
-									{mutationError ? (
-										<div>{mutationError}</div>
-									) : null}
-								</div>
+					{currentUser.id.toString() !== id ? null : (
+						<div className="delete-account">
+							<div
+								className="delete-icon"
+								onClick={() => setIsDeleteOpen(!isDeleteOpen)}
+							>
+								<PersonAddDisabled fontSize="small" />
 							</div>
-						)}
-					</div>
+							{isDeleteOpen && (
+								<div className="delete">
+									<div className="delete-modal">
+										<h2>Delete Account?</h2>
+										<div className="inputs">
+											<label>Username</label>
+											<input
+												type="text"
+												required
+												value={currentUser.username}
+												placeholder="username"
+												onChange={(e) =>
+													setDeleteForm({
+														...deleteForm,
+														username:
+															e.target.value,
+													})
+												}
+											/>
+										</div>
+										<div className="inputs">
+											<label>Password</label>
+											<input
+												type="password"
+												required
+												ref={inputRef}
+												placeholder="!@#$%^&*()_+"
+												onChange={(e) =>
+													setDeleteForm({
+														...deleteForm,
+														password:
+															e.target.value,
+													})
+												}
+											/>
+										</div>
+										<div className="delete-buttons">
+											<button
+												className="delete-button"
+												onClick={handleAccountDelete}
+											>
+												{isButtonLoading ? (
+													<Spinner />
+												) : (
+													"Delete"
+												)}
+											</button>
+											<button
+												className="delete-cancel"
+												onClick={() =>
+													setIsDeleteOpen(
+														!isDeleteOpen
+													)
+												}
+											>
+												Cancel
+											</button>
+										</div>
+										{mutationError ? (
+											<div>{mutationError}</div>
+										) : null}
+									</div>
+								</div>
+							)}
+						</div>
+					)}
 					<img src={coverPic!} alt="Cover Photo" className="cover" />
 					<img
 						src={profilePic!}

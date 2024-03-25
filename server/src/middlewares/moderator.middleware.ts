@@ -2,7 +2,8 @@ import config from "$/config/config";
 import axios from "axios";
 import { NextFunction, Request, Response } from "express";
 
-import { supabase } from "$/db/connect";
+import { addBan, getModerationAxiosConfig } from "$/utils/axios.util";
+import clearAllCookies from "$/utils/cookie.util";
 import { getUserIdFromCookie } from "$/utils/getUserId.util";
 import { prefix } from "$/utils/prefix.util";
 import { AddPostSchema } from "$/validations/post.validation";
@@ -13,11 +14,17 @@ const moderatorMiddleware = async (
 	res: Response,
 	next: NextFunction
 ) => {
+	// Toggle moderator on/off as per config
+	if (config.modOptions.modStatus === false) {
+		return next();
+	}
+
 	let validationResult;
 	const user_id = getUserIdFromCookie(req);
 	validationResult = AddPostSchema.safeParse(req);
 
 	if (!validationResult.success) {
+		// STORY VALIDATION
 		validationResult = StorySchema.safeParse(req);
 
 		if (!validationResult.success) {
@@ -25,38 +32,17 @@ const moderatorMiddleware = async (
 		}
 
 		const { img } = validationResult.data.body;
-
-		const options = {
-			method: "POST",
-			url: config.modOptions.modUrl,
-			headers: {
-				"content-type": "application/json",
-				"X-RapidAPI-Key": config.modOptions.modKey,
-				"X-RapidAPI-Host": config.modOptions.modHost,
-			},
-			data: {
-				url: img,
-			},
-		};
+		const options = getModerationAxiosConfig(img);
 
 		try {
 			const response = await axios.request(options);
 			if (response.data.unsafe === true) {
-				const { data, error } = await supabase
-					.from("bans")
-					.insert({ user_id: user_id })
-					.select();
-
-				if (error) return res.status(400).json("Ban failed!");
+				const banAdded = await addBan(user_id);
+				if (banAdded === false)
+					return res.status(400).json("Ban failed!");
 
 				// Clear cookies on ban
-				res.clearCookie("accessToken", {
-					httpOnly: true,
-					secure: true,
-					sameSite: "none",
-				})
-					.status(403)
-					.send("You are banned!");
+				return clearAllCookies(res).status(403).send("You are banned!");
 			}
 			return next();
 		} catch (error) {
@@ -64,6 +50,7 @@ const moderatorMiddleware = async (
 		}
 	}
 
+	// POSTS VALIDATION
 	const { userId, img, filename } = validationResult.data.body;
 
 	if (img) {
@@ -77,38 +64,18 @@ const moderatorMiddleware = async (
 		return res.status(401).send("Unauthorized");
 	}
 
-	const options = {
-		method: "POST",
-		url: config.modOptions.modUrl,
-		headers: {
-			"content-type": "application/json",
-			"X-RapidAPI-Key": config.modOptions.modKey,
-			"X-RapidAPI-Host": config.modOptions.modHost,
-		},
-		data: {
-			url: img,
-		},
-	};
+	if (!img) return next();
+
+	const options = getModerationAxiosConfig(img);
 
 	try {
 		const response = await axios.request(options);
 		if (response.data.unsafe === true) {
-			const { data, error } = await supabase
-				.from("bans")
-				.insert({ user_id: user_id })
-				.select();
-
-			if (error) return res.status(400).json("Ban failed!");
+			const banAdded = await addBan(user_id);
+			if (banAdded === false) return res.status(400).json("Ban failed!");
 
 			// Clear cookie on ban
-			return res
-				.clearCookie("accessToken", {
-					httpOnly: true,
-					secure: true,
-					sameSite: "none",
-				})
-				.status(403)
-				.send("You are banned!");
+			return clearAllCookies(res).status(403).send("You are banned!");
 		}
 		return next();
 	} catch (error) {

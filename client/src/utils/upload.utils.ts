@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import { axiosRequest } from "./axios.utils";
 
 const upload = async (file: File, folder: string) => {
@@ -10,10 +11,9 @@ const upload = async (file: File, folder: string) => {
 		const res = await axiosRequest.post("/upload", formData);
 		return res.data;
 	} catch (error) {
-		console.log({
-			message: "File upload failed!",
-			errorData: error,
-		});
+		const { response } = error as AxiosError;
+		console.log(response?.data);
+		alert(response?.data);
 	}
 };
 

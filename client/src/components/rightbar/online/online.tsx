@@ -61,7 +61,7 @@ const Online = () => {
 					title="Show your online status to others - Heavy server load!"
 					onClick={() => setIsOnline(!isOnline)}
 				>
-					<p className="realtime-title">Realtime</p>
+					<p className="realtime-title">Status</p>
 					<div
 						className={`realtime-circle ${!isOnline && "offline"}`}
 					/>

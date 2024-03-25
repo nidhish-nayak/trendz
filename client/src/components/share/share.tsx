@@ -72,7 +72,7 @@ const Share = () => {
 			imgUrl = await upload(file, config.s3.folders.posts);
 			filename = file.name;
 			if (!imgUrl) {
-				alert("Upload failed!");
+				setUploading(false);
 				return;
 			}
 		}

@@ -71,6 +71,47 @@
 			align-items: center;
 			gap: 20px;
 
+			.item-realtime {
+				@include tablet {
+					display: none;
+				}
+
+				padding: 5px 10px;
+				border-radius: 6px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				gap: 6px;
+				background-color: themed("border");
+				cursor: pointer;
+				border: 1px solid themed("border");
+				transition: all 150ms ease-in-out;
+
+				&:hover {
+					border: 1px solid themed("arrow");
+				}
+
+				.realtime-title {
+					font-size: 0.75rem;
+				}
+
+				.realtime-circle {
+					margin-top: 2px;
+					width: 5px;
+					height: 5px;
+					border-radius: 100%;
+					background-color: themed("activityOn");
+				}
+
+				.realtime-circle.read-only {
+					margin-top: 2px;
+					width: 5px;
+					height: 5px;
+					border-radius: 100%;
+					background-color: yellow;
+				}
+			}
+
 			.user {
 				display: flex;
 				align-items: center;
@@ -131,6 +172,50 @@
 		display: none;
 
 		&.visible {
+			.item-realtime {
+				padding: 5px 10px;
+				border-radius: 6px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				gap: 6px;
+				background-color: themed("border");
+				cursor: pointer;
+				border: 1px solid themed("border");
+				transition: all 150ms ease-in-out;
+
+				&:hover {
+					border: 1px solid themed("arrow");
+				}
+
+				.realtime-title {
+					font-weight: 500;
+					font-size: 0.85rem;
+					margin-bottom: 2px;
+				}
+
+				.realtime-circle {
+					width: 5px;
+					height: 5px;
+					border-radius: 100%;
+					background-color: themed("activityOn");
+				}
+
+				.realtime-circle.offline {
+					width: 5px;
+					height: 5px;
+					border-radius: 100%;
+					background-color: themed("activityOff");
+				}
+
+				.realtime-circle.read-only {
+					width: 5px;
+					height: 5px;
+					border-radius: 100%;
+					background-color: yellow;
+				}
+			}
+
 			opacity: 1;
 			transform: translateY(0);
 			transition:

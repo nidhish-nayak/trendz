@@ -6,6 +6,15 @@ import "./register.scss";
 import config from "../../config/config";
 import { RegisterTypes } from "./register.types";
 
+// Loading component
+const RegisterSpinner = () => {
+	return (
+		<div className="spinner-overlay">
+			<div className="spinner-container" />
+		</div>
+	);
+};
+
 const defaultFormFields: RegisterTypes = {
 	username: "",
 	email: "",
@@ -71,7 +80,7 @@ const Register = () => {
 							Welcome to our vibrant social media community, where
 							meaningful connections thrive. If you do not want to
 							create a new account, you can login as <b>Guest</b>{" "}
-							and enjoy the features for free!
+							and enjoy the <b>read-only</b> features for free!
 						</p>
 					</div>
 					<div className="left-register">
@@ -126,7 +135,9 @@ const Register = () => {
 						{resData.msg ? (
 							<div
 								className="response"
-								style={{ color: resData.err ? "red" : "green" }}
+								style={{
+									color: resData.err ? "red" : "green",
+								}}
 							>
 								{resData.msg}
 							</div>
@@ -134,7 +145,9 @@ const Register = () => {
 							<></>
 						)}
 						{isLoading ? (
-							<button type="button">Loading...</button>
+							<button type="button">
+								<RegisterSpinner />
+							</button>
 						) : (
 							<button type="submit">Register</button>
 						)}

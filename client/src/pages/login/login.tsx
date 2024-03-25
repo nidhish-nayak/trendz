@@ -3,7 +3,17 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/authContext";
 import "./login.scss";
 
+import config from "../../config/config";
 import { LoginTypes } from "./login.types";
+
+// Loading component
+const LoginSpinner = () => {
+	return (
+		<div className="spinner-overlay">
+			<div className="spinner-container" />
+		</div>
+	);
+};
 
 const defaultFormFields: LoginTypes = {
 	username: "",
@@ -16,6 +26,7 @@ const Login = () => {
 	const [err, setErr] = useState<string | null>(null);
 	const [formFields, setFormFields] = useState(defaultFormFields);
 	const [isLoading, setIsLoading] = useState(false);
+	const [isGuestLoading, setIsGuestLoading] = useState(false);
 
 	const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = event.target;
@@ -37,6 +48,29 @@ const Login = () => {
 		setErr(res.response);
 	};
 
+	const handleGuestLoginSubmit = async (event: React.FormEvent) => {
+		event.preventDefault();
+		setIsGuestLoading(true);
+
+		const { username, password } = config.guestCredentials;
+		if (!username || !password) {
+			setIsGuestLoading(false);
+			setErr("Guest Credentials not found!");
+		}
+
+		const res = await login({
+			username: username,
+			password: password,
+		});
+
+		if (res.isLoggedIn === true) {
+			setIsGuestLoading(false);
+			navigate("/");
+		}
+		setIsGuestLoading(false);
+		setErr(res.response);
+	};
+
 	return (
 		<div className="login">
 			<div className="card">
@@ -50,7 +84,7 @@ const Login = () => {
 							Welcome to our vibrant social media community, where
 							meaningful connections thrive. If you do not want to
 							create a new account, you can login as <b>Guest</b>{" "}
-							and enjoy the features for free!
+							and enjoy the <b>read-only</b> features for free!
 						</p>
 					</div>
 				</div>
@@ -82,13 +116,33 @@ const Login = () => {
 							/>
 						</div>
 						<div className="button-container">
-							<button
-								type="submit"
-								className="login-button"
-								disabled={isLoading ? true : false}
-							>
-								{isLoading ? "Loading..." : "Login"}
-							</button>
+							{isLoading ? (
+								<button type="button" className="login-button">
+									<LoginSpinner />
+								</button>
+							) : (
+								<button
+									type="submit"
+									className="login-button"
+									disabled={isLoading ? true : false}
+								>
+									Login
+								</button>
+							)}
+							{isGuestLoading ? (
+								<button type="button" className="guest-button">
+									<LoginSpinner />
+								</button>
+							) : (
+								<button
+									type="button"
+									className="guest-button"
+									disabled={isGuestLoading ? true : false}
+									onClick={handleGuestLoginSubmit}
+								>
+									Guest
+								</button>
+							)}
 						</div>
 						<div style={{ color: "crimson" }}>{err}</div>
 					</form>

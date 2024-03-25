@@ -8,8 +8,8 @@ const Rightbar = () => {
 		<div className="rightbar">
 			<div className="container">
 				<Suggested />
-				<Activity />
 				<Online />
+				<Activity />
 			</div>
 		</div>
 	);

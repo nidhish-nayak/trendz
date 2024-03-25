@@ -35,9 +35,18 @@ const config = {
 		cloudfrontLink: process.env.s3CloudfrontLink,
 	},
 	modOptions: {
+		modStatus: true, // Toggle moderator
 		modUrl: process.env.MOD_URL,
 		modKey: process.env.MOD_KEY,
 		modHost: process.env.MOD_HOST,
+	},
+	// Only for development
+	guestAccess: {
+		readOnly: false,
+	},
+	token: {
+		// 1 DAY
+		maxAge: 24 * 60 * 60 * 1000,
 	},
 };
 

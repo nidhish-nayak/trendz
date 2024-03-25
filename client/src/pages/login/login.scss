@@ -128,7 +128,8 @@
 					gap: 20px;
 
 					.login-button {
-						width: min-content;
+						max-width: 130px;
+						height: 40px;
 						padding: 10px 30px;
 						border: 1px solid black;
 						text-transform: uppercase;
@@ -268,5 +269,33 @@
 	.login {
 		padding: 0;
 		height: min-content;
+	}
+}
+
+.spinner-overlay {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.spinner-container {
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	border: 2px solid white;
+	border-radius: 50%;
+	border-top-color: black;
+	animation: spin 1s ease-in-out infinite;
+	-webkit-animation: spin 1s ease-in-out infinite;
+	@keyframes spin {
+		to {
+			-webkit-transform: rotate(360deg);
+		}
+	}
+	@-webkit-keyframes spin {
+		to {
+			-webkit-transform: rotate(360deg);
+		}
 	}
 }

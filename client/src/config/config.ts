@@ -21,6 +21,10 @@ const config = {
 			stories: "stories",
 		},
 	},
+	guestCredentials: {
+		username: import.meta.env.VITE_GUEST_USERNAME,
+		password: import.meta.env.VITE_GUEST_PASSWORD,
+	},
 };
 
 export default config;

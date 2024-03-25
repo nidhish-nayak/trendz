@@ -9,6 +9,7 @@ import {
 	Groups3Outlined,
 	HomeOutlined,
 	MarkUnreadChatAltOutlined,
+	MonitorHeart,
 	NotificationsActiveOutlined,
 	TravelExploreOutlined,
 } from "@mui/icons-material";
@@ -21,8 +22,8 @@ const Leftbar = () => {
 	const navigate = useNavigate();
 	const { currentUser } = useContext(AuthContext);
 	const { isPostOpen, setIsPostOpen } = useContext(PostContext);
-
 	if (!currentUser) throw Error("User not logged in!");
+
 	const { id, profilePic } = currentUser;
 
 	const handleProfileNavigate = () => {
@@ -109,6 +110,19 @@ const Leftbar = () => {
 						<div className="item">
 							<TravelExploreOutlined />
 							<span>Find People</span>
+						</div>
+					</Link>
+					<Link
+						to="/activities"
+						className="tablet"
+						style={{
+							textDecoration: "none",
+							color: "inherit",
+						}}
+					>
+						<div className="item tablet">
+							<MonitorHeart />
+							<span>Activities</span>
 						</div>
 					</Link>
 				</div>

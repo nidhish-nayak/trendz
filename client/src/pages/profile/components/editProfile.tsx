@@ -8,17 +8,20 @@ import { axiosRequest } from "../../../utils/axios.utils";
 import "../profile.scss";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import config from "../../../config/config";
 import { ProfileContext } from "../../../context/profileContext";
 import { objectsAreEqual } from "../../../utils/objects.utils";
+import upload from "../../../utils/upload.utils";
 import { MUTATION_TYPE, USER_TYPES } from "../profile.types";
 import UploadUser from "./uploadUser";
 
 const EditProfile = ({ closeModal }: { closeModal: () => void }) => {
 	const { id } = useParams();
 	const queryClient = useQueryClient();
+	const [isLoading, setIsLoading] = useState(false);
 
-	const { currentUser } = useContext(AuthContext);
-	const { userImg, coverImg, profileData, setProfileDataHandler } =
+	const { currentUser, setCurrentUserHandler } = useContext(AuthContext);
+	const { userImg, coverImg, formData, setFormDataHandler } =
 		useContext(ProfileContext);
 
 	if (!currentUser || !id) {
@@ -26,20 +29,20 @@ const EditProfile = ({ closeModal }: { closeModal: () => void }) => {
 		throw Error("User not logged in!");
 	}
 
-	const [formData, setFormData] = useState<USER_TYPES | null>(profileData);
-
 	const mutation: MUTATION_TYPE = useMutation({
 		mutationFn: (formData: USER_TYPES) =>
 			axiosRequest.put("/users", formData),
 		onSuccess: () => {
-			if (formData === null) return alert("Null formData sent to server");
-			localStorage.setItem("user", JSON.stringify(formData));
+			if (formData === null) return alert("No FormData!");
 			queryClient.invalidateQueries({ queryKey: ["users", id] });
-
+			setCurrentUserHandler(formData);
+			setFormDataHandler(formData);
+			setIsLoading(false);
 			closeModal();
-			window.location.reload();
+			alert("Please refresh to see profile updates");
 		},
 		onError: (error) => {
+			setIsLoading(false);
 			console.error("Error creating user:", error);
 		},
 	});
@@ -49,39 +52,56 @@ const EditProfile = ({ closeModal }: { closeModal: () => void }) => {
 			console.log("Form data loading...");
 			return;
 		}
-		setFormData({ ...formData, [event.target.name]: event.target.value });
-		setProfileDataHandler(formData);
+		setFormDataHandler({
+			...formData,
+			[event.target.name]: event.target.value,
+		});
 	};
 
 	const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
+		setIsLoading(true);
+		if (formData === null) return alert("Form data is blank!");
 
-		if (formData === null || profileData === null)
-			return alert("Form data is blank!");
+		// Define upload folder paths
+		const userImgPath =
+			config.s3.folders.profiles.users + `/${currentUser.username}`;
+		const coverImgPath =
+			config.s3.folders.profiles.covers + `/${currentUser.username}`;
 
-		// Very important code - DO NOT TOUCH!!!
-		if (!userImg && coverImg) {
-			setFormData({ ...formData, coverPic: coverImg });
-			return mutation.mutate(formData);
-		}
-
-		if (userImg && !coverImg) {
-			setFormData({ ...formData, profilePic: userImg });
-			return mutation.mutate({ ...formData, profilePic: userImg });
-		}
-
+		// Check all conditions
 		if (!userImg && !coverImg) {
 			if (objectsAreEqual(formData, currentUser))
 				return alert("No updates made!");
 			return mutation.mutate(formData);
 		}
 
-		setFormData({
-			...formData,
-			profilePic: userImg,
-			coverPic: coverImg,
-		});
-		return mutation.mutate(formData);
+		if (userImg && !coverImg) {
+			const userUrl = await upload(userImg, userImgPath);
+			// Beware formData will only update once submitted - Hence direct mutation
+			return mutation.mutate({ ...formData, profilePic: userUrl });
+		}
+
+		if (!userImg && coverImg) {
+			const coverUrl = await upload(coverImg, coverImgPath);
+			// Beware formData will only update once submitted - Hence direct mutation
+			return mutation.mutate({ ...formData, coverPic: coverUrl });
+		}
+
+		// If both user & cover updated
+		if (userImg && coverImg) {
+			const userUrl = await upload(userImg, userImgPath);
+			const coverUrl = await upload(coverImg, coverImgPath);
+			// Beware formData will only update once submitted - Hence direct mutation
+			return mutation.mutate({
+				...formData,
+				profilePic: userUrl,
+				coverPic: coverUrl,
+			});
+		}
+
+		setIsLoading(false);
+		return alert("No updates made!");
 	};
 
 	if (formData === null) {
@@ -220,10 +240,10 @@ const EditProfile = ({ closeModal }: { closeModal: () => void }) => {
 						</button>
 						<button
 							type="submit"
-							disabled={mutation.isPending}
+							disabled={isLoading}
 							className="save"
 						>
-							{mutation.isPending ? <Spinner /> : "Save"}
+							{isLoading ? <Spinner /> : "Save"}
 						</button>
 					</div>
 				</form>

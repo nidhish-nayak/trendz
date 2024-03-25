@@ -27,6 +27,7 @@ import {
 	SearchOff,
 } from "@mui/icons-material";
 import PostSVG from "../../assets/PostSVG";
+import { OnlineContext } from "../../context/onlineContext";
 import { PostContext } from "../../context/postContext";
 import Logo from "../logo/logo";
 import Logout from "../logout/logout";
@@ -39,6 +40,7 @@ const Navbar = () => {
 	const navigate = useNavigate();
 	const scrollDirection = useScrollDirection();
 	const { currentUser } = useContext(AuthContext);
+	const { isOnline } = useContext(OnlineContext);
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const { isPostOpen, setIsPostOpen } = useContext(PostContext);
 	const { darkMode, toggleTheme } = useContext(DarkModeContext);
@@ -91,6 +93,21 @@ const Navbar = () => {
 					<Search />
 				</div>
 				<div className="right">
+					<div
+						className="item-realtime"
+						title={
+							username === "guest"
+								? "Plese sign-up for full-access."
+								: ""
+						}
+					>
+						<p className="realtime-title">
+							{username === "guest" ? "Read Only" : "Full Access"}
+						</p>
+						<div
+							className={`realtime-circle ${username === "guest" ? "read-only" : "online"}`}
+						/>
+					</div>
 					<div className="user">
 						<div className="user-link" onClick={showLogout}>
 							<img
@@ -123,6 +140,16 @@ const Navbar = () => {
 					<Logo />
 				</div>
 				<div className="right-mobile">
+					<div
+						className="item-realtime"
+						title="Status"
+						onClick={() => navigate("/activities")}
+					>
+						<p className="realtime-title">Status</p>
+						<div
+							className={`realtime-circle ${currentUser.username === "guest" ? "read-only" : isOnline ? "online" : "offline"}`}
+						/>
+					</div>
 					<div
 						className="theme"
 						onClick={toggleTheme}

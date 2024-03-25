@@ -2,18 +2,18 @@ import { ReactNode, createContext, useState } from "react";
 import { USER_TYPES } from "../pages/profile/profile.types";
 
 type PROFILE_CONTEXT_TYPES = {
-	userImg: string | null;
-	coverImg: string | null;
-	profileData: USER_TYPES | null;
-	setUserImgHandler: (data: string | null) => void;
-	setCoverImgHandler: (data: string | null) => void;
-	setProfileDataHandler: (data: USER_TYPES) => void;
+	userImg: File | null;
+	coverImg: File | null;
+	formData: USER_TYPES | null;
+	setUserImgHandler: (data: File | null) => void;
+	setCoverImgHandler: (data: File | null) => void;
+	setFormDataHandler: (data: USER_TYPES) => void;
 };
 
 export const ProfileContext = createContext<PROFILE_CONTEXT_TYPES>({
 	userImg: null,
 	coverImg: null,
-	profileData: {
+	formData: {
 		id: 0,
 		name: "",
 		email: "",
@@ -25,31 +25,31 @@ export const ProfileContext = createContext<PROFILE_CONTEXT_TYPES>({
 	},
 	setUserImgHandler: () => {},
 	setCoverImgHandler: () => {},
-	setProfileDataHandler: () => {},
+	setFormDataHandler: () => {},
 });
 
 export const ProfileProvider = ({ children }: { children: ReactNode }) => {
-	const [userImg, setUserImg] = useState<string | null>(null);
-	const [coverImg, setCoverImg] = useState<string | null>(null);
-	const [profileData, setProfileData] = useState<USER_TYPES | null>(null);
+	const [userImg, setUserImg] = useState<File | null>(null);
+	const [coverImg, setCoverImg] = useState<File | null>(null);
+	const [formData, setFormData] = useState<USER_TYPES | null>(null);
 
-	const setUserImgHandler = (data: string | null) => {
-		setUserImg(() => data);
+	const setUserImgHandler = (file: File | null) => {
+		setUserImg(file);
 	};
-	const setCoverImgHandler = (data: string | null) => {
-		setCoverImg(() => data);
+	const setCoverImgHandler = (file: File | null) => {
+		setCoverImg(file);
 	};
-	const setProfileDataHandler = (data: USER_TYPES) => {
-		setProfileData(() => data);
+	const setFormDataHandler = (data: USER_TYPES) => {
+		setFormData(data);
 	};
 
 	const value = {
 		userImg,
 		coverImg,
-		profileData,
+		formData,
 		setUserImgHandler,
 		setCoverImgHandler,
-		setProfileDataHandler,
+		setFormDataHandler,
 	};
 	return (
 		<ProfileContext.Provider value={value}>

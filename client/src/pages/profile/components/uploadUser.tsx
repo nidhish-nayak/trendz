@@ -1,25 +1,21 @@
 import { ChangeEvent, useContext, useState } from "react";
 import Spinner from "../../../components/spinner/spinner";
-import config from "../../../config/config";
 import { ProfileContext } from "../../../context/profileContext";
-import upload from "../../../utils/upload.utils";
 
 const UploadUser = () => {
 	const [isUserLoading, setIsUserLoading] = useState(false);
 	const [isCoverLoading, setIsCoverLoading] = useState(false);
-	const {
-		userImg,
-		coverImg,
-		profileData,
-		setUserImgHandler,
-		setCoverImgHandler,
-	} = useContext(ProfileContext);
+	const [localUserImg, setLocalUserImg] = useState<string | null>(null);
+	const [localCoverImg, setLocalCoverImg] = useState<string | null>(null);
+
+	const { formData, setUserImgHandler, setCoverImgHandler } =
+		useContext(ProfileContext);
 
 	// Show spinner if initial images not yet loaded
 	if (
-		!profileData ||
-		profileData.profilePic === null ||
-		profileData.coverPic === null
+		!formData ||
+		formData.profilePic === null ||
+		formData.coverPic === null
 	) {
 		return (
 			<div className="edit-profile-image">
@@ -33,21 +29,14 @@ const UploadUser = () => {
 		if (!e.target.files) return "File selection failed!";
 		const selectedFile = e.target.files?.[0];
 
-		let imgUrl: string | null = null;
-
-		// Upload file to server and get imgUrl back
-		if (selectedFile) {
-			imgUrl = await upload(
-				selectedFile,
-				config.s3.folders.profiles.users + `/${profileData.username}`
-			);
-			if (!imgUrl) {
-				alert("Upload failed!");
-				return;
-			}
-			setUserImgHandler(imgUrl);
-			setIsUserLoading(false);
+		if (!selectedFile) {
+			return alert("File attach failed!");
 		}
+
+		const url = URL.createObjectURL(selectedFile);
+		setLocalUserImg(url);
+		setUserImgHandler(selectedFile);
+		setIsUserLoading(false);
 	};
 
 	const handleCoverFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -55,21 +44,14 @@ const UploadUser = () => {
 		if (!e.target.files) return "File selection failed!";
 		const selectedFile = e.target.files?.[0];
 
-		let imgUrl: string | null = null;
-
-		// Upload file to server and get imgUrl back
-		if (selectedFile) {
-			imgUrl = await upload(
-				selectedFile,
-				config.s3.folders.profiles.covers + `/${profileData.username}`
-			);
-			if (!imgUrl) {
-				alert("Upload failed!");
-				return;
-			}
-			setCoverImgHandler(imgUrl);
-			setIsCoverLoading(false);
+		if (!selectedFile) {
+			return alert("File not attached!");
 		}
+
+		const url = URL.createObjectURL(selectedFile);
+		setLocalCoverImg(url);
+		setCoverImgHandler(selectedFile);
+		setIsCoverLoading(false);
 	};
 
 	return (
@@ -81,7 +63,11 @@ const UploadUser = () => {
 					) : (
 						<>
 							<img
-								src={userImg ? userImg : profileData.profilePic}
+								src={
+									localUserImg
+										? localUserImg
+										: formData.profilePic
+								}
 								alt="profile-pic"
 							/>
 
@@ -105,7 +91,11 @@ const UploadUser = () => {
 					) : (
 						<>
 							<img
-								src={coverImg ? coverImg : profileData.coverPic}
+								src={
+									localCoverImg
+										? localCoverImg
+										: formData.coverPic
+								}
 								alt="cover-pic"
 							/>
 

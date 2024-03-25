@@ -29,6 +29,7 @@ const AddComment = ({ postId }: { postId: number }) => {
 			return setUploading(false);
 		},
 		onError(error) {
+			setUploading(false);
 			console.log(error);
 			return alert("Comment upload failed!");
 		},

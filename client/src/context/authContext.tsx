@@ -3,6 +3,7 @@ import { ReactNode, createContext, useEffect, useState } from "react";
 
 import config from "../config/config";
 import { LoginResponseTypes, LoginTypes } from "../pages/login/login.types";
+import { USER_TYPES } from "../pages/profile/profile.types";
 
 export type AuthContextTypes = {
 	currentUser: {
@@ -15,11 +16,13 @@ export type AuthContextTypes = {
 		city: string;
 		coverPic: string;
 	} | null;
+	setCurrentUserHandler: (data: USER_TYPES) => void;
 	login: (inputs: LoginTypes) => Promise<LoginResponseTypes>;
 };
 
 export const AuthContext = createContext<AuthContextTypes>({
 	currentUser: null,
+	setCurrentUserHandler: () => {},
 	login: () => Promise.resolve({ isLoggedIn: false, response: null }),
 });
 
@@ -32,6 +35,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 	useEffect(() => {
 		localStorage.setItem("user", JSON.stringify(currentUser));
 	}, [currentUser]);
+
+	const setCurrentUserHandler = (data: USER_TYPES) => {
+		localStorage.setItem("user", JSON.stringify(data));
+		setCurrentUser(data);
+	};
 
 	const login = async (inputs: LoginTypes): Promise<LoginResponseTypes> => {
 		const API_URL = `${config.serverUrl}/api/auth/login`;
@@ -54,7 +62,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 		}
 	};
 
-	const value = { currentUser, login };
+	const value = { currentUser, setCurrentUserHandler, login };
 
 	return (
 		<AuthContext.Provider value={value}>{children}</AuthContext.Provider>

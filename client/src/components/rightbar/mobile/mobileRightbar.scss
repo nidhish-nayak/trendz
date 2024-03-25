@@ -29,6 +29,15 @@
 			padding: 20px;
 			background-color: themed("bg");
 
+			.item.note {
+				display: none;
+
+				@include tablet {
+					display: flex;
+					flex-direction: column;
+				}
+			}
+
 			.item {
 				border: 1px solid themed("border");
 				background-color: themed("bgSoft");
@@ -38,6 +47,33 @@
 
 				span {
 					color: themed("textColor");
+				}
+
+				.item-container.mobile.note {
+					margin-top: 10px;
+					font-size: 0.85rem;
+					color: themed("textColorSoft");
+					display: inline;
+
+					span {
+						color: themed("textColorSoft");
+						font-weight: 500;
+						margin-right: 4px;
+					}
+				}
+
+				.item-container.mobile.access {
+					margin-top: 6px;
+					font-size: 0.85rem;
+					color: themed("textColor");
+					display: flex;
+					justify-content: flex-start;
+					align-items: center;
+					gap: 4px !important;
+
+					.username {
+						font-weight: 500;
+					}
 				}
 
 				.item-container {
@@ -52,6 +88,19 @@
 
 					.item-title-realtime {
 						color: themed("textColorSoft");
+
+						@include tablet {
+							display: flex;
+							gap: 4px;
+
+							.item-title-data {
+								color: themed("textColor");
+
+								&.username {
+									color: themed("textColorSoft");
+								}
+							}
+						}
 					}
 
 					.item-realtime {
@@ -86,6 +135,13 @@
 							height: 5px;
 							border-radius: 100%;
 							background-color: themed("activityOff");
+						}
+
+						.realtime-circle.read-only {
+							width: 5px;
+							height: 5px;
+							border-radius: 100%;
+							background-color: yellow;
 						}
 					}
 				}

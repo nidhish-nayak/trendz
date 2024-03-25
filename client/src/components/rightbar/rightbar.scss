@@ -34,6 +34,16 @@
 					color: themed("textColor");
 				}
 
+				@include mobile {
+					.item-container.mobile {
+						display: block;
+					}
+				}
+
+				.item-container.mobile {
+					display: none;
+				}
+
 				.item-container {
 					display: flex;
 					justify-content: space-between;
@@ -240,7 +250,7 @@
 						gap: 10px;
 
 						button {
-							padding: 4px 10px;
+							padding: 5px 10px;
 							border-radius: 6px;
 							display: flex;
 							justify-content: center;
@@ -249,7 +259,7 @@
 							cursor: pointer;
 							color: white;
 							transition: all 150ms ease-in-out;
-							background-color: #37996b;
+							background-color: #1e794e;
 							border: 1px solid hsl(153.1deg, 60.2%, 52.7%);
 
 							&:hover {

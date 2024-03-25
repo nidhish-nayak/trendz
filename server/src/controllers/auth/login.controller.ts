@@ -56,7 +56,8 @@ export const login = async (req: Request, res: Response) => {
 					secure: true,
 					sameSite: "none",
 					// set 1 day token expiry
-					maxAge: 24 * 60 * 60 * 1000,
+					// maxAge: 24 * 60 * 60 * 1000,
+					maxAge: config.token.maxAge,
 				})
 				.status(200)
 				.json(other);

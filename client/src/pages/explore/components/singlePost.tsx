@@ -210,8 +210,8 @@ const SinglePost = () => {
 										className="delete"
 										onClick={handleDelete}
 									>
+										<Delete fontSize="small" />
 										Delete
-										<Delete />
 									</div>
 								)}
 							</div>

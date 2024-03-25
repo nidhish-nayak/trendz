@@ -75,8 +75,8 @@ const Stories = () => {
 			setIsPostOpen(false);
 		},
 		onError(error) {
-			console.log(error);
 			setIsSubmitLoading(false);
+			console.log(error);
 			return alert("Story upload failed!");
 		},
 	});
@@ -91,7 +91,7 @@ const Stories = () => {
 
 		const storyImgUrl = await upload(storyImg, config.s3.folders.stories);
 		if (!storyImgUrl) {
-			alert("Upload failed!");
+			setIsSubmitLoading(false);
 			return;
 		}
 		mutation.mutate(storyImgUrl);
