@@ -39,7 +39,6 @@ const EditProfile = ({ closeModal }: { closeModal: () => void }) => {
 			setFormDataHandler(formData);
 			setIsLoading(false);
 			closeModal();
-			alert("Please refresh to see profile updates");
 		},
 		onError: (error) => {
 			setIsLoading(false);

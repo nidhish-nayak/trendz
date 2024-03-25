@@ -40,9 +40,9 @@ const config = {
 		modKey: process.env.MOD_KEY,
 		modHost: process.env.MOD_HOST,
 	},
-	// Only for development
+	// Only for development - default always true
 	guestAccess: {
-		readOnly: false,
+		readOnly: true,
 	},
 	token: {
 		// 1 DAY
