@@ -1,7 +1,7 @@
 // TEST CASES - CREDENTIALS
 import dotenv from "dotenv";
 
-// OTHER IMPORTANT EXPORT UTILS
+// IMPORTANT TEST EXPORT UTILS
 export const testConfig = {
 	posts: {
 		testImagePath: "./src/__tests__/utils/assets/test.png",
