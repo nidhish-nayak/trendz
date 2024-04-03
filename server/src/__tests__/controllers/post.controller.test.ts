@@ -31,6 +31,8 @@ let guestId: number;
 
 // Reusable function to parse accessToken from cookie
 const getAccessToken = (cookies: string): string => {
+	if (!cookies) throw Error("Login failed for Guest/User");
+
 	const filter1 = cookies[0].split("; ");
 	const filter2 = filter1[0].split("=");
 	const token = filter2[1];
@@ -55,11 +57,11 @@ describe("Post controllers test", () => {
 		userId = response.body.id;
 		guestId = guestRes.body.id;
 
-		const cookies = await response.headers["set-cookie"];
+		const cookies = response.headers["set-cookie"];
 		accessToken = getAccessToken(cookies);
 		if (!accessToken) throw new Error("Access token not found");
 
-		const guestCookies = await guestRes.headers["set-cookie"];
+		const guestCookies = guestRes.headers["set-cookie"];
 		guestAccessToken = getAccessToken(guestCookies);
 		if (!guestAccessToken) throw new Error("Guest Access token not found");
 
