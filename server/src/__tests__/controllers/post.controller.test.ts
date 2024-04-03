@@ -55,11 +55,11 @@ describe("Post controllers test", () => {
 		userId = response.body.id;
 		guestId = guestRes.body.id;
 
-		const cookies = response.headers["set-cookie"];
+		const cookies = await response.headers["set-cookie"];
 		accessToken = getAccessToken(cookies);
 		if (!accessToken) throw new Error("Access token not found");
 
-		const guestCookies = guestRes.headers["set-cookie"];
+		const guestCookies = await guestRes.headers["set-cookie"];
 		guestAccessToken = getAccessToken(guestCookies);
 		if (!guestAccessToken) throw new Error("Guest Access token not found");
 
