@@ -1,0 +1,268 @@
+.register {
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: white;
+	background-color: black;
+
+	.card {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 100px;
+
+		.left {
+			padding: 0;
+			display: flex;
+			flex-direction: column;
+			gap: 40px;
+
+			.left-heading {
+				display: flex;
+				flex-direction: column;
+				gap: 20px;
+				max-width: 500px;
+
+				.logo-name {
+					width: 250px;
+					height: 250px;
+				}
+
+				h1 {
+					font-size: 4rem;
+				}
+
+				p {
+					font-size: 1.025rem;
+
+					b {
+						text-decoration: underline;
+						text-decoration-style: wavy;
+						text-decoration-color: #dd469e;
+					}
+				}
+			}
+
+			.left-register {
+				display: flex;
+				align-items: center;
+				justify-content: flex-start;
+				flex-wrap: wrap;
+				gap: 20px;
+
+				span {
+					font-size: 1.05rem;
+					font-weight: 500;
+				}
+
+				button {
+					width: min-content;
+					padding: 10px 30px;
+					border: none;
+					text-transform: uppercase;
+					background-color: white;
+					font-weight: bold;
+					cursor: pointer;
+					border-radius: 2px;
+
+					&:hover {
+						background-color: #e4e4e4;
+					}
+				}
+			}
+		}
+
+		.right {
+			padding: 0px;
+			display: flex;
+			flex-direction: column;
+			gap: 50px;
+			justify-content: center;
+
+			.right-title {
+				display: flex;
+				flex-direction: column;
+				gap: 10px;
+			}
+
+			form {
+				display: flex;
+				flex-direction: column;
+				gap: 30px;
+
+				input {
+					border: none;
+					background-color: black;
+					color: white;
+					border-bottom: 1px solid #cecece;
+					padding: 10px 5px;
+					font-size: 1rem;
+
+					&::placeholder {
+						font-size: 0.875rem;
+						color: #7a7a7a;
+					}
+
+					&:focus {
+						outline: none;
+					}
+				}
+
+				button {
+					width: min-content;
+					padding: 10px 30px;
+					border: 1px solid black;
+					text-transform: uppercase;
+					color: white;
+					background-image: linear-gradient(
+						to right,
+						#ff0095,
+						#ff6ec3
+					);
+					cursor: pointer;
+					border-radius: 2px;
+					transition: 250ms ease-in-out;
+					font-weight: bold;
+
+					&:hover {
+						color: white;
+						background-color: black;
+						border: 1px solid white;
+						background-image: linear-gradient(
+							to right,
+							#ff0095,
+							#ff6ec3
+						);
+					}
+				}
+			}
+
+			.response {
+				font-size: 1rem;
+				font-weight: 500;
+				width: fit-content;
+			}
+		}
+
+		@media (max-width: 1024px) {
+			.left {
+				gap: 60px;
+				padding: 50px;
+				width: 100%;
+			}
+
+			.right {
+				padding: 50px;
+				width: 100%;
+			}
+		}
+
+		@media (max-width: 1024px) {
+			.left {
+				padding: 20px;
+				gap: 40px;
+				width: 100%;
+
+				.left-heading {
+					display: flex;
+					justify-content: flex-start;
+					align-items: center;
+					flex-direction: row;
+					flex-wrap: wrap;
+					gap: 40px;
+
+					.logo-name {
+						width: 100px;
+						height: 100px;
+					}
+
+					p {
+						font-size: 1rem;
+					}
+				}
+			}
+
+			.right {
+				padding: 20px;
+				width: 100%;
+				gap: 20px;
+
+				.right-title {
+					h2 {
+						font-size: 1.25rem;
+					}
+				}
+			}
+		}
+
+		@media (max-width: 480px) {
+			.left {
+				gap: 30px;
+
+				.left-heading {
+					display: flex;
+					justify-content: flex-start;
+					align-items: center;
+					flex-direction: row;
+					flex-wrap: wrap;
+					gap: 30px;
+
+					.logo-name {
+						width: 50px;
+						height: 50px;
+					}
+
+					h1 {
+						font-size: 40px;
+						font-weight: bold;
+						height: 100%;
+					}
+				}
+			}
+		}
+	}
+
+	@media (max-width: 1024px) {
+		.card {
+			gap: 10px;
+			flex-direction: column;
+		}
+	}
+}
+
+@media (max-width: 1024px) {
+	.register {
+		height: 100%;
+	}
+}
+
+.spinner-overlay {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.spinner-container {
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	border: 2px solid white;
+	border-radius: 50%;
+	border-top-color: black;
+	animation: spin 1s ease-in-out infinite;
+	-webkit-animation: spin 1s ease-in-out infinite;
+	@keyframes spin {
+		to {
+			-webkit-transform: rotate(360deg);
+		}
+	}
+	@-webkit-keyframes spin {
+		to {
+			-webkit-transform: rotate(360deg);
+		}
+	}
+}

@@ -1,0 +1,61 @@
+name: Server Test
+on:
+    push:
+        branches: [main]
+    pull_request:
+        branches: [main]
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v4
+            - name: Use Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "20.x" # Adjust version according to your requirements
+                  cache: "npm"
+                  cache-dependency-path: server/package-lock.json
+
+            - name: Cache node modules
+              id: cache-nodemodules
+              uses: actions/cache@v3
+              env:
+                  cache-name: cache-node-modules
+              with:
+                  path: server/node_modules # Update path to cache the node_modules directory inside the /server sub-folder
+                  key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }} # Update path to hash package-lock.json inside the /server sub-folder
+                  restore-keys: |
+                      ${{ runner.os }}-build-${{ env.cache-name }}-
+                      ${{ runner.os }}-build-
+                      ${{ runner.os }}-
+
+            - name: Install Dependencies
+              if: steps.cache-nodemodules.outputs.cache-hit != 'true'
+              run: |
+                  cd server
+                  npm ci
+
+            - name: Run tests
+              run: |
+                  cd server
+                  touch .env
+                  echo "DB_URL=${{ secrets.DB_URL }}" >> .env
+                  echo "DB_SERVICE_ROLE_KEY=${{ secrets.DB_SERVICE_ROLE_KEY }}" >> .env
+                  echo "DB_DIRECT_URL=${{ secrets.DB_DIRECT_URL }}" >> .env
+                  echo "JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }}" >> .env
+                  echo "QA_NAME=${{ secrets.QA_NAME }}" >> .env
+                  echo "QA_EMAIL=${{ secrets.QA_EMAIL }}" >> .env
+                  echo "QA_USERNAME=${{ secrets.QA_USERNAME }}" >> .env
+                  echo "QA_PASSWORD=${{ secrets.QA_PASSWORD }}" >> .env
+                  echo "QA_NAME_EXISTS=${{ secrets.QA_NAME_EXISTS }}" >> .env
+                  echo "QA_EMAIL_EXISTS=${{ secrets.QA_EMAIL_EXISTS }}" >> .env
+                  echo "QA_USERNAME_EXISTS=${{ secrets.QA_USERNAME_EXISTS }}" >> .env
+                  echo "QA_PASSWORD_EXISTS=${{ secrets.QA_PASSWORD_EXISTS }}" >> .env
+                  npm test
+
+            - name: Remove .env
+              run: |
+                  cd server
+                  rm .env

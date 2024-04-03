@@ -1,0 +1,12 @@
+@import "../../style.scss";
+
+.logo-container {
+	@include themify($themes) {
+		font-weight: bold;
+		font-size: 1.25rem;
+
+		#logo-span {
+			color: themed("button");
+		}
+	}
+}

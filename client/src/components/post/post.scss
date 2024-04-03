@@ -1,0 +1,224 @@
+@import "../../style.scss";
+
+.post {
+	@include themify($themes) {
+		border-radius: 10px;
+		background-color: themed("bg");
+		color: themed("textColor");
+		// border: 1px solid themed("border");
+		box-shadow:
+			0 10px 15px -3px rgb(0 0 0 / 0.1),
+			0 4px 6px -4px rgb(0 0 0 / 0.1);
+
+		@include tablet {
+			border-radius: 10px;
+			margin: 30px;
+			background-color: themed("bgSoft");
+			box-shadow: none;
+		}
+
+		@include mobile {
+			border-radius: 0;
+			border: none;
+			margin: 0;
+			background-color: themed("bg");
+		}
+
+		.container {
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+			padding: 20px;
+
+			@include mobile {
+				gap: 12px;
+				padding: 20px 0 0 0;
+			}
+
+			.user {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+
+				@include mobile {
+					margin: 0 10px;
+				}
+
+				.userInfo {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					gap: 20px;
+
+					a {
+						display: flex;
+						justify-content: flex-start;
+						align-items: center;
+					}
+
+					img {
+						width: 40px;
+						height: 40px;
+						border-radius: 50%;
+						object-fit: cover;
+					}
+
+					.details {
+						display: flex;
+						flex-direction: column;
+						align-items: flex-start;
+						justify-content: space-between;
+
+						.name {
+							font-weight: 500;
+							align-items: center;
+						}
+
+						.date {
+							font-size: 12px;
+						}
+					}
+				}
+				.post-delete {
+					cursor: pointer;
+					color: themed("textColor");
+					position: relative;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+
+					.delete {
+						position: absolute;
+						right: 12px;
+						top: 28px;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						background-color: themed("bgSoft");
+						border: 1px solid themed("border");
+						border-radius: 10px;
+						color: themed("textColor");
+						overflow: hidden;
+						padding: 6px 12px 8px 10px;
+						gap: 5px;
+						transition: 250ms ease-in-out;
+						box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+
+						&:hover {
+							background-color: crimson;
+							color: white;
+						}
+					}
+				}
+			}
+
+			.content {
+				img {
+					width: 100%;
+					max-height: 500px;
+					object-fit: cover;
+					margin-top: 10px;
+
+					@include mobile {
+						margin-top: 0;
+					}
+				}
+
+				p {
+					margin: 10px 0 10px 0;
+
+					@include mobile {
+						margin: 10px 10px;
+					}
+				}
+			}
+
+			.info {
+				display: flex;
+				align-items: flex-start;
+				justify-content: flex-start;
+				gap: 20px;
+
+				@include mobile {
+					margin: 0 10px;
+				}
+
+				.item {
+					display: flex;
+					align-items: center;
+					gap: 10px;
+					cursor: pointer;
+					font-size: 14px;
+
+					@include mobile {
+						font-size: small;
+					}
+
+					span {
+						@include mobile {
+							display: none;
+						}
+					}
+				}
+			}
+
+			.mobile-likes {
+				display: block;
+				margin: 0px;
+				font-weight: 600;
+
+				@include mobile {
+					margin: 0 10px;
+				}
+			}
+
+			p {
+				span {
+					margin-right: 10px;
+					font-weight: 600;
+				}
+
+				@include mobile {
+					margin: 0 10px;
+				}
+			}
+		}
+
+		.comment-stamp {
+			cursor: pointer;
+			width: fit-content;
+			color: themed("textColorSoft");
+
+			span {
+				font-size: 1rem;
+				font-weight: bold;
+				color: themed("button");
+				padding: 0px 5px;
+			}
+
+			@include mobile {
+				margin: 0 10px;
+			}
+		}
+
+		.time-stamp {
+			display: flex;
+			justify-content: flex-start;
+			align-items: center;
+			gap: 10px;
+			color: themed("arrow");
+			font-size: small;
+
+			@include mobile {
+				margin: 0 10px;
+			}
+
+			.dot {
+				width: 4px;
+				height: 4px;
+				border-radius: 50%;
+				background-color: themed("arrow");
+			}
+		}
+	}
+}

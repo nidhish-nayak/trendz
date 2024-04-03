@@ -1,0 +1,44 @@
+.error-page {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	flex-direction: column;
+	gap: 2em;
+	background-color: #161616;
+	height: 100vh;
+	width: 100%;
+	padding: 30px;
+	color: white;
+}
+
+.error-title {
+	font-size: 3rem;
+}
+
+.error-container {
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	flex-direction: column;
+	gap: 2em;
+
+	.para {
+		font-size: 1.25rem;
+
+		.ital {
+			color: #ff2651;
+			font-weight: bold;
+		}
+
+		.link {
+			padding: 5px 10px;
+			border-radius: 10px;
+			color: white;
+			background-color: #000000;
+
+			&:hover {
+				background-color: #21b35e;
+			}
+		}
+	}
+}

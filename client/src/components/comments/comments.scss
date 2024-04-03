@@ -1,0 +1,14 @@
+@import "../../style.scss";
+
+.comments {
+	@include themify($themes) {
+		margin: 0 10px;
+
+		img {
+			width: 40px;
+			height: 40px;
+			border-radius: 50%;
+			object-fit: cover;
+		}
+	}
+}

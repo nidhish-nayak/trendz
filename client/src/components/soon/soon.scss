@@ -1,0 +1,16 @@
+@import "../../style.scss";
+
+.soon {
+	@include themify($themes) {
+		position: absolute;
+		color: white;
+		background-color: themed("button");
+		padding: 2px 4px;
+		border-radius: 8px;
+		font-size: 0.5rem;
+		font-weight: 500;
+		top: 5px;
+		left: -5px;
+		border: 1px solid themed("border");
+	}
+}
