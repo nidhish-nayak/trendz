@@ -53,6 +53,10 @@ jobs:
                   echo "QA_EMAIL_EXISTS=${{ secrets.QA_EMAIL_EXISTS }}" >> .env
                   echo "QA_USERNAME_EXISTS=${{ secrets.QA_USERNAME_EXISTS }}" >> .env
                   echo "QA_PASSWORD_EXISTS=${{ secrets.QA_PASSWORD_EXISTS }}" >> .env
+                  echo "QA_NAME_GUEST=${{ secrets.QA_NAME_GUEST }}" >> .env
+                  echo "QA_EMAIL_GUEST=${{ secrets.QA_EMAIL_GUEST }}" >> .env
+                  echo "QA_USERNAME_GUEST=${{ secrets.QA_USERNAME_GUEST }}" >> .env
+                  echo "QA_PASSWORD_GUEST=${{ secrets.QA_PASSWORD_GUEST }}" >> .env
                   npm test
 
             - name: Remove .env
