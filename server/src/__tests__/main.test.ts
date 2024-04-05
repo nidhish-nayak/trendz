@@ -4,10 +4,10 @@ import dotenv from "dotenv";
 import express, { type Application } from "express";
 import request from "supertest";
 
+import { ExistingUser } from "$/config/test.config";
 import config from "../config/config";
 import { zodMiddleware } from "../middlewares/zod.middleware";
 
-import { ExistingUser } from "$/config/test.config";
 import activityRoutes from "../routes/activity.route";
 import authRoutes from "../routes/auth.route";
 import commentRoutes from "../routes/comment.route";

@@ -41,3 +41,29 @@ export const guestUserLogin = async (app: Application) => {
 
 	return { userId: userId, token: accessToken };
 };
+
+type MANUAL_AUTH_TYPES = {
+	name?: string | boolean | number | null | undefined;
+	email?: string | boolean | number | null | undefined;
+	username: string | boolean | number | null | undefined;
+	password: string | boolean | number | null | undefined;
+};
+
+export const manualAuth = async (
+	app: Application,
+	endpoint: string,
+	data: MANUAL_AUTH_TYPES,
+	status: number
+): Promise<void | { userId: number; token: string }> => {
+	const response = await request(app).post(endpoint).send(data);
+	expect(response.status).toBe(status);
+
+	if (status === 200) {
+		const userId = response.body.id;
+		const cookies = response.headers["set-cookie"];
+		const accessToken = getAccessToken(cookies);
+
+		expect(accessToken).toBeDefined();
+		return { userId: userId, token: accessToken };
+	}
+};

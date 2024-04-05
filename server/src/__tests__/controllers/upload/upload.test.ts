@@ -1,16 +1,14 @@
-import request from "supertest";
 import fs from "fs";
+import request from "supertest";
 
-import authRoutes from "../../routes/auth.route";
-import postRoutes from "../../routes/post.route";
-import userRoutes from "../../routes/user.route";
-import uploadRoute from "../../routes/upload.route";
-import { createFile } from "../utils/fileOperations.util";
-import {
-	existingUserLogin,
-	guestUserLogin,
-} from "../utils/authOperations.util";
-import { createApp } from "../utils/setup.util";
+import authRoutes from "../../../routes/auth.route";
+import postRoutes from "../../../routes/post.route";
+import uploadRoute from "../../../routes/upload.route";
+import userRoutes from "../../../routes/user.route";
+
+import { existingUserLogin, guestUserLogin } from "../../utils/auth.util";
+import { createFile } from "../../utils/file.util";
+import { createApp } from "../../utils/setup.util";
 
 // Initial setup
 const app = createApp();

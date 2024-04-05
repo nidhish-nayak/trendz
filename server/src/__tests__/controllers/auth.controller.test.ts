@@ -1,4 +1,6 @@
 import request from "supertest";
+import authRoutes from "../../routes/auth.route";
+
 import {
 	DeregisterAnotherUser,
 	DeregisterInputFail,
@@ -13,8 +15,7 @@ import {
 	RegisterPass,
 	RegisterUserExists,
 } from "../../config/test.config";
-import authRoutes from "../../routes/auth.route";
-import { getAccessToken } from "../utils/authOperations.util";
+import { getAccessToken, manualAuth } from "../utils/auth.util";
 import { createApp } from "../utils/setup.util";
 
 // Initial setup
@@ -36,6 +37,8 @@ describe("Auth controllers test", () => {
 			.post("/api/auth/register")
 			.send(RegisterInputFail);
 		expect(resInputValFail.status).toBe(400);
+
+		manualAuth(app, "/api/auth/register", RegisterInputFail, 400);
 
 		const resExistingUser = await request(app)
 			.post("/api/auth/register")

@@ -1,9 +1,10 @@
-import express, { Application } from "express";
-import dotenv from "dotenv";
-import cors from "cors";
 import cookieParser from "cookie-parser";
-import { zodMiddleware } from "$/middlewares/zod.middleware";
+import cors from "cors";
+import dotenv from "dotenv";
+import express, { Application } from "express";
+
 import config from "$/config/config";
+import { zodMiddleware } from "$/middlewares/zod.middleware";
 
 // INITIAL SETUP
 

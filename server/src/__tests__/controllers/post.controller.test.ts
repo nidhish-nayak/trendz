@@ -2,10 +2,8 @@ import request from "supertest";
 import authRoutes from "../../routes/auth.route";
 import postRoutes from "../../routes/post.route";
 import uploadRoute from "../../routes/upload.route";
-import {
-	existingUserLogin,
-	guestUserLogin,
-} from "../utils/authOperations.util";
+
+import { existingUserLogin, guestUserLogin } from "../utils/auth.util";
 import { createApp } from "../utils/setup.util";
 
 // Initial setup
