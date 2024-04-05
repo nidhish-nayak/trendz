@@ -3,9 +3,9 @@ import dotenv from "dotenv";
 
 // IMPORTANT TEST EXPORT UTILS
 export const testConfig = {
-	posts: {
-		testImagePath: "./src/__tests__/utils/assets/test.png",
-		testImageContent: "test image",
+	upload: {
+		path: "./src/__tests__/utils/assets/test.png",
+		data: "test data",
 	},
 };
 
