@@ -1,12 +1,4 @@
-import cookieParser from "cookie-parser";
-import cors from "cors";
-import dotenv from "dotenv";
-import express, { type Application } from "express";
 import request from "supertest";
-
-import config from "../../config/config";
-import { zodMiddleware } from "../../middlewares/zod.middleware";
-
 import {
 	DeregisterAnotherUser,
 	DeregisterInputFail,
@@ -22,27 +14,15 @@ import {
 	RegisterUserExists,
 } from "../../config/test.config";
 import authRoutes from "../../routes/auth.route";
+import { getAccessToken } from "../utils/authOperations.util";
+import { createApp } from "../utils/setup.util";
 
-// Configs
-const app: Application = express();
-dotenv.config();
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cors(config.corsOptions));
-app.use(cookieParser());
-app.use(zodMiddleware);
+// Initial setup
+const app = createApp();
 
-// Test Globals
+// Globals to test
 let accessToken: string;
 let userId: number;
-
-// Reusable function to parse accessToken from cookie
-const getAccessToken = (cookies: string): string => {
-	const filter1 = cookies[0].split("; ");
-	const filter2 = filter1[0].split("=");
-	const token = filter2[1];
-	return token;
-};
 
 describe("Auth controllers test", () => {
 	beforeAll(async () => {

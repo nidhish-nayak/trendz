@@ -2,10 +2,11 @@ import { testConfig } from "$/config/test.config";
 import fs from "fs";
 
 export const createFile = () => {
-	const filePath = testConfig.posts.testImagePath;
-	const fileContent = testConfig.posts.testImageContent;
+	const path = testConfig.upload.path;
+	const data = testConfig.upload.data;
 
-	if (!fs.existsSync(filePath)) {
-		fs.writeFileSync(filePath, fileContent);
-	}
+	// Create a temparory file in-memory
+	fs.writeFileSync(path, data);
+	const file = fs.createReadStream(path);
+	return { file: file, path: path };
 };
