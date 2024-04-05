@@ -1,7 +1,5 @@
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import fs from "fs";
-import FormData from "form-data";
 import dotenv from "dotenv";
 import express, { type Application } from "express";
 import request from "supertest";
@@ -9,10 +7,10 @@ import request from "supertest";
 import config from "../../config/config";
 import { zodMiddleware } from "../../middlewares/zod.middleware";
 
-import { ExistingUser, GuestUser, testConfig } from "$/config/test.config";
+import { ExistingUser, GuestUser } from "$/config/test.config";
 import authRoutes from "../../routes/auth.route";
 import postRoutes from "../../routes/post.route";
-import { createFile } from "../utils/fileOperations.util";
+import uploadRoute from "../../routes/upload.route";
 
 // Configs
 const app: Application = express();
@@ -67,6 +65,7 @@ describe("Post controllers test", () => {
 
 		// Tested Routes
 		app.use("/api/posts", postRoutes);
+		app.use("/api/upload", uploadRoute);
 	});
 
 	it("responds for GET /api/posts", async () => {
@@ -96,18 +95,47 @@ describe("Post controllers test", () => {
 	});
 
 	it("responds for POST /api/posts", async () => {
-		const filePath = testConfig.posts.testImagePath;
-		const fileStream = fs.createReadStream(filePath);
+		const postData = {
+			img: null,
+			desc: "test",
+			userId: userId,
+			fileName: null,
+		};
+		const addPost = await request(app)
+			.post("/api/posts")
+			.set("Cookie", [`accessToken=${accessToken}`])
+			.send(postData);
+		expect(addPost.status).toBe(200);
+		expect(typeof addPost.body[0].id).toBe("number");
 
-		createFile(); // Creating a mock file
-		const result = fs.readFileSync(filePath);
-		expect(JSON.parse(JSON.stringify(result)).type).toBe("Buffer");
+		const postId = addPost.body[0].id;
+		const deletePost = await request(app)
+			.delete(`/api/posts/${postId}`)
+			.set("Cookie", [`accessToken=${accessToken}`]);
+		expect(deletePost.status).toBe(200);
 
-		// Getting the file to upload to post
-		const formData = new FormData();
-		formData.append("image", fileStream);
+		// Test No Cookie
+		const addPostNoCookie = await request(app)
+			.post("/api/posts")
+			.send(postData);
+		expect(addPostNoCookie.status).toBe(401);
 
-		// Send the post request with image file
+		const deletePostNoCookie = await request(app).delete(
+			`/api/posts/${postId}`
+		);
+		expect(deletePostNoCookie.status).toBe(401);
+
+		// Test Guest user no access to Post
+		const addPostGuest = await request(app)
+			.post("/api/posts")
+			.set("Cookie", [`accessToken=${guestAccessToken}`])
+			.send(postData);
+		expect(addPostGuest.status).toBe(401);
+
+		const deletePostGuest = await request(app)
+			.delete(`/api/posts/${postId}`)
+			.set("Cookie", [`accessToken=${guestAccessToken}`]);
+		expect(deletePostGuest.status).toBe(401);
 	});
 
 	afterAll(() => {

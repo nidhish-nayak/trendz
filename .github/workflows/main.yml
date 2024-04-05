@@ -14,7 +14,8 @@ jobs:
             - name: Use Node.js
               uses: actions/setup-node@v4
               with:
-                  node-version: "20.x" # Adjust version according to your requirements
+                  # Adjust version according to your requirements
+                  node-version: "20.x"
                   cache: "npm"
                   cache-dependency-path: server/package-lock.json
 
@@ -24,8 +25,10 @@ jobs:
               env:
                   cache-name: cache-node-modules
               with:
-                  path: server/node_modules # Update path to cache the node_modules directory inside the /server sub-folder
-                  key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }} # Update path to hash package-lock.json inside the /server sub-folder
+                  # Update path to cache the node_modules directory inside the /server sub-folder
+                  path: server/node_modules
+                  # Update path to hash package-lock.json inside the /server sub-folder
+                  key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
                   restore-keys: |
                       ${{ runner.os }}-build-${{ env.cache-name }}-
                       ${{ runner.os }}-build-
