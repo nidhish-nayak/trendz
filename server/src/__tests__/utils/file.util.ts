@@ -1,5 +1,5 @@
-import { testConfig } from "$/config/test.config";
 import fs from "fs";
+import { testConfig } from "./test.util";
 
 export const createFile = () => {
 	const path = testConfig.upload.path;
