@@ -25,14 +25,14 @@ const config = {
 		optionSuccessStatus: 200,
 	},
 	awsConfig: {
-		accessKeyId: process.env.awsAccessKeyId,
-		secretAccessKey: process.env.awsSecretAccessKey,
+		accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+		secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
 	},
 	s3Config: {
 		region: "ap-south-1",
-		imageLink: process.env.s3ImageLink,
-		bucketLink: process.env.s3BucketLink,
-		cloudfrontLink: process.env.s3CloudfrontLink,
+		imageLink: process.env.S3_IMAGE_LINK,
+		bucketLink: process.env.S3_BUCKET_LINK,
+		cloudfrontLink: process.env.S3_CLOUDFRONT_LINK,
 	},
 	modOptions: {
 		modStatus: true, // Toggle moderator

@@ -44,10 +44,13 @@ jobs:
               run: |
                   cd server
                   touch .env
+                  # Database variables
                   echo "DB_URL=${{ secrets.DB_URL }}" >> .env
                   echo "DB_SERVICE_ROLE_KEY=${{ secrets.DB_SERVICE_ROLE_KEY }}" >> .env
                   echo "DB_DIRECT_URL=${{ secrets.DB_DIRECT_URL }}" >> .env
+                  # Jwt key
                   echo "JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }}" >> .env
+                  # Testing variables
                   echo "QA_NAME=${{ secrets.QA_NAME }}" >> .env
                   echo "QA_EMAIL=${{ secrets.QA_EMAIL }}" >> .env
                   echo "QA_USERNAME=${{ secrets.QA_USERNAME }}" >> .env
@@ -60,6 +63,13 @@ jobs:
                   echo "QA_EMAIL_GUEST=${{ secrets.QA_EMAIL_GUEST }}" >> .env
                   echo "QA_USERNAME_GUEST=${{ secrets.QA_USERNAME_GUEST }}" >> .env
                   echo "QA_PASSWORD_GUEST=${{ secrets.QA_PASSWORD_GUEST }}" >> .env
+                  # AWS variables
+                  echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> .env
+                  echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> .env
+                  # S3 bucket variables
+                  echo "S3_BUCKET_LINK=${{ secrets.S3_BUCKET_LINK }}" >> .env
+                  echo "S3_IMAGE_LINK=${{ secrets.S3_IMAGE_LINK }}" >> .env
+                  echo "S3_CLOUDFRONT_LINK=${{ secrets.S3_CLOUDFRONT_LINK }}" >> .env
                   npm test
 
             - name: Remove .env
