@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { ChangeEvent, SyntheticEvent, useContext, useState } from "react";
+import { ChangeEvent, useContext, useState } from "react";
 
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -23,16 +23,6 @@ const Share = () => {
     const [file, setFile] = useState<File | null>(null);
     const [uploading, setUploading] = useState(false);
     const [localImgUrl, setLocalImgUrl] = useState<string | null>(null);
-
-    const checkImageDimensions = (
-        e: SyntheticEvent<HTMLImageElement, Event>
-    ) => {
-        const { naturalWidth, naturalHeight } = e.target as HTMLImageElement;
-        if (naturalWidth > 1920 || naturalHeight > 1080) {
-            alert("Image dimensions too large!");
-            setFile(null);
-        }
-    };
 
     const mutation = useMutation({
         mutationFn: (newPost: NEW_POST_TYPES) =>
@@ -58,8 +48,8 @@ const Share = () => {
             alert("Please enter description to your post!");
             return;
         }
-        if (file && file.size > 1048576) {
-            alert("Please upload image less than 1MB!");
+        if (file && file.size > 5242880) {
+            alert("Please upload image less than 5MB!");
             return;
         }
 
@@ -124,7 +114,6 @@ const Share = () => {
                                 src={localImgUrl}
                                 className="file"
                                 alt="uploaded-img"
-                                onLoad={checkImageDimensions}
                             />
                         )}
                     </div>

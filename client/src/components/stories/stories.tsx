@@ -97,14 +97,14 @@ const Stories = () => {
         mutation.mutate(storyImgUrl);
     };
 
-    const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         if (!e.target.files) return;
 
         const file = e.target.files[0];
-        if (file && file.size > 1048576) {
-            return alert("Please upload image less than 1MB!");
+        if (file && file.size > 5242880) {
+            return alert("Please upload image less than 5MB!");
         }
-        const imgUrl = await URL.createObjectURL(file);
+        const imgUrl = URL.createObjectURL(file);
         setLocalStory(imgUrl);
         setStoryImg(file);
     };

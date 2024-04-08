@@ -8,7 +8,7 @@ if (!config.s3Config.bucketLink)
     throw new Error("AWS S3 bucket link not found!");
 
 // Define custom file size limit middleware
-const fileSizeLimit = 1024 * 1024; // 1MB in bytes
+const fileSizeLimit = 5242880; // 5MB in bytes
 
 export const uploadMulter = multer({
     storage: multerS3({
@@ -16,12 +16,12 @@ export const uploadMulter = multer({
         bucket: config.s3Config.bucketLink,
         acl: "private",
         contentType: multerS3.AUTO_CONTENT_TYPE,
-        key: function (req: Request, file, cb) {
+        key: function(req: Request, file, cb) {
             cb(
                 null,
                 `${req.body.folder}/` +
-                    Date.now().toString() +
-                    file.originalname
+                Date.now().toString() +
+                file.originalname
             );
         },
     }),
