@@ -1,6 +1,8 @@
 import request from "supertest";
 import { createApp } from "./utils/setup.util";
 import { existingUserLogin } from "./utils/auth.util";
+import { FOLLOWING_TYPES, POST_TYPE } from "./utils/types.util";
+
 import activityRoutes from "../routes/activity.route";
 import authRoutes from "../routes/auth.route";
 import commentRoutes from "../routes/comment.route";
@@ -11,7 +13,6 @@ import relationshipRoutes from "../routes/relationship.route";
 import statusRoutes from "../routes/status.route";
 import storyRoutes from "../routes/story.route";
 import userRoutes from "../routes/user.route";
-import { FOLLOWING_TYPES, POST_TYPE } from "./utils/types.util";
 
 // Initial setup
 const app = createApp();
