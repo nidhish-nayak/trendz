@@ -1,79 +1,79 @@
 $themes: (
-	light: (
-		textColor: #000,
-		bg: white,
-		logo: black,
-		bgSoft: #f5f5f5,
-		textColorSoft: #555,
-		arrow: #888,
-		border: lightgray,
-		button: #5271ff,
-		buttonBorder: #abbaff,
-		buttonSoft: #3b52b9,
-		buttonBlue: #5271ff,
-		buttonBlueSoft: #3b52b9,
-		buttonRed: #f0544f,
-		buttonRedSoft: #d14944,
-		svgColor: #1f1f1f,
-		themeIcon: #8400ff,
-		activityOn: #00c72b,
-		activityOff: rgb(255, 23, 69),
-	),
-	dark: (
-		textColor: whitesmoke,
-		bg: black,
-		logo: white,
-		bgSoft: #0e0e0e,
-		textColorSoft: lightgray,
-		arrow: #aaa,
-		border: #222,
-		button: #dd469e,
-		buttonBorder: #ff71c4,
-		buttonSoft: #a33174,
-		buttonBlue: #5271ff,
-		buttonBlueSoft: #3b52b9,
-		buttonRed: #f0544f,
-		buttonRedSoft: #d14944,
-		svgColor: white,
-		themeIcon: #ffa34d,
-		activityOn: #3cf09c,
-		activityOff: rgb(255, 23, 69),
-	),
+    light: (
+        textColor: #000,
+        bg: white,
+        logo: black,
+        bgSoft: #f5f5f5,
+        textColorSoft: #555,
+        arrow: #888,
+        border: lightgray,
+        button: #5271ff,
+        buttonBorder: #abbaff,
+        buttonSoft: #3b52b9,
+        buttonBlue: #5271ff,
+        buttonBlueSoft: #3b52b9,
+        buttonRed: #f0544f,
+        buttonRedSoft: #d14944,
+        svgColor: #1f1f1f,
+        themeIcon: #8400ff,
+        activityOn: #00c72b,
+        activityOff: rgb(255, 23, 69),
+    ),
+    dark: (
+        textColor: whitesmoke,
+        bg: black,
+        logo: white,
+        bgSoft: #0e0e0e,
+        textColorSoft: lightgray,
+        arrow: #aaa,
+        border: #222,
+        button: #dd469e,
+        buttonBorder: #ff71c4,
+        buttonSoft: #a33174,
+        buttonBlue: #5271ff,
+        buttonBlueSoft: #3b52b9,
+        buttonRed: #f0544f,
+        buttonRedSoft: #d14944,
+        svgColor: white,
+        themeIcon: #ffa34d,
+        activityOn: #3cf09c,
+        activityOff: rgb(255, 23, 69),
+    ),
 );
 
 @mixin themify($themes) {
-	@each $theme, $map in $themes {
-		.theme-#{$theme} & {
-			$theme-map: () !global;
+    @each $theme, $map in $themes {
+        .theme-#{$theme} & {
+            $theme-map: () !global;
 
-			@each $key, $submap in $map {
-				$value: map-get(map-get($themes, $theme), "#{$key}");
-				$theme-map: map-merge(
-					$theme-map,
-					(
-						$key: $value,
-					)
-				) !global;
-			}
+            @each $key, $submap in $map {
+                $value: map-get(map-get($themes, $theme), "#{$key}");
+                $theme-map: map-merge(
+                    $theme-map,
+                    (
+                        $key: $value,
+                    )
+                ) !global;
+            }
 
-			@content;
-			$theme-map: null !global;
-		}
-	}
+            @content;
+            $theme-map: null !global;
+        }
+    }
 }
 
 @function themed($key) {
-	@return map-get($theme-map, $key);
+    @return map-get($theme-map, $key);
 }
 
 @mixin mobile {
-	@media (max-width: 480px) {
-		@content;
-	}
+    @media (max-width: 480px) {
+        @content;
+    }
 }
 
 @mixin tablet {
-	@media (max-width: 1200px) {
-		@content;
-	}
+    @media (max-width: 1200px) {
+        @content;
+    }
 }

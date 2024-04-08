@@ -7,9 +7,9 @@ const supabaseKey = config.supabase.db_key;
 if (!supabaseKey || !supabaseUrl) throw Error("Supabase connection failed!");
 
 export const supabase = createClient(supabaseUrl, supabaseKey, {
-	realtime: {
-		params: {
-			eventsPerSecond: 1,
-		},
-	},
+    realtime: {
+        params: {
+            eventsPerSecond: 1,
+        },
+    },
 });

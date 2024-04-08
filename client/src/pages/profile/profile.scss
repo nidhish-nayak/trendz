@@ -1,625 +1,625 @@
 @import "../../style.scss";
 
 .profile {
-	@include themify($themes) {
-		background-color: themed("bgSoft");
-		padding: 2em;
+    @include themify($themes) {
+        background-color: themed("bgSoft");
+        padding: 2em;
 
-		@include tablet {
-			background-color: themed("bg");
-		}
+        @include tablet {
+            background-color: themed("bg");
+        }
 
-		@include mobile {
-			background-color: themed("bg");
-			padding: 0 0 70px 0;
-		}
+        @include mobile {
+            background-color: themed("bg");
+            padding: 0 0 70px 0;
+        }
 
-		.user-container {
-			display: flex;
-			justify-content: space-between;
-			flex-direction: column;
-			border-radius: 20px;
-			background-color: themed("bg");
-			color: themed("textColor");
-			margin-bottom: 20px;
+        .user-container {
+            display: flex;
+            justify-content: space-between;
+            flex-direction: column;
+            border-radius: 20px;
+            background-color: themed("bg");
+            color: themed("textColor");
+            margin-bottom: 20px;
 
-			@include tablet {
-				border: 1px solid themed("border");
-				overflow: hidden;
-			}
+            @include tablet {
+                border: 1px solid themed("border");
+                overflow: hidden;
+            }
 
-			@include mobile {
-				border: none;
-				// overflow: hidden;
-				border-radius: 0;
-				border-bottom: 1px solid #333;
-			}
+            @include mobile {
+                border: none;
+                // overflow: hidden;
+                border-radius: 0;
+                border-bottom: 1px solid #333;
+            }
 
-			.images {
-				width: 100%;
-				height: 200px;
-				border-radius: 10px;
-				display: flex;
-				flex-direction: column;
-				background-color: themed("bg");
-				position: relative;
+            .images {
+                width: 100%;
+                height: 200px;
+                border-radius: 10px;
+                display: flex;
+                flex-direction: column;
+                background-color: themed("bg");
+                position: relative;
 
-				.delete-account {
-					position: absolute;
-					top: 0;
-					right: 0;
-					margin: 10px;
-					padding: 5px;
-					border: 1px solid themed("border");
-					border-radius: 6px;
-					display: flex;
-					justify-content: center;
-					align-items: center;
-					background-color: themed("bgSoft");
-					cursor: pointer;
+                .delete-account {
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    margin: 10px;
+                    padding: 5px;
+                    border: 1px solid themed("border");
+                    border-radius: 6px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background-color: themed("bgSoft");
+                    cursor: pointer;
 
-					.delete-icon {
-						display: flex;
-						justify-content: center;
-						align-items: center;
-					}
+                    .delete-icon {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
 
-					&:hover {
-						background-color: crimson;
-					}
-					.delete {
-						cursor: default;
-						position: fixed;
-						top: 50%;
-						left: 50%;
-						transform: translate(-50%, -50%);
-						width: 100%;
-						height: 100%;
-						z-index: 100;
-						background-color: hsl(0, 0%, 0%, 0.8);
-						display: flex;
-						justify-content: center;
-						align-items: center;
+                    &:hover {
+                        background-color: crimson;
+                    }
+                    .delete {
+                        cursor: default;
+                        position: fixed;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        width: 100%;
+                        height: 100%;
+                        z-index: 100;
+                        background-color: hsl(0, 0%, 0%, 0.8);
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
 
-						.delete-modal {
-							background-color: themed("bgSoft");
-							border: 1px solid themed("border");
-							border-radius: 10px;
-							padding: 40px 80px;
-							display: flex;
-							flex-direction: column;
-							gap: 30px;
-							align-items: center;
-							justify-content: center;
+                        .delete-modal {
+                            background-color: themed("bgSoft");
+                            border: 1px solid themed("border");
+                            border-radius: 10px;
+                            padding: 40px 80px;
+                            display: flex;
+                            flex-direction: column;
+                            gap: 30px;
+                            align-items: center;
+                            justify-content: center;
 
-							@include mobile {
-								padding: 15px 30px;
-							}
+                            @include mobile {
+                                padding: 15px 30px;
+                            }
 
-							.inputs {
-								display: flex;
-								flex-direction: column;
-								gap: 4px;
+                            .inputs {
+                                display: flex;
+                                flex-direction: column;
+                                gap: 4px;
 
-								input {
-									background-color: themed("border");
-									border: none;
-									outline: none;
-									color: themed("textColor");
-									border-radius: 4px;
-									padding: 6px 10px;
-									font-size: 1rem;
+                                input {
+                                    background-color: themed("border");
+                                    border: none;
+                                    outline: none;
+                                    color: themed("textColor");
+                                    border-radius: 4px;
+                                    padding: 6px 10px;
+                                    font-size: 1rem;
 
-									&:focus {
-										outline: 1px solid themed("arrow");
-									}
-								}
-							}
+                                    &:focus {
+                                        outline: 1px solid themed("arrow");
+                                    }
+                                }
+                            }
 
-							.delete-buttons {
-								display: flex;
-								gap: 20px;
+                            .delete-buttons {
+                                display: flex;
+                                gap: 20px;
 
-								.delete-button {
-									cursor: pointer;
-									padding: 6px 12px;
-									border: 1px solid rgb(255, 66, 103);
-									background-color: rgb(184, 22, 22);
-									border-radius: 4px;
-									font-size: 0.875rem;
-									color: white;
-								}
+                                .delete-button {
+                                    cursor: pointer;
+                                    padding: 6px 12px;
+                                    border: 1px solid rgb(255, 66, 103);
+                                    background-color: rgb(184, 22, 22);
+                                    border-radius: 4px;
+                                    font-size: 0.875rem;
+                                    color: white;
+                                }
 
-								.delete-cancel {
-									cursor: pointer;
-									padding: 6px 12px;
-									border: 1px solid rgb(120, 255, 181);
-									background-color: rgb(15, 155, 73);
-									border-radius: 4px;
-									font-size: 0.875rem;
-									color: white;
-								}
-							}
-						}
-					}
-				}
+                                .delete-cancel {
+                                    cursor: pointer;
+                                    padding: 6px 12px;
+                                    border: 1px solid rgb(120, 255, 181);
+                                    background-color: rgb(15, 155, 73);
+                                    border-radius: 4px;
+                                    font-size: 0.875rem;
+                                    color: white;
+                                }
+                            }
+                        }
+                    }
+                }
 
-				.cover {
-					width: 100%;
-					height: 100%;
-					object-fit: cover;
-					border-top-right-radius: 10px;
-					border-top-left-radius: 10px;
-					padding: 1px;
+                .cover {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    border-top-right-radius: 10px;
+                    border-top-left-radius: 10px;
+                    padding: 1px;
 
-					@include mobile {
-						border-radius: 0;
-					}
-				}
+                    @include mobile {
+                        border-radius: 0;
+                    }
+                }
 
-				.profilePic {
-					position: absolute;
-					width: 150px;
-					height: 150px;
-					border-radius: 50%;
-					object-fit: cover;
-					left: 20px;
-					top: 50%;
-					margin: auto;
-					border: 5px solid themed("bg");
-				}
-			}
+                .profilePic {
+                    position: absolute;
+                    width: 150px;
+                    height: 150px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                    left: 20px;
+                    top: 50%;
+                    margin: auto;
+                    border: 5px solid themed("bg");
+                }
+            }
 
-			.details {
-				margin-top: 30px;
-				display: flex;
-				flex-wrap: wrap;
-				justify-content: space-between;
-				padding: 30px;
+            .details {
+                margin-top: 30px;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                padding: 30px;
 
-				@include mobile {
-					flex-direction: column;
-					flex-wrap: nowrap;
-					justify-content: center;
-					align-items: flex-start;
-					gap: 30px;
-				}
+                @include mobile {
+                    flex-direction: column;
+                    flex-wrap: nowrap;
+                    justify-content: center;
+                    align-items: flex-start;
+                    gap: 30px;
+                }
 
-				.left {
-					flex: 1;
-					display: flex;
-					flex-direction: column;
-					justify-content: flex-start;
-					align-items: flex-start;
-					gap: 10px;
-					width: 100%;
+                .left {
+                    flex: 1;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-start;
+                    align-items: flex-start;
+                    gap: 10px;
+                    width: 100%;
 
-					.name {
-						font-size: 1.5rem;
-						font-weight: 500;
-						max-width: 200px;
-						white-space: nowrap;
-						overflow: hidden;
-						text-overflow: ellipsis;
-					}
+                    .name {
+                        font-size: 1.5rem;
+                        font-weight: 500;
+                        max-width: 200px;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
 
-					.desc {
-						.desc-child {
-							display: flex;
-							gap: 10px;
+                    .desc {
+                        .desc-child {
+                            display: flex;
+                            gap: 10px;
 
-							p {
-								font-weight: 500;
-							}
-							span {
-								max-width: 200px;
-								white-space: nowrap;
-								overflow: hidden;
-								text-overflow: ellipsis;
+                            p {
+                                font-weight: 500;
+                            }
+                            span {
+                                max-width: 200px;
+                                white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
 
-								@include mobile {
-									max-width: 150px;
-								}
-							}
-						}
-					}
+                                @include mobile {
+                                    max-width: 150px;
+                                }
+                            }
+                        }
+                    }
 
-					.item {
-						display: flex;
-						align-items: center;
-						margin-top: 5px;
-						margin-bottom: 5px;
+                    .item {
+                        display: flex;
+                        align-items: center;
+                        margin-top: 5px;
+                        margin-bottom: 5px;
 
-						span {
-							margin-left: 5px;
-						}
-					}
+                        span {
+                            margin-left: 5px;
+                        }
+                    }
 
-					.follow-button {
-						margin-top: 20px;
-						font-size: 0.9rem;
-						display: flex;
-						align-items: center;
-						justify-content: center;
-						gap: 4px;
-						border: none;
-						background-color: themed("button");
-						color: white;
-						padding: 6px 12px;
-						border-radius: 1.6rem;
-						cursor: pointer;
+                    .follow-button {
+                        margin-top: 20px;
+                        font-size: 0.9rem;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        gap: 4px;
+                        border: none;
+                        background-color: themed("button");
+                        color: white;
+                        padding: 6px 12px;
+                        border-radius: 1.6rem;
+                        cursor: pointer;
 
-						&:hover {
-							background-color: themed("buttonSoft");
-						}
-					}
-				}
+                        &:hover {
+                            background-color: themed("buttonSoft");
+                        }
+                    }
+                }
 
-				.right {
-					flex: 1;
-					display: flex;
-					flex-direction: column;
-					align-items: flex-end;
-					justify-content: flex-start;
-					gap: 20px;
+                .right {
+                    flex: 1;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-end;
+                    justify-content: flex-start;
+                    gap: 20px;
 
-					@include mobile {
-						align-items: flex-end;
-						align-self: flex-end;
-						flex-direction: column-reverse;
-					}
+                    @include mobile {
+                        align-items: flex-end;
+                        align-self: flex-end;
+                        flex-direction: column-reverse;
+                    }
 
-					.more {
-						display: flex;
-						justify-content: center;
-						align-items: center;
-						gap: 20px;
+                    .more {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        gap: 20px;
 
-						a {
-							display: flex;
-							justify-content: center;
-							align-items: center;
-							color: themed("textColor");
-						}
+                        a {
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            color: themed("textColor");
+                        }
 
-						.edit {
-							background-color: themed("bgSoft");
-							color: themed("textColor");
-							border-radius: 6px;
-							padding: 5px 12px 6px 8px;
-							border: 1px solid themed("border");
-							display: flex;
-							justify-content: center;
-							align-items: center;
-							gap: 5px;
-							font-weight: 500;
-							font-size: 0.875rem;
-							cursor: pointer;
+                        .edit {
+                            background-color: themed("bgSoft");
+                            color: themed("textColor");
+                            border-radius: 6px;
+                            padding: 5px 12px 6px 8px;
+                            border: 1px solid themed("border");
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            gap: 5px;
+                            font-weight: 500;
+                            font-size: 0.875rem;
+                            cursor: pointer;
 
-							&:hover {
-								background-color: themed("button");
-							}
-						}
-					}
+                            &:hover {
+                                background-color: themed("button");
+                            }
+                        }
+                    }
 
-					.social-links {
-						display: flex;
-						align-items: center;
-						justify-content: center;
-						gap: 10px;
+                    .social-links {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        gap: 10px;
 
-						a {
-							color: themed("textColorSoft");
-						}
-					}
+                        a {
+                            color: themed("textColorSoft");
+                        }
+                    }
 
-					span {
-						font-size: 30px;
-						font-weight: 500;
-					}
+                    span {
+                        font-size: 30px;
+                        font-weight: 500;
+                    }
 
-					.info {
-						display: flex;
-						align-items: center;
-						justify-content: space-around;
-						gap: 20px;
+                    .info {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-around;
+                        gap: 20px;
 
-						a {
-							&:hover {
-								color: themed("button");
-							}
-						}
+                        a {
+                            &:hover {
+                                color: themed("button");
+                            }
+                        }
 
-						.item {
-							display: flex;
-							align-items: center;
-							gap: 5px;
-							color: themed("textColorSoft");
+                        .item {
+                            display: flex;
+                            align-items: center;
+                            gap: 5px;
+                            color: themed("textColorSoft");
 
-							span {
-								font-size: 12px;
-							}
-						}
+                            span {
+                                font-size: 12px;
+                            }
+                        }
 
-						.item.city {
-							display: flex;
-							flex-wrap: wrap;
-							align-items: center;
-							justify-content: center;
-							font-size: small;
-						}
-					}
-				}
-			}
-		}
-	}
+                        .item.city {
+                            display: flex;
+                            flex-wrap: wrap;
+                            align-items: center;
+                            justify-content: center;
+                            font-size: small;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 #edit-profile-id {
-	@include themify($themes) {
-		display: flex;
-		flex-direction: column;
-		gap: 40px;
-		position: fixed;
-		background-color: themed("bgSoft");
-		color: themed("textColor");
-		padding: 20px;
-		top: 0;
-		left: 0;
-		z-index: 100;
-		width: 100%;
-		height: 100%;
-		overflow-y: scroll;
-		&::-webkit-scrollbar {
-			display: none;
-		}
+    @include themify($themes) {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+        position: fixed;
+        background-color: themed("bgSoft");
+        color: themed("textColor");
+        padding: 20px;
+        top: 0;
+        left: 0;
+        z-index: 100;
+        width: 100%;
+        height: 100%;
+        overflow-y: scroll;
+        &::-webkit-scrollbar {
+            display: none;
+        }
 
-		.edit-profile-header {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
+        .edit-profile-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
 
-			.edit-heading {
-				font-size: 1.7rem;
-			}
+            .edit-heading {
+                font-size: 1.7rem;
+            }
 
-			.close-icon {
-				display: flex;
-				justify-content: center;
-				align-self: center;
-				padding: 8px;
-				width: fit-content;
-				border-radius: 10px;
-				background-color: themed("bg");
-				cursor: pointer;
+            .close-icon {
+                display: flex;
+                justify-content: center;
+                align-self: center;
+                padding: 8px;
+                width: fit-content;
+                border-radius: 10px;
+                background-color: themed("bg");
+                cursor: pointer;
 
-				&:hover {
-					background-color: themed("textColor");
-					color: themed("bg");
-				}
-			}
-		}
+                &:hover {
+                    background-color: themed("textColor");
+                    color: themed("bg");
+                }
+            }
+        }
 
-		.edit-profile-image {
-			display: flex;
-			justify-content: center;
-			align-items: flex-start;
-			flex-wrap: wrap;
-			gap: 50px;
+        .edit-profile-image {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 50px;
 
-			@include tablet {
-				flex-direction: column-reverse;
-				align-items: center;
-			}
+            @include tablet {
+                flex-direction: column-reverse;
+                align-items: center;
+            }
 
-			.user {
-				position: relative;
-				width: 150px;
-				height: 150px;
-				background-color: themed("bg");
-				border: 1px solid themed("border");
-				display: flex;
-				justify-content: center;
-				align-items: center;
+            .user {
+                position: relative;
+                width: 150px;
+                height: 150px;
+                background-color: themed("bg");
+                border: 1px solid themed("border");
+                display: flex;
+                justify-content: center;
+                align-items: center;
 
-				img {
-					width: 100%;
-					height: 100%;
-					object-fit: cover;
-				}
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
 
-				.user-edit {
-					position: absolute;
-					top: -15px;
-					right: -25px;
-					background-color: themed("bg");
-					font-size: 0.875rem;
-					padding: 5px 10px;
-					border: 1px solid themed("border");
-					border-radius: 10px;
-					cursor: pointer;
-					transition: all 250ms ease-in-out;
+                .user-edit {
+                    position: absolute;
+                    top: -15px;
+                    right: -25px;
+                    background-color: themed("bg");
+                    font-size: 0.875rem;
+                    padding: 5px 10px;
+                    border: 1px solid themed("border");
+                    border-radius: 10px;
+                    cursor: pointer;
+                    transition: all 250ms ease-in-out;
 
-					&:hover {
-						background-color: themed("button");
-					}
-				}
-			}
+                    &:hover {
+                        background-color: themed("button");
+                    }
+                }
+            }
 
-			.cover {
-				position: relative;
-				width: 600px;
-				height: 200px;
-				background-color: themed("bg");
-				border: 1px solid themed("border");
-				display: flex;
-				justify-content: center;
-				align-items: center;
+            .cover {
+                position: relative;
+                width: 600px;
+                height: 200px;
+                background-color: themed("bg");
+                border: 1px solid themed("border");
+                display: flex;
+                justify-content: center;
+                align-items: center;
 
-				@include tablet {
-					width: 100%;
-					height: 200px;
-				}
+                @include tablet {
+                    width: 100%;
+                    height: 200px;
+                }
 
-				@include mobile {
-					width: 100%;
-					height: 150px;
-				}
+                @include mobile {
+                    width: 100%;
+                    height: 150px;
+                }
 
-				img {
-					width: 100%;
-					height: 100%;
-					object-fit: cover;
-				}
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
 
-				.cover-edit {
-					position: absolute;
-					top: -15px;
-					right: -25px;
-					background-color: themed("bg");
-					font-size: 0.875rem;
-					padding: 5px 10px;
-					border: 1px solid themed("border");
-					border-radius: 10px;
-					cursor: pointer;
-					transition: all 250ms ease-in-out;
+                .cover-edit {
+                    position: absolute;
+                    top: -15px;
+                    right: -25px;
+                    background-color: themed("bg");
+                    font-size: 0.875rem;
+                    padding: 5px 10px;
+                    border: 1px solid themed("border");
+                    border-radius: 10px;
+                    cursor: pointer;
+                    transition: all 250ms ease-in-out;
 
-					@include tablet {
-						right: 10px;
-					}
+                    @include tablet {
+                        right: 10px;
+                    }
 
-					&:hover {
-						background-color: themed("button");
-					}
-				}
-			}
-		}
+                    &:hover {
+                        background-color: themed("button");
+                    }
+                }
+            }
+        }
 
-		.form-container {
-			padding: 40px;
+        .form-container {
+            padding: 40px;
 
-			.form {
-				display: flex;
-				flex-direction: column;
-				justify-content: center;
-				align-items: center;
-				gap: 40px;
+            .form {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 40px;
 
-				.form-group-container {
-					display: grid;
-					grid-template-columns: 1fr 1fr;
-					gap: 50px;
+                .form-group-container {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 50px;
 
-					@include tablet {
-						grid-template-columns: 1fr;
-					}
+                    @include tablet {
+                        grid-template-columns: 1fr;
+                    }
 
-					.form-group {
-						position: relative;
-						width: 100%;
+                    .form-group {
+                        position: relative;
+                        width: 100%;
 
-						input {
-							background-color: themed("bgSoft");
-							outline: none;
-							border: none;
-							padding: 10px;
-							min-width: 400px;
-							color: themed("textColor");
-							font-size: 1rem;
-							border-bottom: 1px solid themed("border");
+                        input {
+                            background-color: themed("bgSoft");
+                            outline: none;
+                            border: none;
+                            padding: 10px;
+                            min-width: 400px;
+                            color: themed("textColor");
+                            font-size: 1rem;
+                            border-bottom: 1px solid themed("border");
 
-							@include mobile {
-								min-width: 200px;
-							}
-						}
+                            @include mobile {
+                                min-width: 200px;
+                            }
+                        }
 
-						label.empty {
-							position: absolute;
-							left: 10px;
-							bottom: 10px;
-							font-size: 1rem;
-							font-weight: normal;
-							color: themed("arrow");
-							transition:
-								left 0.2s ease-in-out,
-								bottom 0.2s ease-in-out,
-								font-size 0.2s ease-in-out;
+                        label.empty {
+                            position: absolute;
+                            left: 10px;
+                            bottom: 10px;
+                            font-size: 1rem;
+                            font-weight: normal;
+                            color: themed("arrow");
+                            transition:
+                                left 0.2s ease-in-out,
+                                bottom 0.2s ease-in-out,
+                                font-size 0.2s ease-in-out;
 
-							&::after {
-								content: "...";
-							}
-						}
+                            &::after {
+                                content: "...";
+                            }
+                        }
 
-						label {
-							position: absolute;
-							left: 0px;
-							bottom: 40px;
-							font-size: 0.75rem;
-							font-weight: bold;
-							transition:
-								left 0.2s ease-in-out,
-								bottom 0.2s ease-in-out;
+                        label {
+                            position: absolute;
+                            left: 0px;
+                            bottom: 40px;
+                            font-size: 0.75rem;
+                            font-weight: bold;
+                            transition:
+                                left 0.2s ease-in-out,
+                                bottom 0.2s ease-in-out;
 
-							span {
-								font-size: inherit;
-								font-weight: normal;
-								font-style: italic;
-								color: themed("textColorSoft");
-							}
-						}
-					}
-				}
+                            span {
+                                font-size: inherit;
+                                font-weight: normal;
+                                font-style: italic;
+                                color: themed("textColorSoft");
+                            }
+                        }
+                    }
+                }
 
-				.button-container {
-					display: flex;
-					gap: 50px;
+                .button-container {
+                    display: flex;
+                    gap: 50px;
 
-					.save,
-					.cancel {
-						padding: 8px 16px;
-						font-size: 0.95rem;
-						font-weight: bold;
-						font-family:
-							Circular,
-							custom-font,
-							Helvetica Neue,
-							Helvetica,
-							Arial,
-							sans-serif;
-						cursor: pointer;
-						border-radius: 0.375rem;
-						outline: none;
-						border: none;
-						color: white;
-						transition: all 150ms ease-in-out;
-					}
+                    .save,
+                    .cancel {
+                        padding: 8px 16px;
+                        font-size: 0.95rem;
+                        font-weight: bold;
+                        font-family:
+                            Circular,
+                            custom-font,
+                            Helvetica Neue,
+                            Helvetica,
+                            Arial,
+                            sans-serif;
+                        cursor: pointer;
+                        border-radius: 0.375rem;
+                        outline: none;
+                        border: none;
+                        color: white;
+                        transition: all 150ms ease-in-out;
+                    }
 
-					.save {
-						background-color: #37996b;
-						border: 1px solid hsl(153.1deg, 60.2%, 52.7%);
+                    .save {
+                        background-color: #37996b;
+                        border: 1px solid hsl(153.1deg, 60.2%, 52.7%);
 
-						&:hover {
-							background-color: hsl(152, 47%, 41%, 0.8);
-						}
-					}
+                        &:hover {
+                            background-color: hsl(152, 47%, 41%, 0.8);
+                        }
+                    }
 
-					.cancel {
-						background-color: #b43838;
-						border: 1px solid hsl(0, 92%, 66%);
+                    .cancel {
+                        background-color: #b43838;
+                        border: 1px solid hsl(0, 92%, 66%);
 
-						&:hover {
-							background-color: hsla(0, 54%, 46%, 0.8);
-						}
-					}
-				}
-			}
-			.error-message {
-				font-size: 1rem;
-				background-color: themed("bg");
-				color: rgb(255, 39, 39);
-				padding: 10px;
-				border-radius: 10px;
-			}
-		}
-	}
+                        &:hover {
+                            background-color: hsla(0, 54%, 46%, 0.8);
+                        }
+                    }
+                }
+            }
+            .error-message {
+                font-size: 1rem;
+                background-color: themed("bg");
+                color: rgb(255, 39, 39);
+                padding: 10px;
+                border-radius: 10px;
+            }
+        }
+    }
 }

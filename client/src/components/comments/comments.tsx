@@ -9,41 +9,41 @@ import "./comments.scss";
 import { CommentsProps, CommentsTypes } from "./comments.types";
 
 const Comments = ({ postId }: CommentsProps) => {
-	const getComments = async () => {
-		const res = await axiosRequest.get(`/comments?postId=${postId}`);
-		return res.data;
-	};
+    const getComments = async () => {
+        const res = await axiosRequest.get(`/comments?postId=${postId}`);
+        return res.data;
+    };
 
-	const { isLoading, data, error } = useQuery({
-		queryKey: ["comments", postId],
-		queryFn: getComments,
-	});
+    const { isLoading, data, error } = useQuery({
+        queryKey: ["comments", postId],
+        queryFn: getComments,
+    });
 
-	if (error) {
-		console.error(error.message);
-		return <CommentsError />;
-	}
+    if (error) {
+        console.error(error.message);
+        return <CommentsError />;
+    }
 
-	if (isLoading) {
-		return (
-			<div className="comments">
-				<Spinner />
-			</div>
-		);
-	}
+    if (isLoading) {
+        return (
+            <div className="comments">
+                <Spinner />
+            </div>
+        );
+    }
 
-	if (!isLoading && data) {
-		const comments: CommentsTypes = data;
+    if (!isLoading && data) {
+        const comments: CommentsTypes = data;
 
-		return (
-			<div className="comments">
-				<AddComment postId={postId} />
-				{comments.map((comment) => (
-					<Comment key={comment.id} comment={comment} />
-				))}
-			</div>
-		);
-	}
+        return (
+            <div className="comments">
+                <AddComment postId={postId} />
+                {comments.map((comment) => (
+                    <Comment key={comment.id} comment={comment} />
+                ))}
+            </div>
+        );
+    }
 };
 
 export default Comments;

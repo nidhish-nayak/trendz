@@ -1,74 +1,74 @@
 @import "../../style.scss";
 
 .posts {
-	@include themify($themes) {
-		display: flex;
-		flex-direction: column;
-		gap: 50px;
-		min-height: 80vh;
+    @include themify($themes) {
+        display: flex;
+        flex-direction: column;
+        gap: 50px;
+        min-height: 80vh;
 
-		@include tablet {
-			gap: 0;
-		}
+        @include tablet {
+            gap: 0;
+        }
 
-		@include mobile {
-			gap: 30px;
-		}
+        @include mobile {
+            gap: 30px;
+        }
 
-		.empty {
-			background-color: themed("bg");
-			padding: 8px 16px;
-			border-radius: 10px;
-			width: fit-content;
-			color: themed("textColor");
-			font-size: 0.875rem;
-			font-weight: 500;
-			border: 1px solid themed("border");
+        .empty {
+            background-color: themed("bg");
+            padding: 8px 16px;
+            border-radius: 10px;
+            width: fit-content;
+            color: themed("textColor");
+            font-size: 0.875rem;
+            font-weight: 500;
+            border: 1px solid themed("border");
 
-			@include tablet {
-				background-color: themed("bgSoft");
-				margin: 30px;
-			}
+            @include tablet {
+                background-color: themed("bgSoft");
+                margin: 30px;
+            }
 
-			@include mobile {
-				background-color: themed("bgSoft");
-				margin: 10px;
-				font-size: 0.75rem;
-			}
-		}
+            @include mobile {
+                background-color: themed("bgSoft");
+                margin: 10px;
+                font-size: 0.75rem;
+            }
+        }
 
-		.posts-error {
-			padding: 10px 30px;
-			margin-top: 10px;
-			background-color: themed("bg");
-			text-align: center;
-			border-radius: 40px;
-			color: crimson;
+        .posts-error {
+            padding: 10px 30px;
+            margin-top: 10px;
+            background-color: themed("bg");
+            text-align: center;
+            border-radius: 40px;
+            color: crimson;
 
-			@include mobile {
-				border-radius: 20px;
-				padding: 10px 10px;
-				margin: 10px 10px;
-				background-color: themed("bgSoft");
-			}
-		}
+            @include mobile {
+                border-radius: 20px;
+                padding: 10px 10px;
+                margin: 10px 10px;
+                background-color: themed("bgSoft");
+            }
+        }
 
-		.load-more {
-			width: fit-content;
-			padding: 5px 10px;
-			color: white;
-			font-weight: 500;
-			border-radius: 6px;
-			font-size: 0.875rem;
-			align-self: center;
-			cursor: pointer;
-			transition: all 150ms ease-in-out;
-			background-color: #0a9253;
-			border: 1px solid hsl(153, 66%, 50%);
+        .load-more {
+            width: fit-content;
+            padding: 5px 10px;
+            color: white;
+            font-weight: 500;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            align-self: center;
+            cursor: pointer;
+            transition: all 150ms ease-in-out;
+            background-color: #0a9253;
+            border: 1px solid hsl(153, 66%, 50%);
 
-			&:hover {
-				background-color: hsla(152, 69%, 34%, 0.8);
-			}
-		}
-	}
+            &:hover {
+                background-color: hsla(152, 69%, 34%, 0.8);
+            }
+        }
+    }
 }

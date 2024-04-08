@@ -1,66 +1,66 @@
 @import "./style.scss";
 
 :root {
-	font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-	font-synthesis: none;
-	text-rendering: optimizeLegibility;
-	-webkit-font-smoothing: antialiased;
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
 }
 
 * {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body::-webkit-scrollbar {
-	width: 10px;
-	background-color: #ececec;
+    width: 10px;
+    background-color: #ececec;
 }
 
 body::-webkit-scrollbar-thumb {
-	background-color: darkgray;
+    background-color: darkgray;
 }
 
 body::-webkit-scrollbar-thumb:hover {
-	background-color: rgb(112, 112, 112);
+    background-color: rgb(112, 112, 112);
 }
 
 body.modal-open {
-	overflow: hidden;
+    overflow: hidden;
 }
 
 .outlet-container {
-	@include themify($themes) {
-		min-width: 50%;
+    @include themify($themes) {
+        min-width: 50%;
 
-		@include tablet {
-			min-width: 70%;
-		}
+        @include tablet {
+            min-width: 70%;
+        }
 
-		@include mobile {
-			width: 100%;
-		}
-	}
+        @include mobile {
+            width: 100%;
+        }
+    }
 }
 
 .main {
-	@include themify($themes) {
-		max-width: 1600px;
-		margin: 0 auto;
+    @include themify($themes) {
+        max-width: 1600px;
+        margin: 0 auto;
 
-		@media (min-width: 1600px) {
-			border-right: 1px solid themed("border");
-			border-left: 1px solid themed("border");
-			background-color: themed("bg");
-		}
-	}
+        @media (min-width: 1600px) {
+            border-right: 1px solid themed("border");
+            border-left: 1px solid themed("border");
+            background-color: themed("bg");
+        }
+    }
 }
 
 .theme-dark {
-	background-color: black;
+    background-color: black;
 }
 
 .themed-light {
-	background-color: white;
+    background-color: white;
 }

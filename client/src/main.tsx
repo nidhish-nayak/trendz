@@ -15,21 +15,21 @@ import router from "./routes/router.tsx";
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 
 root.render(
-	<React.StrictMode>
-		<DarkModeProvider>
-			<AuthProvider>
-				<OnlineProvider>
-					<ActivityProvider>
-						<SearchProvider>
-							<PostProvider>
-								<ProfileProvider>
-									<RouterProvider router={router} />
-								</ProfileProvider>
-							</PostProvider>
-						</SearchProvider>
-					</ActivityProvider>
-				</OnlineProvider>
-			</AuthProvider>
-		</DarkModeProvider>
-	</React.StrictMode>
+    <React.StrictMode>
+        <DarkModeProvider>
+            <AuthProvider>
+                <OnlineProvider>
+                    <ActivityProvider>
+                        <SearchProvider>
+                            <PostProvider>
+                                <ProfileProvider>
+                                    <RouterProvider router={router} />
+                                </ProfileProvider>
+                            </PostProvider>
+                        </SearchProvider>
+                    </ActivityProvider>
+                </OnlineProvider>
+            </AuthProvider>
+        </DarkModeProvider>
+    </React.StrictMode>
 );

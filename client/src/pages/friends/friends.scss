@@ -1,281 +1,281 @@
 @import "../../style.scss";
 
 .friends-container {
-	@include themify($themes) {
-		padding: 30px;
-		min-height: 100%;
-		background-color: themed("bgSoft");
-		color: themed("textColor");
-		display: flex;
-		flex-direction: column;
-		gap: 30px;
+    @include themify($themes) {
+        padding: 30px;
+        min-height: 100%;
+        background-color: themed("bgSoft");
+        color: themed("textColor");
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
 
-		@include tablet {
-			background-color: themed("bg");
-			padding: 20px;
-		}
+        @include tablet {
+            background-color: themed("bg");
+            padding: 20px;
+        }
 
-		@include mobile {
-			background-color: themed("bgSoft");
-			padding: 10px;
-			min-height: 100vh;
-			margin-bottom: 50px;
-		}
+        @include mobile {
+            background-color: themed("bgSoft");
+            padding: 10px;
+            min-height: 100vh;
+            margin-bottom: 50px;
+        }
 
-		.friends {
-			display: flex;
-			flex-direction: column;
-			justify-content: center;
-			width: 400px;
-			gap: 0px;
-			margin: 0 auto;
-			background-color: themed("bg");
-			border-radius: 10px;
-			border: 1px solid themed("border");
-			overflow: hidden;
-			box-shadow:
-				0 10px 15px -3px rgb(0 0 0 / 0.1),
-				0 4px 6px -4px rgb(0 0 0 / 0.1);
+        .friends {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 400px;
+            gap: 0px;
+            margin: 0 auto;
+            background-color: themed("bg");
+            border-radius: 10px;
+            border: 1px solid themed("border");
+            overflow: hidden;
+            box-shadow:
+                0 10px 15px -3px rgb(0 0 0 / 0.1),
+                0 4px 6px -4px rgb(0 0 0 / 0.1);
 
-			@include tablet {
-				background-color: themed("bgSoft");
-				width: 100%;
-				max-width: 400px;
-			}
+            @include tablet {
+                background-color: themed("bgSoft");
+                width: 100%;
+                max-width: 400px;
+            }
 
-			@include mobile {
-				background-color: themed("bg");
-				width: 100%;
-			}
+            @include mobile {
+                background-color: themed("bg");
+                width: 100%;
+            }
 
-			.friends-title {
-				font-size: 1rem;
-				padding: 16px;
-				display: flex;
-				justify-content: flex-start;
-				align-items: center;
-				gap: 8px;
+            .friends-title {
+                font-size: 1rem;
+                padding: 16px;
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                gap: 8px;
 
-				span {
-					color: themed("arrow");
-					font-size: 0.75rem;
-					font-weight: 300;
-				}
-			}
+                span {
+                    color: themed("arrow");
+                    font-size: 0.75rem;
+                    font-weight: 300;
+                }
+            }
 
-			.friends-divider {
-				margin: 0;
-				padding: 0;
-				outline: none;
-				border: none;
-				border-bottom: 1px solid themed("border");
-			}
+            .friends-divider {
+                margin: 0;
+                padding: 0;
+                outline: none;
+                border: none;
+                border-bottom: 1px solid themed("border");
+            }
 
-			.friends-search {
-				padding: 16px 16px 0 16px;
-				position: relative;
+            .friends-search {
+                padding: 16px 16px 0 16px;
+                position: relative;
 
-				.search-icon {
-					position: absolute;
-					top: 20px;
-					left: 20px;
-					color: themed("arrow");
-				}
+                .search-icon {
+                    position: absolute;
+                    top: 20px;
+                    left: 20px;
+                    color: themed("arrow");
+                }
 
-				input {
-					width: 100%;
-					font-size: 0.875rem;
-					padding: 5px 5px 5px 30px;
-					border: none;
-					background-color: transparent;
-					color: themed("textColor");
+                input {
+                    width: 100%;
+                    font-size: 0.875rem;
+                    padding: 5px 5px 5px 30px;
+                    border: none;
+                    background-color: transparent;
+                    color: themed("textColor");
 
-					&:focus {
-						outline: none;
-					}
-				}
-			}
+                    &:focus {
+                        outline: none;
+                    }
+                }
+            }
 
-			.friends-list {
-				padding: 16px;
-				display: flex;
-				flex-direction: column;
-				gap: 16px;
-				max-height: 300px;
-				overflow-y: scroll;
+            .friends-list {
+                padding: 16px;
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+                max-height: 300px;
+                overflow-y: scroll;
 
-				&::-webkit-scrollbar {
-					width: 10px;
-					background-color: themed("border");
-				}
+                &::-webkit-scrollbar {
+                    width: 10px;
+                    background-color: themed("border");
+                }
 
-				&::-webkit-scrollbar-thumb {
-					background-color: themed("arrow");
-				}
+                &::-webkit-scrollbar-thumb {
+                    background-color: themed("arrow");
+                }
 
-				.friend {
-					display: flex;
-					flex-direction: row;
-					justify-content: space-between;
-					align-items: center;
+                .friend {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: center;
 
-					.friend-data {
-						display: flex;
-						justify-content: center;
-						align-items: center;
-						gap: 12px;
+                    .friend-data {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        gap: 12px;
 
-						img {
-							border-radius: 100%;
-							width: 45px;
-							height: 45px;
-							object-fit: cover;
-							border: 1px solid themed("border");
-						}
-						.friend-detail {
-							display: flex;
-							flex-direction: column;
-							max-width: 100px;
+                        img {
+                            border-radius: 100%;
+                            width: 45px;
+                            height: 45px;
+                            object-fit: cover;
+                            border: 1px solid themed("border");
+                        }
+                        .friend-detail {
+                            display: flex;
+                            flex-direction: column;
+                            max-width: 100px;
 
-							.detail-name {
-								width: 100%;
-								font-size: 0.875rem;
-								color: themed("textColor");
-								white-space: nowrap;
-								overflow: hidden;
-								text-overflow: ellipsis;
-								font-weight: 500;
+                            .detail-name {
+                                width: 100%;
+                                font-size: 0.875rem;
+                                color: themed("textColor");
+                                white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                font-weight: 500;
 
-								&:hover {
-									color: themed("button");
-								}
-							}
+                                &:hover {
+                                    color: themed("button");
+                                }
+                            }
 
-							.detail-username {
-								width: 100%;
-								font-size: 0.875rem;
-								color: themed("textColorSoft");
-								white-space: nowrap;
-								overflow: hidden;
-								text-overflow: ellipsis;
-							}
-						}
-					}
-					.friend-status,
-					.friend-status-back {
-						background-color: themed("border");
-						padding: 7px 20px;
-						font-size: 0.875rem;
-						font-weight: 500;
-						border-radius: 8px;
-						cursor: pointer;
+                            .detail-username {
+                                width: 100%;
+                                font-size: 0.875rem;
+                                color: themed("textColorSoft");
+                                white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                            }
+                        }
+                    }
+                    .friend-status,
+                    .friend-status-back {
+                        background-color: themed("border");
+                        padding: 7px 20px;
+                        font-size: 0.875rem;
+                        font-weight: 500;
+                        border-radius: 8px;
+                        cursor: pointer;
 
-						.unfollow-text-hover {
-							display: none;
+                        .unfollow-text-hover {
+                            display: none;
 
-							@include mobile {
-								display: none;
-							}
-						}
+                            @include mobile {
+                                display: none;
+                            }
+                        }
 
-						.unfollow-text {
-							display: block;
+                        .unfollow-text {
+                            display: block;
 
-							@include mobile {
-								display: none;
-							}
-						}
+                            @include mobile {
+                                display: none;
+                            }
+                        }
 
-						&:hover {
-							background-color: crimson;
-							color: white;
+                        &:hover {
+                            background-color: crimson;
+                            color: white;
 
-							.unfollow-text-hover {
-								display: block;
+                            .unfollow-text-hover {
+                                display: block;
 
-								@include mobile {
-									display: none;
-								}
-							}
+                                @include mobile {
+                                    display: none;
+                                }
+                            }
 
-							.unfollow-text {
-								display: none;
+                            .unfollow-text {
+                                display: none;
 
-								@include mobile {
-									display: none;
-								}
-							}
-						}
+                                @include mobile {
+                                    display: none;
+                                }
+                            }
+                        }
 
-						@include mobile {
-							background-color: themed("bgSoft");
-							border-radius: 100%;
-							padding: 5px;
+                        @include mobile {
+                            background-color: themed("bgSoft");
+                            border-radius: 100%;
+                            padding: 5px;
 
-							&:hover {
-								background-color: themed("bgSoft");
-								color: white;
-							}
-						}
+                            &:hover {
+                                background-color: themed("bgSoft");
+                                color: white;
+                            }
+                        }
 
-						.unfollow-icon {
-							display: none;
+                        .unfollow-icon {
+                            display: none;
 
-							@include mobile {
-								display: flex;
-								justify-content: center;
-								align-items: center;
-								color: crimson;
+                            @include mobile {
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                color: crimson;
 
-								&:hover {
-									color: themed("textColor");
-								}
-							}
-						}
-					}
+                                &:hover {
+                                    color: themed("textColor");
+                                }
+                            }
+                        }
+                    }
 
-					.friend-status-back {
-						.unfollow-text {
-							display: block;
-						}
+                    .friend-status-back {
+                        .unfollow-text {
+                            display: block;
+                        }
 
-						&:hover {
-							.unfollow-text {
-								display: block;
-							}
-						}
+                        &:hover {
+                            .unfollow-text {
+                                display: block;
+                            }
+                        }
 
-						@include mobile {
-							.unfollow-text {
-								display: none;
-							}
+                        @include mobile {
+                            .unfollow-text {
+                                display: none;
+                            }
 
-							border-radius: 10px;
-							padding: 6px;
+                            border-radius: 10px;
+                            padding: 6px;
 
-							&:hover {
-								.unfollow-text {
-									display: none;
-								}
-							}
-						}
-						.unfollow-icon {
-							display: none;
+                            &:hover {
+                                .unfollow-text {
+                                    display: none;
+                                }
+                            }
+                        }
+                        .unfollow-icon {
+                            display: none;
 
-							@include mobile {
-								display: flex;
-								justify-content: center;
-								align-items: center;
-								color: themed("textColor");
+                            @include mobile {
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                color: themed("textColor");
 
-								&:hover {
-									color: themed("button");
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
+                                &:hover {
+                                    color: themed("button");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

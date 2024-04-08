@@ -1,95 +1,95 @@
 @import "../../style.scss";
 
 .comment {
-	@include themify($themes) {
-		margin: 30px 0px;
-		display: flex;
-		justify-content: space-between;
-		align-items: flex-start;
-		gap: 20px;
+    @include themify($themes) {
+        margin: 30px 0px;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 20px;
 
-		@include mobile {
-			gap: 10px;
-		}
+        @include mobile {
+            gap: 10px;
+        }
 
-		.comment-info {
-			flex: 5;
-			display: flex;
-			flex-direction: column;
-			gap: 5px;
+        .comment-info {
+            flex: 5;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
 
-			.comment-user {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
+            .comment-user {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
 
-				.comment-name {
-					font-weight: 500;
+                .comment-name {
+                    font-weight: 500;
 
-					@include tablet {
-						max-width: 150px;
-						overflow: hidden;
-						text-overflow: ellipsis;
-					}
+                    @include tablet {
+                        max-width: 150px;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
 
-					@include mobile {
-						max-width: 120px;
-						overflow: hidden;
-						text-overflow: ellipsis;
-					}
-				}
+                    @include mobile {
+                        max-width: 120px;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+                }
 
-				.delete-container {
-					display: flex;
-					align-items: center;
-					justify-content: space-between;
-					gap: 20px;
+                .delete-container {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    gap: 20px;
 
-					.comment-date {
-						font-size: small;
-						font-weight: lighter;
-						color: themed("arrow");
-					}
+                    .comment-date {
+                        font-size: small;
+                        font-weight: lighter;
+                        color: themed("arrow");
+                    }
 
-					.comment-delete {
-						cursor: pointer;
-						color: themed("textColor");
-						position: relative;
-						display: flex;
-						justify-content: center;
-						align-items: center;
-						border-radius: 5px;
+                    .comment-delete {
+                        cursor: pointer;
+                        color: themed("textColor");
+                        position: relative;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        border-radius: 5px;
 
-						.delete {
-							position: absolute;
-							right: 12px;
-							top: 28px;
-							display: flex;
-							justify-content: center;
-							align-items: center;
-							background-color: themed("bgSoft");
-							border: 1px solid themed("border");
-							border-radius: 10px;
-							color: themed("textColor");
-							overflow: hidden;
-							padding: 6px 12px 8px 10px;
-							gap: 5px;
-							transition: 250ms ease-in-out;
-							box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+                        .delete {
+                            position: absolute;
+                            right: 12px;
+                            top: 28px;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            background-color: themed("bgSoft");
+                            border: 1px solid themed("border");
+                            border-radius: 10px;
+                            color: themed("textColor");
+                            overflow: hidden;
+                            padding: 6px 12px 8px 10px;
+                            gap: 5px;
+                            transition: 250ms ease-in-out;
+                            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
 
-							&:hover {
-								background-color: crimson;
-								color: white;
-							}
-						}
-					}
-				}
-			}
+                            &:hover {
+                                background-color: crimson;
+                                color: white;
+                            }
+                        }
+                    }
+                }
+            }
 
-			.comment-desc {
-				margin: 0;
-				color: themed("textColorSoft");
-			}
-		}
-	}
+            .comment-desc {
+                margin: 0;
+                color: themed("textColorSoft");
+            }
+        }
+    }
 }

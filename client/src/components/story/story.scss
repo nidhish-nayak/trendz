@@ -1,232 +1,232 @@
 @import "../../style.scss";
 
 .story-view-container {
-	@include themify($themes) {
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		background-color: themed("bgSoft");
-		z-index: 100;
-		display: flex;
-		flex-direction: column;
-		overflow: auto;
-		gap: 30px;
-		cursor: default;
+    @include themify($themes) {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: themed("bgSoft");
+        z-index: 100;
+        display: flex;
+        flex-direction: column;
+        overflow: auto;
+        gap: 30px;
+        cursor: default;
 
-		&::-webkit-scrollbar {
-			display: none;
-		}
+        &::-webkit-scrollbar {
+            display: none;
+        }
 
-		.story-view-wrapper {
-			position: relative;
-			width: 100%;
-			height: 100%;
-			overflow: hidden;
-			display: flex;
-			flex-direction: column;
-			justify-content: space-between;
+        .story-view-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
 
-			.back {
-				position: absolute;
-				padding: 200px 200px;
-				top: calc(50% - 200px);
-				left: 0;
-				background-color: transparent;
-				display: flex;
-				justify-content: center;
-				z-index: 100;
-				cursor: pointer;
+            .back {
+                position: absolute;
+                padding: 200px 200px;
+                top: calc(50% - 200px);
+                left: 0;
+                background-color: transparent;
+                display: flex;
+                justify-content: center;
+                z-index: 100;
+                cursor: pointer;
 
-				&:active {
-					border-style: none;
-					-webkit-tap-highlight-color: transparent;
-				}
+                &:active {
+                    border-style: none;
+                    -webkit-tap-highlight-color: transparent;
+                }
 
-				&::before {
-					content: "<";
-					position: absolute;
-					left: 30px;
-					font-size: 1rem;
-					font-weight: bold;
-					background-color: themed("border");
-					color: themed("textColor");
-					padding: 10px 15px;
-					font-family: monospace;
-					border-radius: 100%;
-				}
+                &::before {
+                    content: "<";
+                    position: absolute;
+                    left: 30px;
+                    font-size: 1rem;
+                    font-weight: bold;
+                    background-color: themed("border");
+                    color: themed("textColor");
+                    padding: 10px 15px;
+                    font-family: monospace;
+                    border-radius: 100%;
+                }
 
-				@include tablet {
-					padding: 200px 100px;
+                @include tablet {
+                    padding: 200px 100px;
 
-					&::before {
-						display: none;
-					}
-				}
+                    &::before {
+                        display: none;
+                    }
+                }
 
-				@include mobile {
-					top: calc(50% - 250px);
-					padding: 250px 70px;
-				}
-			}
+                @include mobile {
+                    top: calc(50% - 250px);
+                    padding: 250px 70px;
+                }
+            }
 
-			.next {
-				position: absolute;
-				padding: 200px 200px;
-				top: calc(50% - 200px);
-				right: 0;
-				background-color: transparent;
-				display: flex;
-				justify-content: center;
-				z-index: 100;
-				cursor: pointer;
+            .next {
+                position: absolute;
+                padding: 200px 200px;
+                top: calc(50% - 200px);
+                right: 0;
+                background-color: transparent;
+                display: flex;
+                justify-content: center;
+                z-index: 100;
+                cursor: pointer;
 
-				&:active {
-					border-style: none;
-					-webkit-tap-highlight-color: transparent;
-				}
+                &:active {
+                    border-style: none;
+                    -webkit-tap-highlight-color: transparent;
+                }
 
-				&::before {
-					content: ">";
-					position: absolute;
-					right: 30px;
-					font-size: 1rem;
-					font-weight: bold;
-					background-color: themed("border");
-					color: themed("textColor");
-					padding: 10px 15px;
-					font-family: monospace;
-					border-radius: 100%;
-				}
+                &::before {
+                    content: ">";
+                    position: absolute;
+                    right: 30px;
+                    font-size: 1rem;
+                    font-weight: bold;
+                    background-color: themed("border");
+                    color: themed("textColor");
+                    padding: 10px 15px;
+                    font-family: monospace;
+                    border-radius: 100%;
+                }
 
-				@include tablet {
-					padding: 200px 100px;
+                @include tablet {
+                    padding: 200px 100px;
 
-					&::before {
-						display: none;
-					}
-				}
+                    &::before {
+                        display: none;
+                    }
+                }
 
-				@include mobile {
-					top: calc(50% - 250px);
-					padding: 250px 70px;
-				}
-			}
+                @include mobile {
+                    top: calc(50% - 250px);
+                    padding: 250px 70px;
+                }
+            }
 
-			.story-view-header {
-				display: flex;
-				flex-direction: row;
-				justify-content: space-between;
-				align-items: center;
-				gap: 30px;
-				padding: 30px;
+            .story-view-header {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                gap: 30px;
+                padding: 30px;
 
-				@include mobile {
-					padding: 20px;
-				}
+                @include mobile {
+                    padding: 20px;
+                }
 
-				.story-view-title {
-					font-size: 1.5rem;
-					display: flex;
-					flex-wrap: wrap;
-					justify-content: center;
-					align-items: center;
-					text-shadow: 1px 1px themed("bgSoft");
+                .story-view-title {
+                    font-size: 1.5rem;
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: center;
+                    align-items: center;
+                    text-shadow: 1px 1px themed("bgSoft");
 
-					span {
-						color: themed("buttonBorder");
-						max-width: 300px;
-						white-space: nowrap;
-						overflow: hidden;
-						text-overflow: ellipsis;
-					}
+                    span {
+                        color: themed("buttonBorder");
+                        max-width: 300px;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
 
-					@include mobile {
-						span {
-							max-width: 160px;
-							white-space: nowrap;
-							overflow: hidden;
-							text-overflow: ellipsis;
-						}
-					}
-				}
+                    @include mobile {
+                        span {
+                            max-width: 160px;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                        }
+                    }
+                }
 
-				.story-view-delete {
-					width: fit-content;
-					border: none;
-					border-radius: 10px;
-					outline: none;
-					padding: 5px;
-					font-size: 0.875rem;
-					font-weight: 600;
-					cursor: pointer;
-					color: white;
-					background-color: hsl(348, 83%, 47%, 0.4);
-					border: 1px solid hsl(348, 100%, 63%);
-					transition: all 250ms ease-in-out;
-					display: flex;
-					justify-content: center;
-					align-items: center;
-					z-index: 1000;
+                .story-view-delete {
+                    width: fit-content;
+                    border: none;
+                    border-radius: 10px;
+                    outline: none;
+                    padding: 5px;
+                    font-size: 0.875rem;
+                    font-weight: 600;
+                    cursor: pointer;
+                    color: white;
+                    background-color: hsl(348, 83%, 47%, 0.4);
+                    border: 1px solid hsl(348, 100%, 63%);
+                    transition: all 250ms ease-in-out;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    z-index: 1000;
 
-					&:hover {
-						background-color: hsl(348, 83%, 47%);
-					}
-				}
-			}
+                    &:hover {
+                        background-color: hsl(348, 83%, 47%);
+                    }
+                }
+            }
 
-			.story-view-data {
-				width: 100%;
-				height: 100%;
-				display: flex;
-				flex-wrap: wrap;
-				position: absolute;
-				top: 0;
-				left: 0;
-				z-index: -1;
+            .story-view-data {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-wrap: wrap;
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: -1;
 
-				.story-image-container {
-					width: 100%;
-					height: 100%;
+                .story-image-container {
+                    width: 100%;
+                    height: 100%;
 
-					.story-view-image {
-						width: 100%;
-						height: 100%;
-						object-fit: contain;
-					}
-				}
-			}
+                    .story-view-image {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: contain;
+                    }
+                }
+            }
 
-			.story-view-close {
-				position: absolute;
-				bottom: 0;
-				right: 0;
-				border: none;
-				border-radius: 10px;
-				outline: none;
-				padding: 5px;
-				margin: 30px;
-				font-size: 0.875rem;
-				font-weight: 600;
-				cursor: pointer;
-				color: white;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				background-color: themed("border");
-				border: 1px solid transparent;
-				transition: all 250ms ease-in-out;
-				z-index: 1000;
+            .story-view-close {
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                border: none;
+                border-radius: 10px;
+                outline: none;
+                padding: 5px;
+                margin: 30px;
+                font-size: 0.875rem;
+                font-weight: 600;
+                cursor: pointer;
+                color: white;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: themed("border");
+                border: 1px solid transparent;
+                transition: all 250ms ease-in-out;
+                z-index: 1000;
 
-				&:hover {
-					border: 1px solid themed("textColor");
-				}
+                &:hover {
+                    border: 1px solid themed("textColor");
+                }
 
-				@include mobile {
-					margin: 20px;
-				}
-			}
-		}
-	}
+                @include mobile {
+                    margin: 20px;
+                }
+            }
+        }
+    }
 }

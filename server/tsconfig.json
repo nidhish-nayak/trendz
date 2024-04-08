@@ -1,31 +1,31 @@
 {
-	"exclude": ["./coverage", "./dist", "__tests__", "jest.config.js"],
-	"ts-node": {
-		"require": ["tsconfig-paths/register"],
-		"transpileOnly": true,
-		"files": true
-	},
-	"compilerOptions": {
-		"target": "ES6",
-		"module": "NodeNext",
-		"outDir": "./dist",
-		"rootDir": "./src",
-		"allowJs": true,
-		"strict": true,
-		"moduleResolution": "NodeNext",
-		"esModuleInterop": true,
-		"skipLibCheck": true,
-		"forceConsistentCasingInFileNames": true,
-		"paths": {
-			"$/*": ["./src/*"]
-		}
-	},
-	"include": [
-		"./src/**/*.ts",
-		"./src/**/*.js",
-		".eslintrc",
-		".prettierrc",
-		"src/utils/coverage.util.ts",
-		"src/utils/coverage.util.mts"
-	]
+    "exclude": ["./coverage", "./dist", "__tests__", "jest.config.js"],
+    "ts-node": {
+        "require": ["tsconfig-paths/register"],
+        "transpileOnly": true,
+        "files": true
+    },
+    "compilerOptions": {
+        "target": "ES6",
+        "module": "NodeNext",
+        "outDir": "./dist",
+        "rootDir": "./src",
+        "allowJs": true,
+        "strict": true,
+        "moduleResolution": "NodeNext",
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "paths": {
+            "$/*": ["./src/*"]
+        }
+    },
+    "include": [
+        "./src/**/*.ts",
+        "./src/**/*.js",
+        ".eslintrc",
+        ".prettierrc",
+        "src/utils/coverage.util.ts",
+        "src/utils/coverage.util.mts"
+    ]
 }

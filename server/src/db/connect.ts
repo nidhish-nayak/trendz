@@ -5,7 +5,7 @@ import { type Database } from "./database.types";
 // API Connect
 const { supabaseUrl, supabaseKey } = config.dbConfig;
 if (!supabaseUrl || !supabaseKey)
-	throw new Error("Supabase API URL or KEY not found!");
+    throw new Error("Supabase API URL or KEY not found!");
 
 export const supabase = createClient<Database>(supabaseUrl, supabaseKey);
 

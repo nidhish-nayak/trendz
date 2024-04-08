@@ -1,40 +1,40 @@
 @import "../../style.scss";
 
 .write {
-	@include themify($themes) {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 20px;
-		margin: 20px 0px;
+    @include themify($themes) {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        margin: 20px 0px;
 
-		@include mobile {
-			gap: 10px;
-		}
+        @include mobile {
+            gap: 10px;
+        }
 
-		input {
-			width: 100%;
-			flex: 5;
-			padding: 10px;
-			border: 1px solid themed("border");
-			background-color: themed("bgSoft");
-			color: themed("textColor");
-			outline: none;
-		}
+        input {
+            width: 100%;
+            flex: 5;
+            padding: 10px;
+            border: 1px solid themed("border");
+            background-color: themed("bgSoft");
+            color: themed("textColor");
+            outline: none;
+        }
 
-		button {
-			border: none;
-			background-color: themed("button");
-			color: white;
-			padding: 9px;
-			cursor: pointer;
-			border-radius: 3px;
-			transition: 250ms ease-in-out;
-			border: 1px solid themed("buttonBorder");
+        button {
+            border: none;
+            background-color: themed("button");
+            color: white;
+            padding: 9px;
+            cursor: pointer;
+            border-radius: 3px;
+            transition: 250ms ease-in-out;
+            border: 1px solid themed("buttonBorder");
 
-			&:hover {
-				background-color: themed("buttonSoft");
-			}
-		}
-	}
+            &:hover {
+                background-color: themed("buttonSoft");
+            }
+        }
+    }
 }

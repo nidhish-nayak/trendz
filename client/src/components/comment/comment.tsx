@@ -12,68 +12,68 @@ import "./comment.scss";
 import { CommentTypes } from "./comment.types";
 
 const Comment = ({ comment }: CommentTypes) => {
-	const postId = useParams();
-	const { id, profilePic, name, createdAt, desc, userId } = comment;
-	const [isOpen, setIsOpen] = useState(false);
+    const postId = useParams();
+    const { id, profilePic, name, createdAt, desc, userId } = comment;
+    const [isOpen, setIsOpen] = useState(false);
 
-	const queryClient = useQueryClient();
-	const { currentUser } = useContext(AuthContext);
+    const queryClient = useQueryClient();
+    const { currentUser } = useContext(AuthContext);
 
-	const time = formatTime(createdAt);
+    const time = formatTime(createdAt);
 
-	useEffect(() => {
-		setIsOpen(false);
-	}, [postId]);
+    useEffect(() => {
+        setIsOpen(false);
+    }, [postId]);
 
-	const mutation = useMutation({
-		mutationFn: () => axiosRequest.delete(`comments/${id}`),
-		onSuccess: () => {
-			queryClient.invalidateQueries({
-				queryKey: ["comments"],
-			});
-			return setIsOpen(false);
-		},
-		onError(error) {
-			console.log(error);
-			return alert("Comment deletion failed!");
-		},
-	});
+    const mutation = useMutation({
+        mutationFn: () => axiosRequest.delete(`comments/${id}`),
+        onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: ["comments"],
+            });
+            return setIsOpen(false);
+        },
+        onError(error) {
+            console.log(error);
+            return alert("Comment deletion failed!");
+        },
+    });
 
-	const handleDelete = () => {
-		mutation.mutate();
-	};
+    const handleDelete = () => {
+        mutation.mutate();
+    };
 
-	return (
-		<div className="comment">
-			<img src={profilePic} alt="comment-img" />
-			<div className="comment-info">
-				<div className="comment-user">
-					<div className="comment-name">{name}</div>
-					<div className="delete-container">
-						<div className="comment-date">{time}</div>
-						{currentUser?.id === userId && (
-							<div
-								className="comment-delete"
-								onClick={() => setIsOpen(!isOpen)}
-							>
-								<MoreVertIcon />
-								{isOpen && (
-									<div
-										className="delete"
-										onClick={handleDelete}
-									>
-										<Delete fontSize="small" />
-										Delete
-									</div>
-								)}
-							</div>
-						)}
-					</div>
-				</div>
-				<p className="comment-desc">{desc}</p>
-			</div>
-		</div>
-	);
+    return (
+        <div className="comment">
+            <img src={profilePic} alt="comment-img" />
+            <div className="comment-info">
+                <div className="comment-user">
+                    <div className="comment-name">{name}</div>
+                    <div className="delete-container">
+                        <div className="comment-date">{time}</div>
+                        {currentUser?.id === userId && (
+                            <div
+                                className="comment-delete"
+                                onClick={() => setIsOpen(!isOpen)}
+                            >
+                                <MoreVertIcon />
+                                {isOpen && (
+                                    <div
+                                        className="delete"
+                                        onClick={handleDelete}
+                                    >
+                                        <Delete fontSize="small" />
+                                        Delete
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                    </div>
+                </div>
+                <p className="comment-desc">{desc}</p>
+            </div>
+        </div>
+    );
 };
 
 export default Comment;

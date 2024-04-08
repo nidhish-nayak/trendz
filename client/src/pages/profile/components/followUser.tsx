@@ -10,113 +10,113 @@ import "../profile.scss";
 import { FOLLOW_MUTATION_TYPE, FOLLOW_TYPE } from "../profile.types";
 
 const FollowUser = () => {
-	const { id } = useParams();
-	const [isSpin, setIsSpin] = useState(false);
-	const queryClient = useQueryClient();
-	const [isFollowed, setIsFollowed] = useState(false);
-	const { currentUser } = useContext(AuthContext);
+    const { id } = useParams();
+    const [isSpin, setIsSpin] = useState(false);
+    const queryClient = useQueryClient();
+    const [isFollowed, setIsFollowed] = useState(false);
+    const { currentUser } = useContext(AuthContext);
 
-	if (!currentUser || !id) throw Error("User/Profile not found!");
+    if (!currentUser || !id) throw Error("User/Profile not found!");
 
-	// Get Followers Data
-	const getFollowers = async () => {
-		const res = await axiosRequest.get(`/relationships/${id}`);
-		if (res.data.length === 0) setIsFollowed(false);
-		else setIsFollowed(true);
-		return res.data;
-	};
+    // Get Followers Data
+    const getFollowers = async () => {
+        const res = await axiosRequest.get(`/relationships/${id}`);
+        if (res.data.length === 0) setIsFollowed(false);
+        else setIsFollowed(true);
+        return res.data;
+    };
 
-	const { isLoading, data, error } = useQuery({
-		queryKey: ["relationships", id],
-		queryFn: getFollowers,
-	});
+    const { isLoading, data, error } = useQuery({
+        queryKey: ["relationships", id],
+        queryFn: getFollowers,
+    });
 
-	if (error) throw Error("getFollowers fetch failed!");
+    if (error) throw Error("getFollowers fetch failed!");
 
-	// Mutate Followers Data
-	const followMutation = useMutation({
-		mutationFn: (followDetails: FOLLOW_MUTATION_TYPE) =>
-			axiosRequest.post("/relationships", followDetails),
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ["relationships"] });
-			return setIsSpin(false);
-		},
-		onError(error) {
-			setIsSpin(false);
-			console.log(error);
-			return alert("Follow user failed!");
-		},
-	});
+    // Mutate Followers Data
+    const followMutation = useMutation({
+        mutationFn: (followDetails: FOLLOW_MUTATION_TYPE) =>
+            axiosRequest.post("/relationships", followDetails),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["relationships"] });
+            return setIsSpin(false);
+        },
+        onError(error) {
+            setIsSpin(false);
+            console.log(error);
+            return alert("Follow user failed!");
+        },
+    });
 
-	const unfollowMutation = useMutation({
-		mutationFn: () => axiosRequest.delete(`/relationships/${id}`),
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ["relationships"] });
-			return setIsSpin(false);
-		},
-		onError(error) {
-			setIsSpin(false);
-			console.log(error);
-			return alert("Unfollow user failed!");
-		},
-	});
+    const unfollowMutation = useMutation({
+        mutationFn: () => axiosRequest.delete(`/relationships/${id}`),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["relationships"] });
+            return setIsSpin(false);
+        },
+        onError(error) {
+            setIsSpin(false);
+            console.log(error);
+            return alert("Unfollow user failed!");
+        },
+    });
 
-	// Follow user
-	const handleFollow = () => {
-		setIsSpin(true);
-		const followDetails = {
-			followerUserId: currentUser.id,
-			followedUserId: parseInt(id),
-		};
-		followMutation.mutate(followDetails);
-	};
+    // Follow user
+    const handleFollow = () => {
+        setIsSpin(true);
+        const followDetails = {
+            followerUserId: currentUser.id,
+            followedUserId: parseInt(id),
+        };
+        followMutation.mutate(followDetails);
+    };
 
-	// Unfollow User
-	const handleUnfollow = () => {
-		setIsSpin(true);
-		unfollowMutation.mutate();
-	};
+    // Unfollow User
+    const handleUnfollow = () => {
+        setIsSpin(true);
+        unfollowMutation.mutate();
+    };
 
-	if (isLoading) {
-		return <Spinner />;
-	}
+    if (isLoading) {
+        return <Spinner />;
+    }
 
-	if (currentUser!.id === parseInt(id!)) {
-		const followerCount: FOLLOW_TYPE[] = data;
-		return (
-			<button className="follow-button">
-				{followerCount.length} Followers
-			</button>
-		);
-	}
+    if (currentUser!.id === parseInt(id!)) {
+        const followerCount: FOLLOW_TYPE[] = data;
+        return (
+            <button className="follow-button">
+                {followerCount.length} Followers
+            </button>
+        );
+    }
 
-	if (!isLoading && data) {
-		return (
-			<>
-				{isFollowed ? (
-					<button
-						className="follow-button"
-						style={{ backgroundColor: "crimson" }}
-						onClick={handleUnfollow}
-					>
-						<PersonRemoveAlt1Icon fontSize="small" />
-						Unfollow
-					</button>
-				) : (
-					<button className="follow-button" onClick={handleFollow}>
-						{isSpin ? (
-							<Spinner />
-						) : (
-							<>
-								<PersonAddAlt1Icon fontSize="small" />
-								Follow
-							</>
-						)}
-					</button>
-				)}
-			</>
-		);
-	}
+    if (!isLoading && data) {
+        return (
+            <>
+                {isFollowed ? (
+                    <button
+                        className="follow-button"
+                        style={{ backgroundColor: "crimson" }}
+                        onClick={handleUnfollow}
+                    >
+                        <PersonRemoveAlt1Icon fontSize="small" />
+                        Unfollow
+                    </button>
+                ) : (
+                    <button className="follow-button" onClick={handleFollow}>
+                        {isSpin ? (
+                            <Spinner />
+                        ) : (
+                            <>
+                                <PersonAddAlt1Icon fontSize="small" />
+                                Follow
+                            </>
+                        )}
+                    </button>
+                )}
+            </>
+        );
+    }
 };
 
 export default FollowUser;

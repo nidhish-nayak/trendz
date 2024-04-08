@@ -4,11 +4,11 @@ import { AuthContext } from "../context/authContext";
 import useHandleToken from "../hooks/useHandleToken";
 
 export const ProtectedRoute = ({ children }: { children: ReactNode }) => {
-	const { currentUser } = useContext(AuthContext);
-	useHandleToken(); // Check if accessToken valid
+    const { currentUser } = useContext(AuthContext);
+    useHandleToken(); // Check if accessToken valid
 
-	if (!currentUser) {
-		return <Navigate to="/login" />;
-	}
-	return children;
+    if (!currentUser) {
+        return <Navigate to="/login" />;
+    }
+    return children;
 };

@@ -6,15 +6,15 @@ import { PostContext } from "../../context/postContext";
 import "./home.scss";
 
 const Home = () => {
-	const { isPostOpen } = useContext(PostContext);
+    const { isPostOpen } = useContext(PostContext);
 
-	return (
-		<div id="home" className="home">
-			<Stories />
-			{isPostOpen ? <Share /> : null}
-			<Posts />
-		</div>
-	);
+    return (
+        <div id="home" className="home">
+            <Stories />
+            {isPostOpen ? <Share /> : null}
+            <Posts />
+        </div>
+    );
 };
 
 export default Home;

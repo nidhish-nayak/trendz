@@ -1,544 +1,544 @@
 @import "../../style.scss";
 
 .navbar-main {
-	@include themify($themes) {
-		position: sticky;
-		z-index: 100;
-		top: 0;
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		padding: 10px 20px;
-		height: 60px;
-		border-bottom: 1px solid themed("border");
-		background-color: themed("bg");
-		color: themed("textColor");
+    @include themify($themes) {
+        position: sticky;
+        z-index: 100;
+        top: 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 20px;
+        height: 60px;
+        border-bottom: 1px solid themed("border");
+        background-color: themed("bg");
+        color: themed("textColor");
 
-		@include tablet {
-			gap: 10px;
-		}
+        @include tablet {
+            gap: 10px;
+        }
 
-		@include mobile {
-			display: none;
-		}
+        @include mobile {
+            display: none;
+        }
 
-		.left {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			gap: 30px;
+        .left {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
 
-			.link {
-				border-radius: 5px;
-				width: 30px;
-				height: 30px;
-				padding: 3px;
-				color: themed("logo");
-				transition: all 250ms ease-in-out;
+            .link {
+                border-radius: 5px;
+                width: 30px;
+                height: 30px;
+                padding: 3px;
+                color: themed("logo");
+                transition: all 250ms ease-in-out;
 
-				&:hover {
-					cursor: pointer;
-					background-color: themed("bgSoft");
-				}
-			}
+                &:hover {
+                    cursor: pointer;
+                    background-color: themed("bgSoft");
+                }
+            }
 
-			.theme {
-				border-radius: 5px;
-				width: 30px;
-				height: 30px;
-				padding: 3px;
-				transition: all 250ms ease-in-out;
+            .theme {
+                border-radius: 5px;
+                width: 30px;
+                height: 30px;
+                padding: 3px;
+                transition: all 250ms ease-in-out;
 
-				&:hover {
-					cursor: pointer;
-					background-color: themed("bgSoft");
-				}
+                &:hover {
+                    cursor: pointer;
+                    background-color: themed("bgSoft");
+                }
 
-				@include mobile {
-					display: none;
-				}
-			}
+                @include mobile {
+                    display: none;
+                }
+            }
 
-			span {
-				font-size: 20px;
-				font-weight: bold;
-				color: themed("logo");
-			}
-		}
+            span {
+                font-size: 20px;
+                font-weight: bold;
+                color: themed("logo");
+            }
+        }
 
-		.right {
-			display: flex;
-			align-items: center;
-			gap: 20px;
+        .right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
 
-			.item-realtime {
-				@include tablet {
-					display: none;
-				}
+            .item-realtime {
+                @include tablet {
+                    display: none;
+                }
 
-				padding: 5px 10px;
-				border-radius: 6px;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				gap: 6px;
-				background-color: themed("border");
-				cursor: pointer;
-				border: 1px solid themed("border");
-				transition: all 150ms ease-in-out;
+                padding: 5px 10px;
+                border-radius: 6px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 6px;
+                background-color: themed("border");
+                cursor: pointer;
+                border: 1px solid themed("border");
+                transition: all 150ms ease-in-out;
 
-				&:hover {
-					border: 1px solid themed("arrow");
-				}
+                &:hover {
+                    border: 1px solid themed("arrow");
+                }
 
-				.realtime-title {
-					font-size: 0.75rem;
-				}
+                .realtime-title {
+                    font-size: 0.75rem;
+                }
 
-				.realtime-circle {
-					margin-top: 2px;
-					width: 5px;
-					height: 5px;
-					border-radius: 100%;
-					background-color: themed("activityOn");
-				}
+                .realtime-circle {
+                    margin-top: 2px;
+                    width: 5px;
+                    height: 5px;
+                    border-radius: 100%;
+                    background-color: themed("activityOn");
+                }
 
-				.realtime-circle.read-only {
-					margin-top: 2px;
-					width: 5px;
-					height: 5px;
-					border-radius: 100%;
-					background-color: yellow;
-				}
-			}
+                .realtime-circle.read-only {
+                    margin-top: 2px;
+                    width: 5px;
+                    height: 5px;
+                    border-radius: 100%;
+                    background-color: yellow;
+                }
+            }
 
-			.user {
-				display: flex;
-				align-items: center;
-				gap: 10px;
-				position: relative;
+            .user {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                position: relative;
 
-				.user-link {
-					display: flex;
-					align-items: center;
-					justify-content: center;
-					gap: 10px;
-					padding: 6px 10px;
-					border-radius: 10px;
-					background-color: themed("bgSoft");
-					cursor: pointer;
+                .user-link {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 10px;
+                    padding: 6px 10px;
+                    border-radius: 10px;
+                    background-color: themed("bgSoft");
+                    cursor: pointer;
 
-					&:hover {
-						background-color: themed("border");
-					}
+                    &:hover {
+                        background-color: themed("border");
+                    }
 
-					.user-image {
-						width: 30px;
-						height: 30px;
-						border-radius: 50%;
-						object-fit: cover;
-					}
+                    .user-image {
+                        width: 30px;
+                        height: 30px;
+                        border-radius: 50%;
+                        object-fit: cover;
+                    }
 
-					span {
-						font-size: 0.875rem;
-						font-weight: 500;
-						max-width: 100px;
-						white-space: nowrap;
-						overflow: hidden;
-						text-overflow: ellipsis;
-					}
-				}
-			}
+                    span {
+                        font-size: 0.875rem;
+                        font-weight: 500;
+                        max-width: 100px;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+                }
+            }
 
-			.link {
-				border-radius: 5px;
-				width: 30px;
-				height: 30px;
-				padding: 3px;
-				color: themed("logo");
-				transition: all 250ms ease-in-out;
+            .link {
+                border-radius: 5px;
+                width: 30px;
+                height: 30px;
+                padding: 3px;
+                color: themed("logo");
+                transition: all 250ms ease-in-out;
 
-				&:hover {
-					cursor: pointer;
-					background-color: themed("bgSoft");
-				}
-			}
-		}
-	}
+                &:hover {
+                    cursor: pointer;
+                    background-color: themed("bgSoft");
+                }
+            }
+        }
+    }
 }
 
 .top-mobile {
-	@include themify($themes) {
-		display: none;
+    @include themify($themes) {
+        display: none;
 
-		&.visible {
-			.item-realtime {
-				padding: 5px 10px;
-				border-radius: 6px;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				gap: 6px;
-				background-color: themed("border");
-				cursor: pointer;
-				border: 1px solid themed("border");
-				transition: all 150ms ease-in-out;
+        &.visible {
+            .item-realtime {
+                padding: 5px 10px;
+                border-radius: 6px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 6px;
+                background-color: themed("border");
+                cursor: pointer;
+                border: 1px solid themed("border");
+                transition: all 150ms ease-in-out;
 
-				&:hover {
-					border: 1px solid themed("arrow");
-				}
+                &:hover {
+                    border: 1px solid themed("arrow");
+                }
 
-				.realtime-title {
-					font-weight: 500;
-					font-size: 0.85rem;
-					margin-bottom: 2px;
-				}
+                .realtime-title {
+                    font-weight: 500;
+                    font-size: 0.85rem;
+                    margin-bottom: 2px;
+                }
 
-				.realtime-circle {
-					width: 5px;
-					height: 5px;
-					border-radius: 100%;
-					background-color: themed("activityOn");
-				}
+                .realtime-circle {
+                    width: 5px;
+                    height: 5px;
+                    border-radius: 100%;
+                    background-color: themed("activityOn");
+                }
 
-				.realtime-circle.offline {
-					width: 5px;
-					height: 5px;
-					border-radius: 100%;
-					background-color: themed("activityOff");
-				}
+                .realtime-circle.offline {
+                    width: 5px;
+                    height: 5px;
+                    border-radius: 100%;
+                    background-color: themed("activityOff");
+                }
 
-				.realtime-circle.read-only {
-					width: 5px;
-					height: 5px;
-					border-radius: 100%;
-					background-color: yellow;
-				}
-			}
+                .realtime-circle.read-only {
+                    width: 5px;
+                    height: 5px;
+                    border-radius: 100%;
+                    background-color: yellow;
+                }
+            }
 
-			opacity: 1;
-			transform: translateY(0);
-			transition:
-				opacity 0.3s,
-				transform 0.3s;
-		}
+            opacity: 1;
+            transform: translateY(0);
+            transition:
+                opacity 0.3s,
+                transform 0.3s;
+        }
 
-		&.hidden {
-			opacity: 0;
-			transform: translateY(-100%);
-			transition:
-				opacity 0.3s,
-				transform 0.3s;
-		}
+        &.hidden {
+            opacity: 0;
+            transform: translateY(-100%);
+            transition:
+                opacity 0.3s,
+                transform 0.3s;
+        }
 
-		@include mobile {
-			display: block;
-			position: sticky;
-			z-index: 100;
-			top: 0;
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			padding: 10px 10px;
-			height: 60px;
-			border-bottom: 1px solid themed("border");
-			background-color: themed("bg");
-			color: themed("textColor");
-		}
+        @include mobile {
+            display: block;
+            position: sticky;
+            z-index: 100;
+            top: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 10px;
+            height: 60px;
+            border-bottom: 1px solid themed("border");
+            background-color: themed("bg");
+            color: themed("textColor");
+        }
 
-		.left-mobile {
-			border-radius: 50%;
-			width: min-content;
-			padding: 3px;
-			color: themed("logo");
+        .left-mobile {
+            border-radius: 50%;
+            width: min-content;
+            padding: 3px;
+            color: themed("logo");
 
-			&:hover {
-				cursor: pointer;
-				background-color: themed("bgSoft");
-			}
+            &:hover {
+                cursor: pointer;
+                background-color: themed("bgSoft");
+            }
 
-			span {
-				font-size: 20px;
-				font-weight: bold;
-				color: themed("logo");
-			}
+            span {
+                font-size: 20px;
+                font-weight: bold;
+                color: themed("logo");
+            }
 
-			.logo-link {
-				font-size: 20px;
-				font-weight: bold;
-				color: themed("logo");
+            .logo-link {
+                font-size: 20px;
+                font-weight: bold;
+                color: themed("logo");
 
-				span {
-					color: themed("button");
-				}
-			}
-		}
+                span {
+                    color: themed("button");
+                }
+            }
+        }
 
-		.right-mobile {
-			display: flex;
-			align-items: center;
-			gap: 20px;
+        .right-mobile {
+            display: flex;
+            align-items: center;
+            gap: 20px;
 
-			.theme {
-				border-radius: 50%;
-				width: 30px;
-				height: 30px;
-				padding: 3px;
+            .theme {
+                border-radius: 50%;
+                width: 30px;
+                height: 30px;
+                padding: 3px;
 
-				&:hover {
-					cursor: pointer;
-					background-color: themed("bgSoft");
-				}
-			}
-		}
-	}
+                &:hover {
+                    cursor: pointer;
+                    background-color: themed("bgSoft");
+                }
+            }
+        }
+    }
 }
 
 .bottom-mobile {
-	@include themify($themes) {
-		display: none;
+    @include themify($themes) {
+        display: none;
 
-		@include mobile {
-			display: block;
-			position: fixed;
-			width: 100%;
-			z-index: 100;
-			bottom: 0;
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			padding: 10px 20px;
-			height: 50px;
-			border-top: 1px solid themed("border");
-			background-color: themed("bg");
-			color: themed("textColor");
+        @include mobile {
+            display: block;
+            position: fixed;
+            width: 100%;
+            z-index: 100;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px;
+            height: 50px;
+            border-top: 1px solid themed("border");
+            background-color: themed("bg");
+            color: themed("textColor");
 
-			.post {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				width: 30px;
-				height: 30px;
-			}
+            .post {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 30px;
+                height: 30px;
+            }
 
-			.post.active {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				width: 30px;
-				height: 30px;
+            .post.active {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 30px;
+                height: 30px;
 
-				svg {
-					color: crimson;
-				}
-			}
+                svg {
+                    color: crimson;
+                }
+            }
 
-			.user {
-				display: flex;
-				align-items: center;
-				position: relative;
-				gap: 10px;
+            .user {
+                display: flex;
+                align-items: center;
+                position: relative;
+                gap: 10px;
 
-				.user-image {
-					width: 30px;
-					height: 30px;
-					border-radius: 50%;
-					object-fit: cover;
-				}
+                .user-image {
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                }
 
-				.logout-container {
-					position: absolute;
-					top: -360px;
-					right: -18px;
-					display: flex;
-					flex-direction: column;
-					align-items: center;
-					border: 1px solid themed("border");
-					background-color: themed("bg");
-					padding: 1.5em;
-					border-radius: 10px;
-					min-width: 280px;
-					gap: 30px;
+                .logout-container {
+                    position: absolute;
+                    top: -360px;
+                    right: -18px;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    border: 1px solid themed("border");
+                    background-color: themed("bg");
+                    padding: 1.5em;
+                    border-radius: 10px;
+                    min-width: 280px;
+                    gap: 30px;
 
-					@include tablet {
-						top: -420px;
-						right: -18px;
-					}
+                    @include tablet {
+                        top: -420px;
+                        right: -18px;
+                    }
 
-					.logout-items {
-						display: flex;
-						flex-direction: column;
-						align-items: flex-start;
-						max-width: 300px;
-						gap: 20px;
+                    .logout-items {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: flex-start;
+                        max-width: 300px;
+                        gap: 20px;
 
-						@include mobile {
-							max-width: 240px;
-						}
+                        @include mobile {
+                            max-width: 240px;
+                        }
 
-						.logout-cover {
-							position: absolute;
-							top: 0;
-							left: 0;
-							width: 100%;
-							height: 130px;
-							z-index: 0;
-							border-top-right-radius: 10px;
-							border-top-left-radius: 10px;
-						}
+                        .logout-cover {
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            width: 100%;
+                            height: 130px;
+                            z-index: 0;
+                            border-top-right-radius: 10px;
+                            border-top-left-radius: 10px;
+                        }
 
-						.logout-image {
-							width: 140px;
-							height: 140px;
-							border-radius: 100%;
-							border: 5px solid themed("bg");
-							object-fit: cover;
-							align-self: center;
-							z-index: 1;
-						}
+                        .logout-image {
+                            width: 140px;
+                            height: 140px;
+                            border-radius: 100%;
+                            border: 5px solid themed("bg");
+                            object-fit: cover;
+                            align-self: center;
+                            z-index: 1;
+                        }
 
-						.logout-user {
-							display: flex;
-							flex-direction: column;
-							gap: 5px;
+                        .logout-user {
+                            display: flex;
+                            flex-direction: column;
+                            gap: 5px;
 
-							.user-items {
-								display: flex;
-								gap: 4px;
-								font-weight: bold;
-								max-width: 256px;
+                            .user-items {
+                                display: flex;
+                                gap: 4px;
+                                font-weight: bold;
+                                max-width: 256px;
 
-								span {
-									font-weight: normal;
-									white-space: nowrap;
-									overflow: hidden;
-									text-overflow: ellipsis;
-								}
-							}
-						}
-					}
+                                span {
+                                    font-weight: normal;
+                                    white-space: nowrap;
+                                    overflow: hidden;
+                                    text-overflow: ellipsis;
+                                }
+                            }
+                        }
+                    }
 
-					.logout-button {
-						padding: 0.75em 1em;
-						text-transform: uppercase;
-						border: 1px solid themed("button");
-						border-radius: 4px;
-						font-size: 0.75rem;
-						font-weight: bold;
-						cursor: pointer;
-						transition: all 250ms ease-in-out;
+                    .logout-button {
+                        padding: 0.75em 1em;
+                        text-transform: uppercase;
+                        border: 1px solid themed("button");
+                        border-radius: 4px;
+                        font-size: 0.75rem;
+                        font-weight: bold;
+                        cursor: pointer;
+                        transition: all 250ms ease-in-out;
 
-						&:hover {
-							background-color: themed("button");
-							color: white;
-						}
-					}
-				}
-			}
+                        &:hover {
+                            background-color: themed("button");
+                            color: white;
+                        }
+                    }
+                }
+            }
 
-			.link {
-				display: block;
-				border-radius: 50%;
-				width: 30px;
-				height: 30px;
-				padding: 3px;
-				color: themed("logo");
+            .link {
+                display: block;
+                border-radius: 50%;
+                width: 30px;
+                height: 30px;
+                padding: 3px;
+                color: themed("logo");
 
-				&:hover {
-					cursor: pointer;
-					background-color: themed("bgSoft");
-				}
-			}
+                &:hover {
+                    cursor: pointer;
+                    background-color: themed("bgSoft");
+                }
+            }
 
-			.search-mobile {
-				display: flex;
-				align-items: center;
-				gap: 10px;
-				border-radius: 5px;
-				cursor: pointer;
+            .search-mobile {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                border-radius: 5px;
+                cursor: pointer;
 
-				input {
-					display: none;
-				}
-			}
+                input {
+                    display: none;
+                }
+            }
 
-			.search-modal {
-				display: block;
-				z-index: 100;
-				top: 0;
-				margin: 10px;
-				background-color: red;
-				color: red;
-			}
-		}
-	}
+            .search-modal {
+                display: block;
+                z-index: 100;
+                top: 0;
+                margin: 10px;
+                background-color: red;
+                color: red;
+            }
+        }
+    }
 }
 
 .menu-container {
-	@include themify($themes) {
-		position: fixed;
-		width: 100%;
-		height: 100%;
-		background-color: themed("bgSoft");
-		top: 0px;
-		right: -1000px;
-		z-index: 1000;
+    @include themify($themes) {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background-color: themed("bgSoft");
+        top: 0px;
+        right: -1000px;
+        z-index: 1000;
 
-		&.menu-open {
-			right: 0px;
-			animation-name: slide;
-			animation-duration: 250ms;
+        &.menu-open {
+            right: 0px;
+            animation-name: slide;
+            animation-duration: 250ms;
 
-			@keyframes slide {
-				from {
-					right: -1000px;
-				}
-				to {
-					right: 0px;
-				}
-			}
-		}
+            @keyframes slide {
+                from {
+                    right: -1000px;
+                }
+                to {
+                    right: 0px;
+                }
+            }
+        }
 
-		.menu-list {
-			width: 100%;
-			height: 100vh;
-			background-color: themed("bgSoft");
-			list-style: none;
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			justify-content: flex-start;
-			gap: 20px;
+        .menu-list {
+            width: 100%;
+            height: 100vh;
+            background-color: themed("bgSoft");
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 20px;
 
-			.menu-close {
-				color: themed("textColor");
-				background-color: themed("bg");
-				border: 1px solid themed("border");
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				align-self: flex-end;
-				padding: 8px;
-				margin: 10px;
-				border-radius: 10px;
-			}
+            .menu-close {
+                color: themed("textColor");
+                background-color: themed("bg");
+                border: 1px solid themed("border");
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                align-self: flex-end;
+                padding: 8px;
+                margin: 10px;
+                border-radius: 10px;
+            }
 
-			a {
-				position: relative;
-				width: 80%;
-				padding: 10px 20px;
-				text-decoration: none;
-				color: themed("textColor");
-				border-radius: 8px;
-				background-color: themed("border");
-				display: flex;
-				align-items: center;
-				gap: 10px;
+            a {
+                position: relative;
+                width: 80%;
+                padding: 10px 20px;
+                text-decoration: none;
+                color: themed("textColor");
+                border-radius: 8px;
+                background-color: themed("border");
+                display: flex;
+                align-items: center;
+                gap: 10px;
 
-				.menu-items {
-					font-size: 1rem;
-				}
-			}
-		}
-	}
+                .menu-items {
+                    font-size: 1rem;
+                }
+            }
+        }
+    }
 }
