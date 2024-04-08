@@ -1,17 +1,9 @@
 {
     "scripts": {
-        "pre-commit": "lint-staged",
-        "prettier": "prettier --write ."
+        "prettier": "prettier --write .",
+        "lint": "prettier --check ."
     },
     "devDependencies": {
-        "husky": "^8.0.3",
-        "lint-staged": "^15.2.2",
         "prettier": "^3.2.5"
-    },
-    "lint-staged": {
-        "*.{ts,tsx,js,jsx,css,md,json}": "prettier --write",
-        "*.json": [
-            "prettier --write"
-        ]
     }
 }
