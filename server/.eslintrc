@@ -11,7 +11,7 @@
 	"rules": {
 		"no-unused-vars": "off",
 		"@typescript-eslint/no-unused-vars": "off",
-		"prettier/prettier": 2
+		"prettier/prettier": [2, { "useTabs": false }]
 	},
 	"env": {
 		"browser": true,
