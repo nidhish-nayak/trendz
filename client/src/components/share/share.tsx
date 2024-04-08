@@ -24,6 +24,9 @@ const Share = () => {
     const [uploading, setUploading] = useState(false);
     const [localImgUrl, setLocalImgUrl] = useState<string | null>(null);
 
+    if (!currentUser) throw Error("User not found!");
+    const id = currentUser.id;
+
     const mutation = useMutation({
         mutationFn: (newPost: NEW_POST_TYPES) =>
             axiosRequest.post("/posts", newPost),
@@ -31,7 +34,9 @@ const Share = () => {
             setDesc("");
             setFile(null);
             setIsPostOpen(); // close post after uploading
-            queryClient.invalidateQueries({ queryKey: ["posts"] });
+            queryClient.invalidateQueries({
+                queryKey: ["posts", id],
+            });
             return setUploading(false);
         },
         onError(error) {
@@ -41,15 +46,13 @@ const Share = () => {
         },
     });
 
-    if (!currentUser) return <div>User not found!</div>;
-
     const submitPost = async () => {
         if (desc.length === 0) {
             alert("Please enter description to your post!");
             return;
         }
-        if (file && file.size > 5242880) {
-            alert("Please upload image less than 5MB!");
+        if (file && file.size > 10000000) {
+            alert("Please upload image less than 10MB!");
             return;
         }
 

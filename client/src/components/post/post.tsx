@@ -37,7 +37,7 @@ const Post = ({ post }: PostTypes) => {
         onSuccess: () => {
             setIsOpen(false);
             queryClient.invalidateQueries({
-                queryKey: ["posts"],
+                queryKey: ["posts", userId],
             });
         },
         onError(error) {

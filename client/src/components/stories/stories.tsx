@@ -101,8 +101,8 @@ const Stories = () => {
         if (!e.target.files) return;
 
         const file = e.target.files[0];
-        if (file && file.size > 5242880) {
-            return alert("Please upload image less than 5MB!");
+        if (file && file.size > 10000000) {
+            return alert("Please upload image less than 10MB!");
         }
         const imgUrl = URL.createObjectURL(file);
         setLocalStory(imgUrl);

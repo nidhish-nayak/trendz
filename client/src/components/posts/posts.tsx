@@ -12,12 +12,17 @@ import { SearchContext } from "../../context/searchContext";
 import { filterPosts } from "../../utils/filterPosts.util";
 import Post from "../post/post";
 import { PostPageTypes, PostsTypes } from "./posts.types";
+import { AuthContext } from "../../context/authContext";
 
 const Posts = () => {
     const param = useParams();
     const { search } = useContext(SearchContext);
+    const { currentUser } = useContext(AuthContext);
     const profileUserId = param.id ? parseInt(param.id) : undefined;
     const lastPostRef = useRef<HTMLElement>(null);
+
+    if (!currentUser) throw Error("User not found!");
+    const id = currentUser.id;
 
     const { ref, entry } = useIntersection({
         root: lastPostRef.current,
@@ -34,7 +39,7 @@ const Posts = () => {
 
     const { data, error, fetchNextPage, isLoading, isFetchingNextPage } =
         useInfiniteQuery({
-            queryKey: ["posts"],
+            queryKey: ["posts", id],
             queryFn: getPosts,
             initialPageParam: 1,
             getNextPageParam: (lastPage, _allPages, lastPageParam) => {
