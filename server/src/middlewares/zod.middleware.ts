@@ -19,7 +19,7 @@ export function zodMiddleware(
         });
         return;
     }
-    return res.status(500).json({
+    res.status(500).json({
         message: "Internal server error",
     });
 }
