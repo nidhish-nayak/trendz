@@ -1,88 +1,73 @@
 import config from "$/config/config";
+import { Response } from "express";
 import axios from "axios";
-import { NextFunction, Request, Response } from "express";
 
 import { addBan, getModerationAxiosConfig } from "$/utils/axios.util";
 import clearAllCookies from "$/utils/cookie.util";
-import { getUserIdFromCookie } from "$/utils/getUserId.util";
-import { prefix } from "$/utils/prefix.util";
-import { AddPostSchema } from "$/validations/post.validation";
-import { StorySchema } from "$/validations/story.validation";
+import { supabase } from "$/db/connect";
 
-const moderatorMiddleware = async (
-    req: Request,
+const moderatorCheck = async (
     res: Response,
-    next: NextFunction
+    userId: number,
+    id: number,
+    post: boolean,
+    imageUrl: string
 ) => {
     // Toggle moderator on/off as per config
-    if (config.modOptions.modStatus === false) {
-        return next();
+    if (config.modOptions.modStatus === false || !imageUrl) {
+        return;
     }
 
-    let validationResult;
-    const user_id = getUserIdFromCookie(req);
-    validationResult = AddPostSchema.safeParse(req);
-
-    if (!validationResult.success) {
-        // STORY VALIDATION
-        validationResult = StorySchema.safeParse(req);
-
-        if (!validationResult.success) {
-            return res.status(401).json("Unauthorized!");
-        }
-
-        const { img } = validationResult.data.body;
-        const options = getModerationAxiosConfig(img);
-
-        try {
-            const response = await axios.request(options);
-            if (response.data.unsafe === true) {
-                const banAdded = await addBan(user_id);
-                if (banAdded === false)
-                    return res.status(400).json("Ban failed!");
-
-                // Clear cookies on ban
-                return clearAllCookies(res).status(403).send("You are banned!");
-            }
-            return next();
-        } catch (error) {
-            return res.status(400).send("Failed!");
-        }
-    }
-
-    // POSTS VALIDATION
-    const { userId, img, filename } = validationResult.data.body;
-
-    if (img) {
-        if (!filename) return res.status(401).send("Unauthorized!");
-        if (!img.includes(prefix.prefixPosts) || !img.includes(filename)) {
-            return res.status(401).send("Unauthorized!");
-        }
-    }
-
-    if (user_id !== userId) {
-        return res.status(401).send("Unauthorized");
-    }
-
-    if (!img) return next();
-
-    const options = getModerationAxiosConfig(img);
+    // Get axios headers setup
+    const options = getModerationAxiosConfig(imageUrl);
 
     try {
         const response = await axios.request(options);
         if (response.data.unsafe === true) {
-            const banAdded = await addBan(user_id);
-            if (banAdded === false) return res.status(400).json("Ban failed!");
+            const banAdded = await addBan(userId);
+            if (banAdded === false)
+                return console.log("User ban failed upon unsafe upload!");
 
-            // Clear cookie on ban
-            return clearAllCookies(res).status(403).send("You are banned!");
-        } else if (response.data.unsafe === false) {
-            return next();
+            // Delete post or story if user banned
+            if (post) {
+                // Add logs of images for unban requests
+                const { error: logError } = await supabase
+                    .from("logs")
+                    .insert({ user_id: userId, img: imageUrl, type: "post" });
+                if (logError) return console.log("Error during post log!");
+
+                // Remove actual post
+                const { error } = await supabase
+                    .from("posts")
+                    .delete()
+                    .eq("userId", userId)
+                    .eq("id", id);
+                if (error) return console.log("Error during post delete!");
+            } else {
+                const { error: logError } = await supabase
+                    .from("logs")
+                    .insert({ user_id: userId, img: imageUrl, type: "story" });
+                if (logError) return console.log("Error logging story delete!");
+
+                // Remove actual story
+                const { error } = await supabase
+                    .from("stories")
+                    .delete()
+                    .eq("userId", userId)
+                    .eq("id", id);
+                if (error) return console.log("Error during Story delete!");
+            }
+
+            // Logout user on ban
+            clearAllCookies(res);
         }
-        return res.status(401).send("Invalid imagelink for mod!");
+        return;
     } catch (error) {
-        return res.status(400).send("Failed!");
+        if (error.code === "ERR_HTTP_HEADERS_SENT") {
+            return console.log("User was banned, cookie was cleared");
+        }
+        return console.log("Failed to request ban check from API!");
     }
 };
 
-export default moderatorMiddleware;
+export default moderatorCheck;

@@ -35,14 +35,14 @@ const authMiddleware = async (
         if (error) return res.status(400).send("Auth check failed!");
 
         if (data.length >= 1) {
-            res.clearCookie("accessToken", {
-                httpOnly: true,
-                secure: true,
-                sameSite: "none",
-            })
+            return res
+                .clearCookie("accessToken", {
+                    httpOnly: true,
+                    secure: true,
+                    sameSite: "none",
+                })
                 .status(200)
                 .send("You are banned!");
-            return res.status(401).send("You are banned!");
         }
 
         const verified = jwt.verify(token, key);

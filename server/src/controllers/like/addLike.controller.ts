@@ -26,7 +26,7 @@ export const addLike = async (req: Request, res: Response) => {
             .insert({ postId: postId, userId: userId })
             .select();
 
-        if (error) res.status(400).json("Adding like to DB failed!");
+        if (error) return res.status(400).json("Adding like to DB failed!");
 
         return res.status(200).json(data);
     }

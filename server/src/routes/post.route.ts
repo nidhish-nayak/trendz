@@ -4,13 +4,12 @@ import getExplore from "$/controllers/post/getExplore.controller";
 import { getPosts } from "$/controllers/post/getPosts.controller";
 import { getSinglePosts } from "$/controllers/post/getSinglePost.controller";
 import authMiddleware from "$/middlewares/auth.middleware";
-import moderatorMiddleware from "$/middlewares/moderator.middleware";
 import express from "express";
 
 const router = express.Router();
 
 router.get("/", authMiddleware, getPosts);
-router.post("/", authMiddleware, moderatorMiddleware, addPost);
+router.post("/", authMiddleware, addPost);
 router.delete("/:postId", authMiddleware, deletePost);
 
 // Get posts for explore

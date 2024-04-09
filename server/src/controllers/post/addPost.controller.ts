@@ -1,4 +1,5 @@
 import { supabase } from "$/db/connect";
+import moderatorCheck from "$/middlewares/moderator.middleware";
 import { getUserIdFromCookie } from "$/utils/getUserId.util";
 import { prefix } from "$/utils/prefix.util";
 import { AddPostSchema } from "$/validations/post.validation";
@@ -38,6 +39,7 @@ export const addPost = async (req: Request, res: Response) => {
 
         if (error) return res.status(400).json("Post upload to DB has failed!");
 
+        if (img) moderatorCheck(res, userId, data[0].id, true, img);
         return res.status(200).json(data);
     } catch (error) {
         return res.status(401).json(error);

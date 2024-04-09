@@ -8,9 +8,9 @@ export const uploadFile = (req: Request, res: Response) => {
     try {
         const file = req.file as Express.MulterS3.File;
         if (!file) return res.status(401).send("File not found in server!");
-        return res
-            .status(200)
-            .json(config.s3Config.cloudfrontLink + "/" + file.key);
+
+        const link = config.s3Config.cloudfrontLink + "/" + file.key;
+        return res.status(200).json(link);
     } catch (error) {
         return res.status(500).send("File upload failed!");
     }

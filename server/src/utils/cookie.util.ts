@@ -1,7 +1,7 @@
 import { Response } from "express";
 
 const clearAllCookies = (res: Response) => {
-    return res.clearCookie("accessToken", {
+    res.clearCookie("accessToken", {
         httpOnly: true,
         secure: true,
         sameSite: "none",
