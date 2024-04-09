@@ -22,5 +22,5 @@ export const getFriends = async (req: Request, res: Response) => {
     if (error)
         return res.status(400).json("get_friends details failed in server!");
 
-    res.status(200).json(data);
+    return res.status(200).json(data);
 };

@@ -24,5 +24,5 @@ export const getFollowers = async (req: Request, res: Response) => {
     if (error)
         return res.status(400).json("Followers detail fetch failed in server!");
 
-    res.status(200).json(data);
+    return res.status(200).json(data);
 };

@@ -48,7 +48,7 @@ const authMiddleware = async (
         const verified = jwt.verify(token, key);
         if (!verified) return res.status(403).send("Token is not valid!");
 
-        next();
+        return next();
     } catch (err) {
         return res.status(403).send("Token verification failed!");
     }

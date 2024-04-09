@@ -26,9 +26,9 @@ export const deleteComment = async (req: Request, res: Response) => {
             .eq("id", commentId);
 
         if (error) throw Error("Comment deletion from DB failed!");
-        res.status(200).json(data);
+        return res.status(200).json(data);
     } catch (error) {
         console.error(error);
-        res.status(401).json(error);
+        return res.status(401).json(error);
     }
 };

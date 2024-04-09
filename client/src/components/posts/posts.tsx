@@ -31,8 +31,8 @@ const Posts = () => {
 
     const getPosts = async ({ pageParam }: { pageParam: number }) => {
         const res = await axiosRequest.get(
-            // Page size 10 = 10 posts fetched on scroll
-            `/posts?page=${pageParam}&pageSize=10`
+            // Page size 5 = 5 posts fetched on scroll
+            `/posts?page=${pageParam}&pageSize=5`
         );
         return res.data;
     };

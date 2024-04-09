@@ -30,8 +30,7 @@ export const postStory = async (req: Request, res: Response) => {
         .select();
 
     if (error) {
-        res.status(500).json("Story data upload to DB failed!");
-        throw Error("Error inserting story to DB!");
+        return res.status(500).json("Story data upload to DB failed!");
     }
     return res.status(200).json(data);
 };

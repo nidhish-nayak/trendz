@@ -11,7 +11,7 @@ export const getSinglePosts = async (req: Request, res: Response) => {
             my_post_id: postId,
         });
 
-        if (error) res.status(400).json("getSinglePosts fetch failed!");
+        if (error) return res.status(400).json("getSinglePosts fetch failed!");
         return res.status(200).json(posts);
     } catch (error) {
         return res.status(400).json(error);

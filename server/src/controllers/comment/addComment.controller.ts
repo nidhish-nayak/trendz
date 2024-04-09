@@ -22,8 +22,8 @@ export const addComment = async (req: Request, res: Response) => {
 
         if (error) return res.status(400).json("Comment insert to DB failed!");
 
-        res.status(200).json(data);
+        return res.status(200).json(data);
     } catch (error) {
-        res.status(401).json(error);
+        return res.status(401).json(error);
     }
 };

@@ -4,9 +4,10 @@ import { type Request, type Response } from "express";
 
 export const getPosts = async (req: Request, res: Response) => {
     const page = req.query.page ? parseInt(req.query.page as string) : 1;
+    // Default set to 5 if no pageSize in payload
     const pageSize = req.query.pageSize
         ? parseInt(req.query.pageSize as string)
-        : 10;
+        : 5;
 
     const myUserId: number = getUserIdFromCookie(req);
 
@@ -17,6 +18,6 @@ export const getPosts = async (req: Request, res: Response) => {
         page_size: pageSize,
     });
 
-    if (error) res.status(400).json("Function get_user_posts() failed!");
-    res.status(200).json(posts);
+    if (error) return res.status(400).json("Function get_user_posts() failed!");
+    return res.status(200).json(posts);
 };

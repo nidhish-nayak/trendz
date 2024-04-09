@@ -9,6 +9,6 @@ export const getStatus = (_req: Request, res: Response) => {
         }
 
         // Send the rendered HTML response
-        res.status(200).send(html);
+        return res.status(200).send(html);
     });
 };

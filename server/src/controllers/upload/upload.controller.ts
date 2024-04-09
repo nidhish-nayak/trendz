@@ -2,7 +2,8 @@ import config from "$/config/config";
 import { type Request, type Response } from "express";
 
 export const uploadFile = (req: Request, res: Response) => {
-    if (!req.file) throw new Error("File from multer middleware not sent!");
+    if (!req.file)
+        return res.status(400).send("File from multer middleware not sent!");
 
     try {
         const file = req.file as Express.MulterS3.File;
