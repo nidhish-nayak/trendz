@@ -1,13 +1,10 @@
 import config from "$/config/config";
-import { Response } from "express";
 import axios from "axios";
-
 import { addBan, getModerationAxiosConfig } from "$/utils/axios.util";
-import clearAllCookies from "$/utils/cookie.util";
 import { supabase } from "$/db/connect";
+import logDetails from "$/utils/log.util";
 
 const moderatorCheck = async (
-    res: Response,
     userId: number,
     id: number,
     post: boolean,
@@ -18,11 +15,10 @@ const moderatorCheck = async (
         return;
     }
 
-    // Get axios headers setup
-    const options = getModerationAxiosConfig(imageUrl);
-
     try {
+        const options = getModerationAxiosConfig(imageUrl);
         const response = await axios.request(options);
+
         if (response.data.unsafe === true) {
             const banAdded = await addBan(userId);
             if (banAdded === false)
@@ -30,13 +26,8 @@ const moderatorCheck = async (
 
             // Delete post or story if user banned
             if (post) {
-                // Add logs of images for unban requests
-                const { error: logError } = await supabase
-                    .from("logs")
-                    .insert({ user_id: userId, img: imageUrl, type: "post" });
-                if (logError) return console.log("Error during post log!");
+                await logDetails(userId, imageUrl, "posts");
 
-                // Remove actual post
                 const { error } = await supabase
                     .from("posts")
                     .delete()
@@ -44,28 +35,21 @@ const moderatorCheck = async (
                     .eq("id", id);
                 if (error) return console.log("Error during post delete!");
             } else {
-                const { error: logError } = await supabase
-                    .from("logs")
-                    .insert({ user_id: userId, img: imageUrl, type: "story" });
-                if (logError) return console.log("Error logging story delete!");
+                await logDetails(userId, imageUrl, "stories");
 
-                // Remove actual story
                 const { error } = await supabase
                     .from("stories")
                     .delete()
                     .eq("userId", userId)
                     .eq("id", id);
-                if (error) return console.log("Error during Story delete!");
+                if (error) return console.log("Error during story delete!");
             }
 
-            // Logout user on ban
-            clearAllCookies(res);
+            // Log the banned userId on server
+            console.log(`UserId: ${userId} was banned!`);
         }
         return;
     } catch (error) {
-        if (error.code === "ERR_HTTP_HEADERS_SENT") {
-            return console.log("User was banned, cookie was cleared");
-        }
         return console.log("Failed to request ban check from API!");
     }
 };

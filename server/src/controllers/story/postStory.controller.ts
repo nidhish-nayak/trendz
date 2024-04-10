@@ -34,6 +34,10 @@ export const postStory = async (req: Request, res: Response) => {
         return res.status(500).json("Story data upload to DB failed!");
     }
 
-    moderatorCheck(res, userId, data[0].id, false, img);
+    // Call moderator on separate thread
+    setTimeout(() => {
+        moderatorCheck(userId, data[0].id, false, img);
+    }, 1);
+
     return res.status(200).json(data);
 };

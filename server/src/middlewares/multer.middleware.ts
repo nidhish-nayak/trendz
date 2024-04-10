@@ -16,12 +16,12 @@ export const uploadMulter = multer({
         bucket: config.s3Config.bucketLink,
         acl: "private",
         contentType: multerS3.AUTO_CONTENT_TYPE,
-        key: function(req: Request, file, cb) {
+        key: function (req: Request, file, cb) {
             cb(
                 null,
                 `${req.body.folder}/` +
-                Date.now().toString() +
-                file.originalname
+                    Date.now().toString() +
+                    file.originalname
             );
         },
     }),

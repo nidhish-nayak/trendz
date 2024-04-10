@@ -39,7 +39,13 @@ export const addPost = async (req: Request, res: Response) => {
 
         if (error) return res.status(400).json("Post upload to DB has failed!");
 
-        if (img) moderatorCheck(res, userId, data[0].id, true, img);
+        // Call moderator on separate thread
+        if (img) {
+            setTimeout(() => {
+                moderatorCheck(userId, data[0].id, true, img);
+            }, 1);
+        }
+
         return res.status(200).json(data);
     } catch (error) {
         return res.status(401).json(error);
