@@ -1,6 +1,6 @@
 import { supabase } from "$/db/connect";
-import moderatorCheck from "$/middlewares/moderator.middleware";
 import { getUserIdFromCookie } from "$/utils/getUserId.util";
+import moderatorCheck from "$/utils/moderator.util";
 import { prefix } from "$/utils/prefix.util";
 import { AddPostSchema } from "$/validations/post.validation";
 import { type Request, type Response } from "express";
