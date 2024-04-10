@@ -5,13 +5,20 @@ import { addBan, getModerationAxiosConfig } from "./axios.util";
 import logDetails from "./log.util";
 
 const moderatorCheck = async (
-    userId: number,
     id: number,
-    post: boolean,
+    table: string,
+    userId: number,
     imageUrl: string
 ) => {
+    // Deletable tables
+    const allowedTables = ["posts", "stories"];
+
     // Toggle moderator on/off as per config
-    if (config.modOptions.modStatus === false || !imageUrl) {
+    if (
+        config.modOptions.modStatus === false ||
+        !imageUrl ||
+        !allowedTables.includes(table)
+    ) {
         return;
     }
 
@@ -25,28 +32,17 @@ const moderatorCheck = async (
                 return console.log("User ban failed upon unsafe upload!");
 
             // Delete post or story if user banned
-            if (post) {
-                await logDetails(userId, imageUrl, "posts");
+            await logDetails(userId, imageUrl, table);
 
-                const { error } = await supabase
-                    .from("posts")
-                    .delete()
-                    .eq("userId", userId)
-                    .eq("id", id);
-                if (error) return console.log("Error during post delete!");
-            } else {
-                await logDetails(userId, imageUrl, "stories");
-
-                const { error } = await supabase
-                    .from("stories")
-                    .delete()
-                    .eq("userId", userId)
-                    .eq("id", id);
-                if (error) return console.log("Error during story delete!");
-            }
+            const { error } = await supabase
+                .from(table)
+                .delete()
+                .eq("userId", userId)
+                .eq("id", id);
+            if (error) return console.log(`Error during ${table} delete!`);
 
             // Log the banned userId on server
-            console.log(`UserId: ${userId} was banned!`);
+            console.log(`UserId: ${userId} was banned for unsafe ${table}!`);
         }
         return;
     } catch (error) {

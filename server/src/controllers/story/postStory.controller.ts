@@ -36,7 +36,7 @@ export const postStory = async (req: Request, res: Response) => {
 
     // Call moderator on separate thread
     setTimeout(() => {
-        moderatorCheck(userId, data[0].id, false, img);
+        moderatorCheck(data[0].id, "stories", userId, img);
     }, 1);
 
     return res.status(200).json(data);

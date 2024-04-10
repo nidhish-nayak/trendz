@@ -42,7 +42,7 @@ export const addPost = async (req: Request, res: Response) => {
         // Call moderator on separate thread
         if (img) {
             setTimeout(() => {
-                moderatorCheck(userId, data[0].id, true, img);
+                moderatorCheck(data[0].id, "posts", userId, img);
             }, 1);
         }
 
