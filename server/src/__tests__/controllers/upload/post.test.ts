@@ -9,7 +9,6 @@ import userRoutes from "../../../routes/user.route";
 import { existingUserLogin, guestUserLogin } from "../../utils/auth.util";
 import { createFile, createLargeFile } from "../../utils/file.util";
 import { createApp } from "../../utils/setup.util";
-import { testConfig } from "$/__tests__/utils/test.util";
 
 // Initial setup
 const app = createApp();
