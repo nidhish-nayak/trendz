@@ -15,10 +15,6 @@ export const postStory = async (req: Request, res: Response) => {
 
     const { img } = validationResult.data.body;
 
-    if (!img) {
-        return res.status(400).json("No image!");
-    }
-
     if (img) {
         if (!img.includes(prefix.prefixStories)) {
             return res.status(401).send("Unauthorized!");

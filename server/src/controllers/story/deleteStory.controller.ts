@@ -31,7 +31,6 @@ export const deleteStory = async (req: Request, res: Response) => {
 
         return res.status(200).json(data);
     } catch (error) {
-        console.error(error);
         return res.status(401).json(error);
     }
 };

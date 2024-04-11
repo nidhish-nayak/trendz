@@ -19,9 +19,11 @@ export const testConfig = {
     upload: {
         path: "./src/__tests__/utils/assets/test.png",
         data: "test data",
+        largeImgPath: "./src/__tests__/utils/assets/test-large.png",
     },
     s3Path: {
         posts: config.s3Config.cloudfrontLink + "/posts",
+        stories: config.s3Config.cloudfrontLink + "/stories",
     },
 };
 

@@ -13,7 +13,7 @@ const app = createApp();
 let accessToken: string | null;
 let posts: GET_ALL_POSTS_TYPES | null;
 
-describe("Post controllers test", () => {
+describe("Post controllers GET test", () => {
     beforeAll(async () => {
         app.use("/api/auth", authRoutes);
 

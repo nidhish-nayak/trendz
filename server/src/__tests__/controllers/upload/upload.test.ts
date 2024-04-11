@@ -7,8 +7,9 @@ import uploadRoute from "../../../routes/upload.route";
 import userRoutes from "../../../routes/user.route";
 
 import { existingUserLogin, guestUserLogin } from "../../utils/auth.util";
-import { createFile } from "../../utils/file.util";
+import { createFile, createLargeFile } from "../../utils/file.util";
 import { createApp } from "../../utils/setup.util";
+import { testConfig } from "$/__tests__/utils/test.util";
 
 // Initial setup
 const app = createApp();
@@ -19,7 +20,7 @@ let guestId: number;
 let accessToken: string;
 let guestAccessToken: string;
 
-describe("Post controllers test", () => {
+describe("Upload controllers test", () => {
     beforeAll(async () => {
         app.use("/api/auth", authRoutes);
 
@@ -41,7 +42,7 @@ describe("Post controllers test", () => {
         app.use("/api/upload", uploadRoute);
     });
 
-    it("responds for post /api/upload", async () => {
+    it("responds 200 for POST /api/upload", async () => {
         // Create temp file
         const { file, path } = createFile();
 
@@ -56,7 +57,7 @@ describe("Post controllers test", () => {
         expect(response.status).toBe(200);
     });
 
-    it("responds for guest post /api/upload", async () => {
+    it("responds 401 for guest POST /api/upload", async () => {
         // Create temp file
         const { file, path } = createFile();
 
@@ -69,6 +70,27 @@ describe("Post controllers test", () => {
         // Delete in-memory file created
         fs.unlinkSync(path);
         expect(guestRes.status).toBe(401);
+    });
+
+    it("responds 400 for POST /api/upload with no image", async () => {
+        const res = await request(app)
+            .post("/api/upload")
+            .set("Cookie", `accessToken=${accessToken}`)
+            .field("folder", "test");
+        expect(res.status).toBe(400);
+    });
+
+    it("responds 500 for POST /api/upload for >1MB image", async () => {
+        const { file, path } = createLargeFile();
+
+        const res = await request(app)
+            .post("/api/upload")
+            .set("Cookie", `accessToken=${accessToken}`)
+            .field("folder", "test")
+            .attach("file", file);
+
+        fs.unlinkSync(path);
+        expect(res.status).toBe(500);
     });
 
     afterAll(() => {

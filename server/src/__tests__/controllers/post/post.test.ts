@@ -6,6 +6,7 @@ import uploadRoute from "../../../routes/upload.route";
 import { existingUserLogin } from "$/__tests__/utils/auth.util";
 import { createApp } from "$/__tests__/utils/setup.util";
 import { POST_DATA } from "$/__tests__/utils/types.util";
+import { testConfig } from "$/__tests__/utils/test.util";
 
 // Initial setup
 const app = createApp();
@@ -13,6 +14,7 @@ const app = createApp();
 // Test globals
 let userId: number | null;
 let postId: number | null;
+let postIdImg: number | null;
 let accessToken: string | null;
 let postData: POST_DATA | null;
 
@@ -76,6 +78,24 @@ describe("Post controllers test", () => {
         postId = addPost.body[0].id;
     });
 
+    it("responds for POST /api/posts/ with image", async () => {
+        postData = {
+            img: testConfig.s3Path.posts + "/test-image.png",
+            desc: "test image",
+            userId: userId,
+            filename: "test-image",
+        };
+
+        const response = await request(app)
+            .post("/api/posts")
+            .set("Cookie", [`accessToken=${accessToken}`])
+            .send(postData);
+        expect(response.status).toBe(200);
+        expect(typeof response.body[0].id).toBe("number");
+
+        postIdImg = response.body[0].id;
+    });
+
     it("responds for DELETE /api/posts/${postId}", async () => {
         const deletePostNoCookie = await request(app).delete(
             `/api/posts/${postId}`
@@ -86,6 +106,11 @@ describe("Post controllers test", () => {
             .delete(`/api/posts/${postId}`)
             .set("Cookie", [`accessToken=${accessToken}`]);
         expect(deletePost.status).toBe(200);
+
+        const deletePostImg = await request(app)
+            .delete(`/api/posts/${postIdImg}`)
+            .set("Cookie", [`accessToken=${accessToken}`]);
+        expect(deletePostImg.status).toBe(200);
     });
 
     afterAll(() => {
@@ -94,6 +119,7 @@ describe("Post controllers test", () => {
             postData = null;
             userId = null;
             postId = null;
+            postIdImg = null;
             accessToken = null;
             done();
         });

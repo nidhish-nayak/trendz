@@ -25,7 +25,6 @@ const allowGuestUser = async (req: Request, res: Response) => {
         if (req.method !== "GET") {
             return false;
         }
-        return true;
     }
     return true;
 };

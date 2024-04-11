@@ -46,7 +46,7 @@ const moderatorCheck = async (
         }
         return;
     } catch (error) {
-        return console.log("Failed to request ban check from API!");
+        return;
     }
 };
 
