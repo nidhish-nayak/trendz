@@ -42,10 +42,11 @@ describe("Ban moderator test", () => {
         accessToken = token;
     });
 
-    // Mock the moderator check on posts
+    // One test to rule them all
+    // Must be executed in series hence one IT statement
     it("responds 200 for posts ban success", async () => {
         const imgUrl = testConfig.banImg;
-        const { data, error } = await supabase
+        const { data: postData, error: postError } = await supabase
             .from("posts")
             .insert({
                 desc: "test ban",
@@ -53,19 +54,16 @@ describe("Ban moderator test", () => {
                 userId: user_id,
             })
             .select();
-        if (error) return console.log("Post upload to DB has failed!");
+        if (postError) return console.log("Post upload to DB has failed!");
 
         // Call moderator - Main test
-        await moderatorCheck(data[0].id, "posts", user_id, imgUrl);
+        await moderatorCheck(postData[0].id, "posts", user_id, imgUrl);
 
-        const res = await request(app)
+        const response = await request(app)
             .post("/api/auth/login")
             .send(credentials);
-        expect(res.status).toBe(401);
-    });
+        expect(response.status).toBe(401);
 
-    // Mock the moderator check on stories
-    it("responds 200 for stories ban success", async () => {
         // Remove banned user
         const { error: banError } = await supabase
             .from("bans")
@@ -73,7 +71,6 @@ describe("Ban moderator test", () => {
             .eq("user_id", user_id);
         if (banError) return console.log("User unban failed!");
 
-        const imgUrl = testConfig.banImg;
         const { data, error } = await supabase
             .from("stories")
             .insert({
@@ -90,9 +87,7 @@ describe("Ban moderator test", () => {
             .post("/api/auth/login")
             .send(credentials);
         expect(res.status).toBe(401);
-    });
 
-    it("Deregister user after all ban checks", async () => {
         const removeBan = await supabase
             .from("bans")
             .delete()
