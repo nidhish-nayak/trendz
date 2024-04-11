@@ -55,6 +55,13 @@ describe("Express application setup & routes test", () => {
         expect(response.status).toBe(200);
     });
 
+    it("responds with status 200 for GET /api/auth/status", async () => {
+        const response = await request(app)
+            .get("/api/auth/status")
+            .set("Cookie", [`accessToken=${accessToken}`]);
+        expect(response.status).toBe(200);
+    });
+
     it("responds with status 200 for GET /api/posts", async () => {
         expect(accessToken).toBeDefined();
         expect(typeof accessToken).toBe("string");

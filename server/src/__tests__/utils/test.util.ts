@@ -16,6 +16,7 @@ if (
 }
 
 export const testConfig = {
+    banImg: "https://d22c3qhulgjfbh.cloudfront.net/ban/ban.webp",
     upload: {
         path: "./src/__tests__/utils/assets/test.png",
         data: "test data",

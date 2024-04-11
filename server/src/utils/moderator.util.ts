@@ -28,8 +28,7 @@ const moderatorCheck = async (
 
         if (response.data.unsafe === true) {
             const banAdded = await addBan(userId);
-            if (banAdded === false)
-                return console.log("User ban failed upon unsafe upload!");
+            if (banAdded === false) return;
 
             // Delete post or story if user banned
             await logDetails(userId, imageUrl, table);
@@ -39,10 +38,7 @@ const moderatorCheck = async (
                 .delete()
                 .eq("userId", userId)
                 .eq("id", id);
-            if (error) return console.log(`Error during ${table} delete!`);
-
-            // Log the banned userId on server
-            console.log(`UserId: ${userId} was banned for unsafe ${table}!`);
+            if (error) return;
         }
         return;
     } catch (error) {
