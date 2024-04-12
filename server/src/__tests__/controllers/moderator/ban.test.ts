@@ -3,6 +3,7 @@ import config from "$/config/config";
 import { supabase } from "$/db/connect";
 import authRoutes from "../../../routes/auth.route";
 import postRoutes from "../../../routes/post.route";
+import storyRoutes from "../../../routes/story.route";
 
 import { createApp } from "$/__tests__/utils/setup.util";
 import { testConfig, userAlt } from "$/__tests__/utils/test.util";
@@ -28,6 +29,7 @@ describe("Ban moderator test", () => {
 
         app.use("/api/auth", authRoutes);
         app.use("/api/posts", postRoutes);
+        app.use("/api/stories", storyRoutes);
 
         await request(app).post("/api/auth/register").send(userAlt);
         const { userId, token } = await manualAuth(
@@ -58,6 +60,9 @@ describe("Ban moderator test", () => {
 
         // Call moderator - Main test
         await moderatorCheck(postData[0].id, "posts", user_id, imgUrl);
+
+        const logout = await request(app).post("/api/auth/logout");
+        expect(logout.status).toBe(200);
 
         const response = await request(app)
             .post("/api/auth/login")
