@@ -19,9 +19,9 @@ export const testConfig = {
     // Must store unsafe image in same path inside S3 for ban tests if enabled
     banImg: config.s3Config.cloudfrontLink + "/ban/ban.webp",
     upload: {
-        path: "./src/__tests__/utils/assets/test.png",
+        largeImgPath: "./src/__tests__/integration/utils/assets/test-large.png",
+        path: "./src/__tests__/integration/utils/assets/test.png",
         data: "test data",
-        largeImgPath: "./src/__tests__/utils/assets/test-large.png",
     },
     s3Path: {
         posts: config.s3Config.cloudfrontLink + "/posts",

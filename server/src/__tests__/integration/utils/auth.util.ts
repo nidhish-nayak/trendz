@@ -1,10 +1,10 @@
 import { Application } from "express";
 import request from "supertest";
+import { ExistingUser, GuestUser } from "./config.util";
 import {
     MANUAL_AUTH_RETURN_TYPES,
     MANUAL_INPUT_DATA_TYPES,
 } from "./types.util";
-import { ExistingUser, GuestUser } from "./config.util";
 
 // Reusable function to parse accessToken from cookie
 export const getAccessToken = (cookies: string): string => {

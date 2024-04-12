@@ -1,5 +1,5 @@
-import request from "supertest";
 import { Application } from "express";
+import request from "supertest";
 
 export const customGet = async (
     app: Application,

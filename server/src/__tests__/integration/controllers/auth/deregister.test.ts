@@ -1,7 +1,10 @@
-import authRoutes from "../../../routes/auth.route";
-import { ExistingUser } from "../../utils/config.util";
-import { existingUserLogin, manualAuth } from "../../utils/auth.util";
-import { createApp } from "../../utils/setup.util";
+import authRoutes from "../../../../routes/auth.route";
+import {
+    existingUserLogin,
+    manualAuth,
+} from "../../../integration/utils/auth.util";
+import { ExistingUser } from "../../../integration/utils/config.util";
+import { createApp } from "../../../integration/utils/setup.util";
 
 // Initial setup
 const app = createApp();

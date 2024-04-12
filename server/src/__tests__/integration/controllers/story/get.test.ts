@@ -1,8 +1,9 @@
 import request from "supertest";
-import authRoutes from "../../../routes/auth.route";
-import storyRoutes from "../../../routes/story.route";
-import { existingUserLogin } from "../../utils/auth.util";
-import { createApp } from "$/__tests__/utils/setup.util";
+import authRoutes from "../../../../routes/auth.route";
+import storyRoutes from "../../../../routes/story.route";
+
+import { createApp } from "$/__tests__/integration/utils/setup.util";
+import { existingUserLogin } from "../../../integration/utils/auth.util";
 
 // Initial setup
 const app = createApp();

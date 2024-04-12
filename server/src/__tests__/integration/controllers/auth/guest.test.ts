@@ -1,10 +1,10 @@
 import request from "supertest";
-import { createApp } from "../../utils/setup.util";
-import authRoutes from "../../../routes/auth.route";
-import userRoutes from "../../../routes/user.route";
-import postRoutes from "../../../routes/post.route";
-import uploadRoute from "../../../routes/upload.route";
-import { guestUserLogin } from "../../utils/auth.util";
+import authRoutes from "../../../../routes/auth.route";
+import postRoutes from "../../../../routes/post.route";
+import uploadRoute from "../../../../routes/upload.route";
+import userRoutes from "../../../../routes/user.route";
+import { guestUserLogin } from "../../../integration/utils/auth.util";
+import { createApp } from "../../../integration/utils/setup.util";
 
 // Initial setup
 const app = createApp();
