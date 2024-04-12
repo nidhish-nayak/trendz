@@ -103,7 +103,7 @@ describe("Ban moderator test", () => {
         expect(status).toBe(200);
     });
 
-    afterAll(async () => {
+    afterAll(() => {
         return new Promise<void>((done) => {
             // Clean up any resources if necessary
             done();
