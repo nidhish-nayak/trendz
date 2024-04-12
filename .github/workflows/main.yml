@@ -70,6 +70,11 @@ jobs:
                   echo "S3_BUCKET_LINK=${{ secrets.S3_BUCKET_LINK }}" >> .env
                   echo "S3_IMAGE_LINK=${{ secrets.S3_IMAGE_LINK }}" >> .env
                   echo "S3_CLOUDFRONT_LINK=${{ secrets.S3_CLOUDFRONT_LINK }}" >> .env
+                  # Moderator variables
+                  echo "MOD_URL=${{ secrets.MOD_URL }}" >> .env
+                  echo "MOD_KEY=${{ secrets.MOD_KEY }}" >> .env
+                  echo "MOD_HOST=${{ secrets.MOD_HOST }}" >> .env
+                  # Run tests
                   npm test
 
             - name: Remove .env
