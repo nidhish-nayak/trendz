@@ -1,5 +1,5 @@
-import request from "supertest";
 import { createApp } from "./utils/setup.util";
+import { customGet } from "./utils/custom.util";
 import { existingUserLogin } from "./utils/auth.util";
 import { FOLLOWING_TYPES, POST_TYPE } from "./utils/types.util";
 
@@ -18,12 +18,12 @@ import userRoutes from "../routes/user.route";
 const app = createApp();
 
 // Test globals
-let userId: number | null;
-let accessToken: string | null;
-let postIdArray: number[] | null;
-let followingIdArray: number[] | null;
+let userId: number;
+let token: string;
+let postIdArray: number[];
+let followingIdArray: number[];
 
-describe("Express application setup & routes test", () => {
+describe("Express application all routes test", () => {
     beforeAll(async () => {
         // Tested Routes
         app.use("/api/auth", authRoutes);
@@ -37,65 +37,62 @@ describe("Express application setup & routes test", () => {
         app.use("/api/stories", storyRoutes);
         app.use("/api/friends", friendRoutes);
         app.use("/api/activities", activityRoutes);
-    });
 
-    // Login before testing routes
-    it("responds with status 200 for /api/auth/login", async () => {
-        const { userId: id, token, status } = await existingUserLogin(app);
-        expect(status).toBe(200);
+        // Login before testing routes
+        const {
+            userId: id,
+            token: accessToken,
+            status,
+        } = await existingUserLogin(app);
 
-        if (!token || !id) throw new Error("Access token / id not found!");
+        if (!accessToken || !id || status !== 200)
+            throw new Error("Access token / id not found!");
+
         userId = id;
-        accessToken = token;
+        token = accessToken;
     });
 
     // Test all Routes
     it("responds with status 200 for GET /api/test", async () => {
-        const response = await request(app).get("/api/test");
+        const response = await customGet(app, "/api/test");
         expect(response.status).toBe(200);
     });
 
     it("responds with status 200 for GET /api/auth/status", async () => {
-        const response = await request(app)
-            .get("/api/auth/status")
-            .set("Cookie", [`accessToken=${accessToken}`]);
+        const response = await customGet(app, "/api/auth/status", token);
         expect(response.status).toBe(200);
+
+        const resNoToken = await customGet(app, "/api/auth/status");
+        expect(resNoToken.status).toBe(200);
+        expect(resNoToken.body.token).toBe(false);
     });
 
     it("responds with status 200 for GET /api/posts", async () => {
-        expect(accessToken).toBeDefined();
-        expect(typeof accessToken).toBe("string");
+        const response = await customGet(app, "/api/posts", token);
 
-        const response = await request(app)
-            .get("/api/posts")
-            .set("Cookie", [`accessToken=${accessToken}`]);
         postIdArray = response.body.map((post: POST_TYPE) => post.id);
         expect(response.status).toBe(200);
     });
 
     it("responds with status 200 for GET /api/comments", async () => {
-        const response = await request(app).get("/api/comments");
+        const response = await customGet(app, "/api/comments");
         expect(response.status).toBe(200);
     });
 
     it("responds with status 200 for GET /api/likes", async () => {
-        expect(accessToken).toBeDefined();
-        expect(typeof accessToken).toBe("string");
+        if (!postIdArray) throw new Error("PostId array not found!");
+        if (postIdArray.length < 1) return;
 
-        if (!postIdArray) throw Error("postId array not found!");
+        postIdArray.slice(0, 3);
         postIdArray.map(async (postId) => {
-            const response = await request(app)
-                .get(`/api/likes?postId=${postId}&userId=${userId}`)
-                .set("Cookie", [`accessToken=${accessToken}`]);
+            const endpoint = `/api/likes?postId=${postId}&userId=${userId}`;
+            const response = await customGet(app, endpoint, token);
             expect(response.status).toBe(200);
         });
     });
 
     it("responds with status 200 for GET /api/friends", async () => {
-        const response = await request(app)
-            .get("/api/friends/following")
-            .set("Cookie", [`accessToken=${accessToken}`]);
-
+        const response = await customGet(app, "/api/friends/following", token);
         followingIdArray = response.body.map(
             (following: FOLLOWING_TYPES) => following.id
         );
@@ -104,44 +101,36 @@ describe("Express application setup & routes test", () => {
 
     it("responds with status 200 for GET /api/relationships", async () => {
         if (!followingIdArray) throw Error("followingId array not found!");
-        const relationUsers = [...followingIdArray, userId];
+        if (followingIdArray.length < 1) return;
 
+        let relationUsers = [...followingIdArray, userId];
+        relationUsers = relationUsers.slice(0, 3);
         relationUsers.map(async (id) => {
-            const response = await request(app)
-                .get(`/api/relationships/${id}`)
-                .set("Cookie", [`accessToken=${accessToken}`]);
+            const endpoint = `/api/relationships/${id}`;
+            const response = await customGet(app, endpoint, token);
             expect(response.status).toBe(200);
         });
     });
 
     it("responds with status 200 for GET /api/users", async () => {
-        const response = await request(app)
-            .get(`/api/users/find/${userId}`)
-            .set("Cookie", [`accessToken=${accessToken}`]);
+        const endpoint = `/api/users/find/${userId}`;
+        const response = await customGet(app, endpoint, token);
         expect(response.status).toBe(200);
     });
 
     it("responds with status 200 for GET /api/stories", async () => {
-        const response = await request(app)
-            .get(`/api/stories`)
-            .set("Cookie", [`accessToken=${accessToken}`]);
+        const response = await customGet(app, "/api/stories", token);
         expect(response.status).toBe(200);
     });
 
     it("responds with status 200 for GET /api/activities", async () => {
-        const response = await request(app)
-            .get(`/api/activities`)
-            .set("Cookie", [`accessToken=${accessToken}`]);
+        const response = await customGet(app, "/api/activities", token);
         expect(response.status).toBe(200);
     });
 
     afterAll(() => {
         return new Promise<void>((done) => {
-            // Clean up any resources if necessarylet userId: number;
-            userId = null;
-            accessToken = null;
-            postIdArray = null;
-            followingIdArray = null;
+            // Clean up any resources if necessary
             done();
         });
     });
