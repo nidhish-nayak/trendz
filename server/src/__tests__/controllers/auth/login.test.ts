@@ -1,8 +1,8 @@
-import authRoutes from "../../../routes/auth.route";
-import { ExistingUser } from "../../utils/test.util";
+import request from "supertest";
 import { manualAuth } from "../../utils/auth.util";
 import { createApp } from "../../utils/setup.util";
-import request from "supertest";
+import authRoutes from "../../../routes/auth.route";
+import { ExistingUser } from "../../utils/config.util";
 
 // Initial setup
 const app = createApp();

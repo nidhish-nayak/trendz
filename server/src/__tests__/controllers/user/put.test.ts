@@ -1,9 +1,10 @@
 import request from "supertest";
 import authRoutes from "../../../routes/auth.route";
 import userRoutes from "../../../routes/user.route";
-import { existingUserLogin } from "../../utils/auth.util";
+
 import { createApp } from "../../utils/setup.util";
-import { ExistingUser, GuestUser } from "$/__tests__/utils/test.util";
+import { existingUserLogin } from "../../utils/auth.util";
+import { ExistingUser, GuestUser } from "$/__tests__/utils/config.util";
 
 // Initial setup
 const app = createApp();

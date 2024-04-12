@@ -1,5 +1,5 @@
 import authRoutes from "../../../routes/auth.route";
-import { ExistingUser } from "../../utils/test.util";
+import { ExistingUser } from "../../utils/config.util";
 import { existingUserLogin, manualAuth } from "../../utils/auth.util";
 import { createApp } from "../../utils/setup.util";
 

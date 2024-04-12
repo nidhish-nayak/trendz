@@ -1,14 +1,15 @@
 import request from "supertest";
 import config from "$/config/config";
 import { supabase } from "$/db/connect";
+
 import authRoutes from "../../../routes/auth.route";
 import postRoutes from "../../../routes/post.route";
 import storyRoutes from "../../../routes/story.route";
 
-import { createApp } from "$/__tests__/utils/setup.util";
-import { testConfig, userAlt } from "$/__tests__/utils/test.util";
-import { manualAuth } from "$/__tests__/utils/auth.util";
 import moderatorCheck from "$/utils/moderator.util";
+import { createApp } from "$/__tests__/utils/setup.util";
+import { manualAuth } from "$/__tests__/utils/auth.util";
+import { testConfig, userAlt } from "$/__tests__/utils/config.util";
 
 // Initial setup
 const app = createApp();

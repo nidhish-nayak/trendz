@@ -1,7 +1,7 @@
 import authRoutes from "../../../routes/auth.route";
-import { ExistingUser, user } from "../../utils/test.util";
 import { manualAuth } from "../../utils/auth.util";
 import { createApp } from "../../utils/setup.util";
+import { ExistingUser, user } from "../../utils/config.util";
 
 // Initial setup
 const app = createApp();

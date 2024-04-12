@@ -3,10 +3,10 @@ import postRoutes from "../../../routes/post.route";
 import authRoutes from "../../../routes/auth.route";
 import uploadRoute from "../../../routes/upload.route";
 
-import { existingUserLogin } from "$/__tests__/utils/auth.util";
 import { createApp } from "$/__tests__/utils/setup.util";
 import { POST_DATA } from "$/__tests__/utils/types.util";
-import { testConfig } from "$/__tests__/utils/test.util";
+import { testConfig } from "$/__tests__/utils/config.util";
+import { existingUserLogin } from "$/__tests__/utils/auth.util";
 
 // Initial setup
 const app = createApp();
