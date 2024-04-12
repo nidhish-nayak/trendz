@@ -15,7 +15,10 @@ const app = createApp();
 
 // Global variables
 let user_id: number;
+let post_id: number;
+let story_id: number;
 let accessToken: string;
+const imgUrl = testConfig.banImg;
 const credentials = {
     username: userAlt.username,
     password: userAlt.password,
@@ -42,13 +45,8 @@ describe("Ban moderator test", () => {
             return console.log("Login failed - no token returned!");
         user_id = userId;
         accessToken = token;
-    });
 
-    // One test to rule them all
-    // Must be executed in series hence one IT statement
-    it("responds 200 for posts ban success", async () => {
-        const imgUrl = testConfig.banImg;
-        const { data: postData, error: postError } = await supabase
+        const { data, error } = await supabase
             .from("posts")
             .insert({
                 desc: "test ban",
@@ -56,19 +54,20 @@ describe("Ban moderator test", () => {
                 userId: user_id,
             })
             .select();
-        if (postError) return console.log("Post upload to DB has failed!");
+        if (error) return console.log("Post upload to DB has failed!");
+        post_id = data[0].id;
+    });
 
+    it("responds 200 for posts ban success", async () => {
         // Call moderator - Main test
-        await moderatorCheck(postData[0].id, "posts", user_id, imgUrl);
-        //
-        // const logout = await request(app).post("/api/auth/logout");
-        // expect(logout.status).toBe(200);
-        //
-        // const response = await request(app)
-        //     .post("/api/auth/login")
-        //     .send(credentials);
-        // expect(response.status).toBe(401);
-        //
+        const res = await moderatorCheck(post_id, "posts", user_id, imgUrl);
+        expect(res).toBeUndefined();
+
+        const login = await request(app)
+            .post("/api/auth/login")
+            .send(credentials);
+        expect(login.status).toBe(401);
+
         // // Remove banned user
         // const { error: banError } = await supabase
         //     .from("bans")
