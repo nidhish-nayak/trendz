@@ -38,7 +38,7 @@ describe("Zod middleware test", () => {
         });
     });
 
-    it("resturns 400 for Error request", () => {
+    it("returns 400 for Error request", () => {
         const regularError = new Error("Regular error message");
         const req: Request = {} as Request;
         const res: Partial<Response> = {
@@ -53,7 +53,7 @@ describe("Zod middleware test", () => {
         });
     });
 
-    it("resturns 500 for server error", () => {
+    it("returns 500 for server error", () => {
         const unknownError = "Unknown error";
         const req: Request = {} as Request;
         const res: Partial<Response> = {

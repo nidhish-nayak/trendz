@@ -1,15 +1,21 @@
 import { supabase } from "$/db/connect";
+import { getUserIdFromCookie } from "$/utils/getUserId.util";
 import { RelationshipSchema } from "$/validations/relationship.validation";
 import { type Request, type Response } from "express";
 
 export const postRelations = async (req: Request, res: Response) => {
     // Zod validations
+    const user_id = getUserIdFromCookie(req);
     const validationResult = RelationshipSchema.safeParse(req);
     if (!validationResult.success) {
         return res.status(400).send("Input validation failed!");
     }
 
     const { followerUserId, followedUserId } = validationResult.data.body;
+
+    if (followerUserId !== user_id) {
+        return res.status(401).send("Unauthorized");
+    }
 
     const { data: existingRecord, error: existingError } = await supabase
         .from("relationships")
