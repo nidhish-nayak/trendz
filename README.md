@@ -1,13 +1,13 @@
 # Trendz
 
 > **Warning**
-> This app is a work in progress. I am building this in public. You can follow the process on Github.
+> The application is complete and production ready
 
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/nidhish-nayak/trendz/tree/main)
 
 ## About the Project
 
-Trendz is a full-stack application featuring social media functionalities such as posts, likes, uploads, etc. This project is built using Typescript, React, Express, React Query (Tanstack Query), PostgreSQL (Supabase) and Material UI. We will be implementing the features with Context APIs to maintain simplicity as much as possible so that anyone can understand the process. In case complexity increases we will be adding redux-toolkit or other client-side libraries.
+Trendz is a full-stack application featuring social media functionalities such as posts, likes, uploads, etc. This project is built using Typescript, React, Express, React Query, PostgreSQL and so on. We will be implementing the features with Context APIs to maintain simplicity as much as possible so that anyone can understand the process.
 
 ![preview](https://github.com/nidhish-nayak/trendz/assets/76598208/13aeba9b-2bde-48d5-b661-1a645e87e3ff)
 
@@ -16,12 +16,12 @@ Trendz is a full-stack application featuring social media functionalities such a
 
 <p align="left">
 
-  <img alt="GitHub Language Count" src="https://img.shields.io/github/languages/count/nidhish-nayak/linkx" />
-  <img alt="GitHub Top Language" src="https://img.shields.io/github/languages/top/nidhish-nayak/linkx" />
-  <img alt="GitHub Issues" src="https://img.shields.io/github/issues/nidhish-nayak/linkx" />
-  <img alt="GitHub Closed Issues" src="https://img.shields.io/github/issues-closed/nidhish-nayak/linkx" />
-  <img alt="GitHub Last Commit" src="https://img.shields.io/github/last-commit/nidhish-nayak/linkx" />
-  <img alt="GitHub Commit Activity (Year)" src="https://img.shields.io/github/commit-activity/y/nidhish-nayak/linkx" />
+  <img alt="GitHub Language Count" src="https://img.shields.io/github/languages/count/nidhish-nayak/trendz" />
+  <img alt="GitHub Top Language" src="https://img.shields.io/github/languages/top/nidhish-nayak/trendz" />
+  <img alt="GitHub Issues" src="https://img.shields.io/github/issues/nidhish-nayak/trendz" />
+  <img alt="GitHub Closed Issues" src="https://img.shields.io/github/issues-closed/nidhish-nayak/trendz" />
+  <img alt="GitHub Last Commit" src="https://img.shields.io/github/last-commit/nidhish-nayak/trendz" />
+  <img alt="GitHub Commit Activity (Year)" src="https://img.shields.io/github/commit-activity/y/nidhish-nayak/trendz" />
 
 </p>
 
@@ -66,7 +66,8 @@ Here's an overview of the project's backend folder structure:
 ```
 📂server/
     ├── src/
-    │   ├── config/    # All endpoint configurations
+    │   ├── __tests__/      # All test cases
+    │   ├── config/         # All endpoint configurations
     │   ├── controllers/    # Controllers consists of logic for routes
     │   ├── db/             # Database configuration and setup
     │   ├── middlewares/    # Middleware configs and setup
@@ -87,10 +88,17 @@ Here's an overview of the project's backend folder structure:
 
 -   **User Authentication**: Users can create accounts, log in, and securely access their personalized profiles. We have used JWT for user authentication feature.
 -   **Responsive Design**: Enjoy a consistent and visually appealing experience across various devices.
--   **User Profile**: User can manage their profile info
+-   **User Profile**: User can manage their profile info and edit them.
 -   **Upload Posts**: User can post their thoughts or memories with or without images attached. File upload managed through AWS S3 and Cloudfront.
 -   **Comments**: User can comment on the posts made by their followers.
--   **Will be added soon...**
+-   **Likes**: User can like any post.
+-   **Activities**: Get realtime activity of users posting or commenting.
+-   **Moderator**: This uses an AI-powered moderator to ban users related on content.
+-   **Follow**: Users can follow others to view their posts.
+-   **Stories**: Add weekly stories to your profile for other users to view. This will be auto-deleted post 1 week.
+-   **Image Upload**: Images are supported upto 20MB for any uploads.
+-   **Ban System**: This is directly connected to moderator. Once detected user will be added to banned records.
+-   **Realtime**: This feature displays all the online friends available at the moment in realtime.
 
 ## Installation 💻
 
@@ -165,6 +173,30 @@ Setting up the server is similar to frontend setup given above. Follow the below
 > **Note**
 > Make sure both client and server are running locally for the fullstack features to work.
 
+### Testing:
+
+Testing your code if it runs as expected can be done using the below command for server.
+Integration and Unit tests cover almost all the functionalities that are critical for the application.
+Make sure to follow `.env.example` file to get all the test cases working.
+
+1. Navigate to server:
+
+    ```bash
+    cd server
+    ```
+
+2. Run all test cases:
+
+    ```bash
+    npm test
+    ```
+
+3. Run individual test cases based on the describe names:
+
+    ```bash
+    jest -t "<Any test case describe title here>"
+    ```
+
 ## Technologies Used 🔧
 
 ### Frontend technologies:
@@ -176,7 +208,8 @@ Setting up the server is similar to frontend setup given above. Follow the below
 -   **SCSS**: Sass is a preprocessor scripting language that is interpreted or compiled into Cascading Style Sheets.
 -   **React Router**: react-router-dom V6 is used for the application routing.
 -   **React Query**: Also knows as Tanstack query for better data fetching.
--   ...Upcoming updates
+-   **Context-API**: Manage states across components with ease.
+-   **Themes**: Both dark and light themes are included in the application using SCSS.
 
 ### Backend technologies:
 
@@ -188,7 +221,11 @@ Setting up the server is similar to frontend setup given above. Follow the below
 -   **Multer & AWS S3**: For file upload and storage.
 -   **AWS Cloudfront**: CDN for hosting images across the globe.
 -   **PostgreSQL**: Supabase is used to manage our postgres database.
--   ...Upcoming updates
+-   **AWS Lambda**: For running jobs on backend or DB cleanups.
+-   **AWS S3 Bucket**: For storing images and connecting them to cloudfront.
+-   **AI Moderator**: AI detects any unsafe images uploaded and bans the user based on results.
+-   **Jest**: For complete coverage of integration and unit test cases.
+-   **Realtime**: Manages realtime updates using websockets.
 
 ## Contributing 🤝
 
