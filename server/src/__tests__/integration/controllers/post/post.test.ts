@@ -1,6 +1,7 @@
 import request from "supertest";
 import authRoutes from "../../../../routes/auth.route";
 import postRoutes from "../../../../routes/post.route";
+import commentRoutes from "../../../../routes/comment.route";
 import uploadRoute from "../../../../routes/upload.route";
 
 import { existingUserLogin } from "$/__tests__/integration/utils/auth.util";
@@ -17,12 +18,14 @@ let postId: number | null;
 let postIdImg: number | null;
 let accessToken: string | null;
 let postData: POST_DATA | null;
+let commentId: number;
 
 describe("Post controllers test", () => {
     beforeAll(async () => {
         app.use("/api/auth", authRoutes);
         // Tested Routes
         app.use("/api/posts", postRoutes);
+        app.use("/api/comments", commentRoutes);
         app.use("/api/upload", uploadRoute);
     });
 
@@ -76,6 +79,34 @@ describe("Post controllers test", () => {
         expect(typeof addPost.body[0].id).toBe("number");
 
         postId = addPost.body[0].id;
+    });
+
+    it("responds for POST /api/comments", async () => {
+        const addCommentInvalid = await request(app)
+            .post("/api/comments")
+            .set("Cookie", [`accessToken=${accessToken}`])
+            .send({ desc: 10, userId: 10, postId: 10 });
+        expect(addCommentInvalid.status).toBe(400);
+
+        const addCommentWrongUser = await request(app)
+            .post("/api/comments")
+            .set("Cookie", [`accessToken=${accessToken}`])
+            .send({ desc: "test comment", userId: 0, postId: postId });
+        expect(addCommentWrongUser.status).toBe(401);
+
+        const addComment = await request(app)
+            .post("/api/comments")
+            .set("Cookie", [`accessToken=${accessToken}`])
+            .send({ desc: "test comment", userId: userId, postId: postId });
+        expect(addComment.status).toBe(200);
+        commentId = addComment.body[0].id;
+    });
+
+    it("responds for DELETE /api/comments", async () => {
+        const deleteComment = await request(app)
+            .delete(`/api/comments/${commentId}`)
+            .set("Cookie", [`accessToken=${accessToken}`]);
+        expect(deleteComment.status).toBe(200);
     });
 
     it("responds for POST /api/posts/ with image", async () => {
