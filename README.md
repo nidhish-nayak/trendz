@@ -1,6 +1,5 @@
 # Trendz
 
-> **Warning**
 > The application is complete and production ready
 
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/nidhish-nayak/trendz/tree/main)
