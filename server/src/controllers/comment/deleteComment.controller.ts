@@ -28,7 +28,6 @@ export const deleteComment = async (req: Request, res: Response) => {
         if (error) throw Error("Comment deletion from DB failed!");
         return res.status(200).json(data);
     } catch (error) {
-        console.error(error);
         return res.status(401).json(error);
     }
 };
