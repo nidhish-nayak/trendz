@@ -6,7 +6,7 @@
 
 ## About the Project
 
-Trendz is a full-stack application featuring social media functionalities such as posts, likes, uploads, etc. This project is built using Typescript, React, Express, React Query, PostgreSQL and so on. We will be implementing the features with Context APIs to maintain simplicity as much as possible so that anyone can understand the process.
+Trendz is a full-stack app with features like AI-moderation, realtime, infinite-scroll, Auth, image-upload, posts, comments, likes, follows, uploads, stories, profiles and more. This project is built using Typescript, React, Express, React Query, PostgreSQL and so on. We will be implementing the features with Context APIs to maintain simplicity as much as possible so that anyone can understand the process.
 
 ![preview](https://github.com/nidhish-nayak/trendz/assets/76598208/13aeba9b-2bde-48d5-b661-1a645e87e3ff)
 
@@ -86,6 +86,7 @@ Here's an overview of the project's backend folder structure:
 ## Features ✨
 
 -   **User Authentication**: Users can create accounts, log in, and securely access their personalized profiles. We have used JWT for user authentication feature.
+-   **Infinite-scroll**: Using react-query, user will now be able to experience infinite scroll features on posts.
 -   **Responsive Design**: Enjoy a consistent and visually appealing experience across various devices.
 -   **User Profile**: User can manage their profile info and edit them.
 -   **Upload Posts**: User can post their thoughts or memories with or without images attached. File upload managed through AWS S3 and Cloudfront.
